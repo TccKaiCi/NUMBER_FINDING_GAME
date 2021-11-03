@@ -8,7 +8,7 @@
 |------| ----- | ----- |
 | 3118410013 | Nguyễn Tuấn Anh | [FB](https://www.facebook.com/ProHZGOD) |
 | 3118410043 | Tăng Chí Chung | [FB](https://www.facebook.com/hiamkaito.404/) |
-| 3118410094 | Nguyễn Ngọc Tiên Em | [FB](https://www.facebook.com/nguyenngoctienem.nguyen) |
+| 3118410094 | Nguyễn Ngọc Tiến Em | [FB](https://www.facebook.com/nguyenngoctienem.nguyen) |
 
 # Yêu cầu về chức năng phía client (phải có GUI):
 - Cách chơi: SV xem hình minh họa ở trên, game mô phỏng lại trò chơi tìm số trên giấy, các số cần tìm không cần theo thứ tự tăng dần mà theo thứ tự chương trình đưa ra.<br>
