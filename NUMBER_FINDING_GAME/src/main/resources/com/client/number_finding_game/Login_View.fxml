@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.client.number_finding_game.LoginController">
+   <children>
+      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Pane prefHeight="400.0" prefWidth="200.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="58.0" layoutY="74.0" prefHeight="30.0" prefWidth="84.0" text="Sign in" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="tf_username" layoutX="26.0" layoutY="128.0" promptText="USERNAME" />
+                  <PasswordField fx:id="tf_password" layoutX="26.0" layoutY="168.0" promptText="PASSWORD" />
+                  <Button fx:id="btn_Login" alignment="CENTER" layoutX="82.0" layoutY="291.0" mnemonicParsing="false" onAction="#onClick" text="→">
+                     <font>
+                        <Font name="System Italic" size="16.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="34.0" layoutY="369.0" prefHeight="17.0" prefWidth="133.0" text="CREATE NEW ACCOUNT" textFill="#8d8484" underline="true">
+                     <font>
+                        <Font name="Arial Bold" size="10.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="login_background" prefHeight="400.0" prefWidth="400.0">
+               <children>
+                  <ImageView fitHeight="400.0" fitWidth="400.0">
+                     <image>
+                        <Image url="@./assets/login_background.png" />
+                     </image>
+                  </ImageView>
+               </children></Pane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
