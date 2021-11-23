@@ -32,7 +32,7 @@ public class LoginController implements Initializable {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("Waiting_room.fxml"));
             Parent root = fxmlLoader.load();
-            WaitingRoomController waitingRoomController = fxmlLoader.getController();
+//            WaitingRoomController waitingRoomController = fxmlLoader.getController();
 //            UserModel u = new UserModel(tf_username.getText(),tf_password.getText());
 //            waitingRoomController.setUserModel(u);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
