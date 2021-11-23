@@ -1,5 +1,4 @@
 package com.client.number_finding_game;
 
-public class WaitingRoom {
-
+public class numberPointBus {
 }
