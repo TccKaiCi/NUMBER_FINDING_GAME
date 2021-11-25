@@ -48,13 +48,10 @@ public class practiceController implements Initializable {
                 rectangle.setFill(Color.RED);
                 System.out.println(label.getText());
             });
-<<<<<<< Updated upstream
-            if (stackPane.getId().equalsIgnoreCase("SP_1")) {
-                rectangle.setFill(Color.GREEN);
-=======
+
             if(stackPane.getId().equalsIgnoreCase("SP_1")){
                 rectangle.setFill(Color.DARKGOLDENROD);
->>>>>>> Stashed changes
+
             }
             pane.getChildren().add(stackPane);
         }
