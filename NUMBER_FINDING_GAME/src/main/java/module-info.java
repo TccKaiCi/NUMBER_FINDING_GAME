@@ -1,4 +1,4 @@
-module com.example.number_finding_game {
+module com.client.number_finding_game {
     requires javafx.controls;
     requires javafx.fxml;
 
