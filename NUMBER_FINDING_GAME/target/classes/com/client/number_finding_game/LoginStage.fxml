@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="654.0" style="-fx-background-color: TRANSPARENT;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.client.number_finding_game.LoginController">
+   <children>
+      <AnchorPane layoutX="33.0" layoutY="27.0" prefHeight="346.0" prefWidth="534.0" style="-fx-background-color: TRANSPARENT;" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="33.0" AnchorPane.topAnchor="27.0">
+         <children>
+            <AnchorPane fx:id="LEFTPANE" layoutX="14.0" layoutY="12.0" prefHeight="420.0" prefWidth="600.0" style="-fx-background-radius: 0.5EM;" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="12.0">
+               <children>
+                  <ImageView fitHeight="423.0" fitWidth="606.0">
+                     <image>
+                        <Image url="@assets/NFGBG.png" />
+                     </image>
+                  </ImageView>
+                  <TextField fx:id="tf_username" layoutX="190.0" layoutY="204.0" prefHeight="25.0" prefWidth="220.0" style="-fx-border-color: #000; -fx-background-color: TRANSPARENT;" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="196.0" />
+                  <PasswordField fx:id="tf_password" layoutX="190.0" layoutY="262.0" prefHeight="25.0" prefWidth="220.0" style="-fx-border-color: #000; -fx-background-color: TRANSPARENT;" />
+                  <Label layoutX="229.0" layoutY="175.0" text="Account Name">
+                     <font>
+                        <Font name="Alien Encounters Solid" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="246.0" layoutY="234.0" text="Password">
+                     <font>
+                        <Font name="Alien Encounters Solid" size="18.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btn_Login" defaultButton="true" layoutX="190.0" layoutY="312.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="220.0" style="-fx-background-color: #D6B5A7; -fx-border-color: #000;" text="LOGIN">
+                     <font>
+                        <Font name="Alien Encounters Solid" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button defaultButton="true" layoutX="190.0" layoutY="365.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="220.0" style="-fx-background-color: #D6B5A7; -fx-border-color: #000;" text="Create new account">
+                     <font>
+                        <Font name="Alien Encounters Solid" size="14.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="85.0" layoutY="63.0" text="Number Finding Game " textFill="#00ffc2">
+                     <font>
+                        <Font name="Alien Encounters Solid" size="38.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

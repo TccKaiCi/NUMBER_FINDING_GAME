@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -22,6 +23,9 @@ public class LoginController implements Initializable {
     public TextField tf_username;
     @FXML
     public PasswordField tf_password;
+    @FXML
+    public Pane login_background;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

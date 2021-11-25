@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -47,8 +48,13 @@ public class practiceController implements Initializable {
                 rectangle.setFill(Color.RED);
                 System.out.println(label.getText());
             });
+<<<<<<< Updated upstream
             if (stackPane.getId().equalsIgnoreCase("SP_1")) {
                 rectangle.setFill(Color.GREEN);
+=======
+            if(stackPane.getId().equalsIgnoreCase("SP_1")){
+                rectangle.setFill(Color.DARKGOLDENROD);
+>>>>>>> Stashed changes
             }
             pane.getChildren().add(stackPane);
         }
