@@ -42,7 +42,7 @@ public class Server extends Thread{
                     int lenght = process.length;
                     System.out.println(lenght);
                     switch (lenght){
-                        case 3:
+                        case 3: // validation signin
                         {
                             if(process[0].equals("SIGNIN")) {
                                 //check thong tin trong database SIGNIN;username;passwd

@@ -29,18 +29,17 @@ public class Client {
                 out.write(line);
                 out.newLine();
                 out.flush();
-
-                if (line.equals("bye")) {
-                    break;
-                }
                 line = in.readLine();
                 System.out.println("ClientBK get: " + line);
+                if (line.equals("bye")) {
+                    System.out.println("Closing connection");
+                    in.close();
+                    out.close();
+                    socket.close();
+                }
             }
 
-            System.out.println("Closing connection");
-            in.close();
-            out.close();
-            socket.close();
+
         } catch (IOException e) {
             System.out.println(e);
         }
