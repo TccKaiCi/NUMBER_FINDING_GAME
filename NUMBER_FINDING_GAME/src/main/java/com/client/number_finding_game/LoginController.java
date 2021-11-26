@@ -1,5 +1,6 @@
 package com.client.number_finding_game;
 
+import com.server.number_finding_game.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,10 +37,11 @@ public class LoginController implements Initializable {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("Waiting_room.fxml"));
             Parent root = fxmlLoader.load();
-//            WaitingRoomController waitingRoomController = fxmlLoader.getController();
-            UserModel u = new UserModel(tf_username.getText(),tf_password.getText());
-
+//            WaitingRoomController waitingRoomController = fxmlLoader.getController()
+//            UserModel u = new UserModel(tf_username.getText(),tf_password.getText());
 //            waitingRoomController.setUserModel(u);
+            String SendingPack = "SIGNIN;" +tf_username.getText()+";"+tf_password.getText();
+            Client a = new Client("localhost", 6000,SendingPack);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Number finding game");
