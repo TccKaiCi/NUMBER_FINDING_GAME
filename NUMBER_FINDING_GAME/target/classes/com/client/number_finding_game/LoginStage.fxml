@@ -17,11 +17,11 @@
                <children>
                   <ImageView fitHeight="423.0" fitWidth="606.0">
                      <image>
-                        <Image url="@assets/bg.jpg" />
+                        <Image url="@assets/NFGBG.png" />
                      </image>
                   </ImageView>
-                  <TextField fx:id="tf_username" layoutX="190.0" layoutY="197.0" prefHeight="25.0" prefWidth="220.0" style="-fx-border-color: #000; -fx-background-color: WHITE;" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="196.0" />
-                  <PasswordField fx:id="pf_password" layoutX="190.0" layoutY="255.0" prefHeight="25.0" prefWidth="220.0" style="-fx-border-color: #000; -fx-background-color: WHITE;" />
+                  <TextField fx:id="tf_username" layoutX="190.0" layoutY="197.0" prefHeight="25.0" prefWidth="220.0" style="-fx-border-color: #000; -fx-background-color: TRANSPARENT;" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="196.0" />
+                  <PasswordField fx:id="pf_password" layoutX="190.0" layoutY="255.0" prefHeight="25.0" prefWidth="220.0" style="-fx-border-color: #000; -fx-background-color: TRANSPARENT;" />
                   <Label layoutX="229.0" layoutY="167.0" text="Account Name">
                      <font>
                         <Font name="Alien Encounters Solid" size="18.0" />
@@ -42,7 +42,7 @@
                         <Font name="Alien Encounters Solid" size="14.0" />
                      </font>
                   </Button>
-                  <Label layoutX="85.0" layoutY="32.0" text="Number Finding Game " textFill="#b57538">
+                  <Label layoutX="85.0" layoutY="32.0" text="Number Finding Game " textFill="#00ffc2">
                      <font>
                         <Font name="Alien Encounters Solid" size="38.0" />
                      </font>
