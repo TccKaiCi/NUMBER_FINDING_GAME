@@ -1,6 +1,6 @@
-package com.client.number_finding_game.Controllers;
+package com.client.number_finding_game.GUI;
 
-import com.client.number_finding_game.Models.Map;
+import com.BUS.Map;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;

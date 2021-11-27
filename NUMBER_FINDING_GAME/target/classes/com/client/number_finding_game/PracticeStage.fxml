@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.client.number_finding_game.Controllers.practiceController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.client.number_finding_game.GUI.practiceController">
    <children>
       <Pane prefHeight="100.0" prefWidth="800.0" style="-fx-background-color: #E7E0C9;" AnchorPane.topAnchor="0.0">
          <children>

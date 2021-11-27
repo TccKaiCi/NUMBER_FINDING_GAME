@@ -1,4 +1,4 @@
-package com.client.number_finding_game.Controllers;
+package com.client.number_finding_game.GUI;
 
 import com.client.number_finding_game.LoginForm;
 import com.server.number_finding_game.Client;
@@ -13,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 

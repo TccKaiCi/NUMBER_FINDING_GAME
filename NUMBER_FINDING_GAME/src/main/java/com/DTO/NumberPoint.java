@@ -1,7 +1,5 @@
-package com.client.number_finding_game.Models;
+package com.DTO;
 
-
-import javafx.scene.paint.Color;
 
 public class NumberPoint {
     public int value;

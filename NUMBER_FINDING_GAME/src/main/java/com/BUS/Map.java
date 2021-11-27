@@ -1,4 +1,6 @@
-package com.client.number_finding_game.Models;
+package com.BUS;
+
+import com.DTO.NumberPoint;
 
 import java.util.ArrayList;
 import java.util.List;
