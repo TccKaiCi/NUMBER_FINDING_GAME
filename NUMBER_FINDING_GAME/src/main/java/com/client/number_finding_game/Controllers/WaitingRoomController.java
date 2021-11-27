@@ -1,5 +1,6 @@
-package com.client.number_finding_game;
+package com.client.number_finding_game.Controllers;
 
+import com.client.number_finding_game.LoginForm;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

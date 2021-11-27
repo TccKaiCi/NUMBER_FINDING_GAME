@@ -1,4 +1,4 @@
-package com.client.number_finding_game;
+package com.client.number_finding_game.Models;
 
 public class UserModel {
     public String userName;

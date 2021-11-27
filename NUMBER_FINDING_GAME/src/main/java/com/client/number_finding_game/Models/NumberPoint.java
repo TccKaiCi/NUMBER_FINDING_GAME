@@ -1,15 +1,15 @@
-package com.client.number_finding_game;
+package com.client.number_finding_game.Models;
 
 
 import javafx.scene.paint.Color;
 
 public class NumberPoint {
-    int value;
-    int posX;
-    int posY;
+    public int value;
+    public int posX;
+    public int posY;
 
-    String chosenColor;
-    String loaiSo;
+    public String chosenColor;
+    public String loaiSo;
 
     public NumberPoint() {
     }

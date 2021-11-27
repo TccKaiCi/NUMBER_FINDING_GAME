@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.client.number_finding_game.WaitingRoomController">
+<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.client.number_finding_game.Controllers.WaitingRoomController">
    <children>
       <Button fx:id="btn_single" layoutX="229.0" layoutY="175.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="250.0" text="Chơi đơn" />
       <Button fx:id="btn_multi" layoutX="229.0" layoutY="233.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="250.0" text="Chơi đội" />
