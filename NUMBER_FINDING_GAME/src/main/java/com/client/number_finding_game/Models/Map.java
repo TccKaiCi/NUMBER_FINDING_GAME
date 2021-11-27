@@ -1,10 +1,7 @@
-package com.client.number_finding_game;
-
-import javafx.scene.paint.Color;
+package com.client.number_finding_game.Models;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 public class Map {
