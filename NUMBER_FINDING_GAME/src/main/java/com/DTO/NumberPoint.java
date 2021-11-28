@@ -1,73 +1,102 @@
 package com.DTO;
 
+import java.util.Random;
 
+/**
+ * MỘt kiểu dữ liệu Object trò chơi, có thể dùng cho hiển thị
+ */
 public class NumberPoint {
-    public int value;
-    public int posX;
-    public int posY;
+    private int intValue;
+    private int intPosX;
+    private int intPosY;
 
-    public String chosenColor;
-    public String loaiSo;
+    private String strChosenColor;
+    private String strRare;
 
     public NumberPoint() {
     }
 
-    public NumberPoint(int value, int posX, int posY, String chosenColor, String loaiSo) {
-        this.value = value;
-        this.posX = posX;
-        this.posY = posY;
-        this.chosenColor = chosenColor;
-        this.loaiSo = loaiSo;
+    public NumberPoint(int intValue, int intPosX, int intPosY, String strChosenColor, String strRare) {
+        this.intValue = intValue;
+        this.intPosX = intPosX;
+        this.intPosY = intPosY;
+        this.strChosenColor = strChosenColor;
+        this.strRare = strRare;
     }
 
-    public int getValue() {
-        return value;
+    public void randomPosition(int posXMax, int posXMin, int posYMax, int posYMin) {
+        Random rand = new Random();
+
+        this.intPosX = rand.nextInt((posXMax - posXMin) + 1) + posXMin;
+        this.intPosY = rand.nextInt((posYMax - posYMin) + 1) + posYMin;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    /**
+     * Check 2 Object NumberPoint
+     * @param point The other Number for compare
+     * @return true if 2 point is nearly
+     */
+    public boolean isNearly(NumberPoint point) {
+//             a^2 + b^2 / 2
+        int duongCheo = (int) Math.sqrt(1152) / 2;
+        int khoanCach = (int) Math.sqrt(
+                (this.intPosX - point.getIntPosX()) * (this.intPosX - point.getIntPosX()) +
+                        (this.intPosY - point.getIntPosY()) * (this.intPosY - point.getIntPosY()));
+
+        if (khoanCach <= duongCheo + 20) {
+            return true;
+        }
+        return false;
     }
 
-    public int getPosX() {
-        return posX;
+    public int getIntValue() {
+        return intValue;
     }
 
-    public void setPosX(int posX) {
-        this.posX = posX;
+    public void setIntValue(int intValue) {
+        this.intValue = intValue;
     }
 
-    public int getPosY() {
-        return posY;
+    public int getIntPosX() {
+        return intPosX;
     }
 
-    public void setPosY(int posY) {
-        this.posY = posY;
+    public void setIntPosX(int intPosX) {
+        this.intPosX = intPosX;
     }
 
-    public String getChosenColor() {
-        return chosenColor;
+    public int getIntPosY() {
+        return intPosY;
     }
 
-    public void setChosenColor(String chosenColor) {
-        this.chosenColor = chosenColor;
+    public void setIntPosY(int intPosY) {
+        this.intPosY = intPosY;
     }
 
-    public String getLoaiSo() {
-        return loaiSo;
+    public String getStrChosenColor() {
+        return strChosenColor;
     }
 
-    public void setLoaiSo(String loaiSo) {
-        this.loaiSo = loaiSo;
+    public void setStrChosenColor(String strChosenColor) {
+        this.strChosenColor = strChosenColor;
+    }
+
+    public String getStrRare() {
+        return strRare;
+    }
+
+    public void setStrRare(String strRare) {
+        this.strRare = strRare;
     }
 
     @Override
     public String toString() {
-        return "numberPointModel{" +
-                "value=" + value +
-                ", posX=" + posX +
-                ", posY=" + posY +
-                ", chosenColor=" + chosenColor +
-                ", loaiSo='" + loaiSo + '\'' +
+        return "NumberPoint{" +
+                "intValue=" + intValue +
+                ", intPosX=" + intPosX +
+                ", intPosY=" + intPosY +
+                ", strChosenColor='" + strChosenColor + '\'' +
+                ", strRare='" + strRare + '\'' +
                 '}';
     }
 }

@@ -1,6 +1,7 @@
 package com.client.number_finding_game.GUI;
 
 import com.BUS.Map;
+import com.BUS.Match;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -50,45 +51,43 @@ public class practiceController implements Initializable {
         }
     }
 
-    Map map;
+    Match match;
 
     public void init(Pane pane) {
-        map = new Map();
+        match = new Match();
 
-        map.startValue = 1;
-        map.endValue = 100;
+        match.createRandomMap();
 
-        map.createNew(770, 0, 470, 0);
 
-        map.list.forEach(model -> {
+        match.getMap().getList().forEach(model -> {
             Rectangle rectangle = new Rectangle(25, 25);
             StackPane stackPane = new StackPane();
             Label label = new Label();
 
-            label.setText(String.valueOf(model.value));
-            stackPane.setId("SP_" + String.valueOf(model.value));
+            label.setText(String.valueOf(model.getIntValue()));
+            stackPane.setId("SP_" + model.getIntValue() );
             rectangle.setFill(Color.valueOf("6fcffa"));
 
             stackPane.getChildren().addAll(rectangle, label);
 
-            stackPane.setLayoutX(model.posX);
-            stackPane.setLayoutY(model.posY);
+            stackPane.setLayoutX(model.getIntPosX());
+            stackPane.setLayoutY(model.getIntPosY());
 
             stackPane.setOnMouseClicked(mouseEvent -> {
                 String color;
-                if (model.getValue() % 2 == 0)
+                if (model.getIntValue() % 2 == 0)
                     color = "0xffa500ff";
                 else
                     color = "ffee04";
 
-                if (!map.isChosen(model.getValue())) {
+                if (match.getMap().isChosen(model.getIntValue())) {
                     rectangle.setFill(Color.valueOf(color));
-                    map.setColorByValue(model.getValue(), color);
+                    match.getMap().setColorByValue(model.getIntValue(), color);
                     System.out.println(label.getText()
                             + " : "
-                            + model.getValue()
+                            + model.getIntValue()
                             + " : "
-                            + model.chosenColor);
+                            + model.getStrChosenColor());
                 }
             });
 
