@@ -11,7 +11,7 @@
 
 <AnchorPane prefHeight="451.0" prefWidth="683.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.client.number_finding_game.GUI.WaitingRoomController">
    <children>
-      <ImageView fitHeight="392.0" fitWidth="602.0" layoutX="41.0" layoutY="49.0" opacity="0.77" pickOnBounds="true">
+      <ImageView fitHeight="424.0" fitWidth="602.0" layoutX="41.0" layoutY="17.0" opacity="0.77" pickOnBounds="true">
          <image>
             <Image url="@assets/bg.jpg" />
          </image>
@@ -19,15 +19,15 @@
             <Glow level="0.37" />
          </effect>
       </ImageView>
-      <Button fx:id="btn_single" layoutX="159.0" layoutY="250.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="382.0" text="Bảng xếp hạng">
+      <Button fx:id="btn_ranking" layoutX="159.0" layoutY="250.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="382.0" text="Bảng xếp hạng">
          <font>
             <Font name="System Bold" size="21.0" />
          </font></Button>
-      <Button fx:id="btn_multi" layoutX="159.0" layoutY="197.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="382.0" text="Chơi nhiều người">
+      <Button fx:id="btn_multi" layoutX="159.0" layoutY="146.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="382.0" text="Chơi nhiều người">
          <font>
             <Font name="System Bold" size="21.0" />
          </font></Button>
-      <Button fx:id="btn_practice" alignment="CENTER" layoutX="159.0" layoutY="146.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="382.0" text="Tập luyện" textAlignment="CENTER">
+      <Button fx:id="btn_practice" alignment="CENTER" layoutX="159.0" layoutY="197.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="382.0" text="Tập luyện" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="21.0" />
          </font></Button>
@@ -53,16 +53,6 @@
             </ImageView>
          </children>
       </Pane>
-      <ImageView fitHeight="431.0" fitWidth="113.0" layoutX="14.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@assets/Banner.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="451.0" fitWidth="113.0" layoutX="559.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@assets/Banner_1.png" />
-         </image>
-      </ImageView>
       <Label id="lblVersion" layoutX="312.0" layoutY="354.0" prefHeight="17.0" prefWidth="76.0" text="Version 1.0">
          <font>
             <Font name="System Bold" size="13.0" />

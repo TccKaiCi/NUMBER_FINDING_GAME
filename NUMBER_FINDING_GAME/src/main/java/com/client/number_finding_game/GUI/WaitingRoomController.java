@@ -9,7 +9,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -28,22 +30,36 @@ public class WaitingRoomController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        btn_practice.setOnAction(this::setBtn_practice);
+        btn_practice.setOnAction(this::setBtn_practiceOnclick);
+        btn_account.setOnAction(this::setBtn_accountOnClick);
     }
 
-    public void setBtn_practice(ActionEvent event){
+    public void setBtn_practiceOnclick(ActionEvent event){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("PracticeStage.fxml"));
             Parent root = fxmlLoader.load();
-//            WaitingRoomController waitingRoomController = fxmlLoader.getController();
-//            UserModel u = new UserModel(tf_username.getText(),tf_password.getText());
-//            waitingRoomController.setUserModel(u);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Practice play");
             stage.setResizable(false);
             stage.show();
         } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void setBtn_accountOnClick(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("EditAccount.fxml"));
+            Parent parent = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(parent));
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setTitle("Edit Account Info");
+            stage.show();
+        }catch (Exception e){
             e.printStackTrace();
         }
     }
