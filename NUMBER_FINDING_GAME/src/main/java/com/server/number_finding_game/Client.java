@@ -11,7 +11,7 @@ public class Client {
     BufferedReader stdin = null;
 
     public static void main(String[] args) throws UnknownHostException, IOException {
-
+    Client client = new Client("localhost",8081,"hello");
 
     }
 

@@ -2,6 +2,8 @@ package com.client.number_finding_game.GUI;
 
 import com.client.number_finding_game.LoginForm;
 import com.server.number_finding_game.Client;
+import com.server.number_finding_game.Memory;
+import com.server.number_finding_game.NewClient;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -62,7 +64,7 @@ public class LoginController implements Initializable {
 //            UserModel u = new UserModel(tf_username.getText(),tf_password.getText());
 //            waitingRoomController.setUserModel(u);
             String SendingPack = "SIGNIN;" + tf_username.getText() + ";" + pf_password.getText();
-            Client a = new Client("localhost", 6000, SendingPack);
+            NewClient client = new NewClient();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Number finding game");
