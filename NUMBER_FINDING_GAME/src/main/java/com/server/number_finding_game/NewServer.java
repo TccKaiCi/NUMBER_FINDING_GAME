@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 // SERVER : Multi Server
 // TIPE : Two-Way Communication (Client to Server, Server to Client)
@@ -21,6 +25,8 @@ public class NewServer implements Runnable {
     private ServerSocket serverSocket = null;
     private Thread thread = null;
     private ChatServerThread clients[] = new ChatServerThread[50];
+    private Map<String,Lobby> ListLobby = new HashMap<>();
+    Lobby tmp = new Lobby();
     private int clientCount = 0;
 public static void main(String[] args){
     NewServer news = new NewServer();
@@ -76,12 +82,18 @@ public static void main(String[] args){
             clients[findClient(ID)].send("exit");
             remove(ID);
         } else {
-            for (int i = 0; i < clientCount; i++) {
+            if(input.equalsIgnoreCase("start")){
+             clients[findClient(ID)].send("YourLob;"+clients[findClient(ID)].getLobbyID());
+            }
+            Lobby temp=ListLobby.get(clients[findClient(ID)].getLobbyID());
+            if(temp!=null)
+            for (int i=0;i<3;i++){
                 if (clients[i].getID() == ID) {
                     // if this client ID is the sender, just skip it
                     continue;
                 }
-                clients[i].send(input);
+                //chi nhung client co trong lobby moi nhan dc
+                clients[findClient(temp.ThreadChat.get(i).getID())].send(input);
             }
         }
     }
@@ -108,10 +120,28 @@ public static void main(String[] args){
     private void addThreadClient(Socket socket) {
         if (clientCount < clients.length) {
             clients[clientCount] = new ChatServerThread(this, socket);
+            addMemtoLobby(clients[clientCount]);
+            clients[clientCount].setLobbyID(String.valueOf(ListLobby.size()));
             clients[clientCount].start();
             clientCount++;
         } else {
             System.out.println("Client refused : maximum " + clients.length + " reached.");
+        }
+    }
+
+    /**
+     * This set Lobby ID to when client start new thread it can send them to Client
+     * @param member
+     * @return
+     */
+    private void addMemtoLobby(ChatServerThread member){
+        tmp.LobbyID = String.valueOf(ListLobby.size());
+        tmp.ThreadChat.add(member);
+        //well lobby reach fullsize we add them to new lobby, neead a fucntion remove them when they disconect
+        if(tmp.ThreadChat.size()==3){
+            tmp.isStart=true;
+            ListLobby.put(tmp.LobbyID,tmp);
+            tmp =new Lobby();
         }
     }
 }

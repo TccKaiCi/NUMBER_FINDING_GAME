@@ -8,7 +8,7 @@ import java.net.Socket;
 
 // Client for Server4
 public class NewClient implements Runnable {
-
+    private String CurLobbyID ="";
     private String serverName = "localhost";
     private int serverPort = 8081;
     private Socket socket = null;
@@ -17,12 +17,17 @@ public class NewClient implements Runnable {
     private DataOutputStream dos = null;
     private ChatClientThread client = null;
 public static void main(String[] args){
-    NewClient client=new NewClient();
-    client.Connect();
-    NewClient client2=new NewClient();
-    client2.Connect();
-    NewClient client3=new NewClient();
-    client3.Connect();
+    NewClient[] client=new NewClient[10];
+    for(int i =0;i<10;i++){
+        client[i]= new NewClient();
+        client[i].Connect();
+    }
+}
+public String getCurLobbyID(){
+    return  CurLobbyID;
+}
+public void setCurLobbyID(String cur){
+    this.CurLobbyID=cur;
 }
 //    is connect tho server???
     public boolean Connect() {
@@ -79,7 +84,23 @@ public static void main(String[] args){
                     Memory.playerMessenger = true;
 //            /127.0.0.1:50194 says : 0 1 2
                     Memory.messenger = message;
-                    System.out.println("Client "+" nhan duoc " + Memory.messenger);
+                    System.out.println("Client "+socket.getLocalPort()+" nhan duoc " + Memory.messenger);
+                    //
+                    if(message.contains(";")){
+                       String[] job = message.split(";");
+                       switch (job.length){
+                           case 2:
+                           {
+                                if(job[0].equalsIgnoreCase("YourLob")){
+                                    setCurLobbyID(job[1]);
+                                    System.out.println("Current Lobby " +getCurLobbyID());
+                                }
+                           }
+                       }
+                    }
+                    if(message.equalsIgnoreCase("test")){
+                        sendMessenger("; "+getCurLobbyID());
+                    }
                 }
             }
         }
