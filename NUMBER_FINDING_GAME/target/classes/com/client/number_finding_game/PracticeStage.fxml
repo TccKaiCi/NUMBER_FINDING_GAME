@@ -21,7 +21,7 @@
                   <Font name="Parry Hotter" size="23.0" />
                </font>
             </Label>
-            <Label id="lblNumberFiding" alignment="CENTER" layoutX="350.0" layoutY="12.0" text="Number: 69" textFill="RED">
+            <Label fx:id="lblNumberFinding" alignment="CENTER" layoutX="350.0" layoutY="12.0" text="Number: 69" textFill="RED">
                <font>
                   <Font name="Parry Hotter" size="23.0" />
                </font>

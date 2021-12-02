@@ -4,8 +4,6 @@ import com.DTO.NumberPoint;
 
 import java.util.Stack;
 
-import static java.sql.Types.NULL;
-
 public class Match {
     private String strIdRoom;
     private String strRoomName;
@@ -19,26 +17,21 @@ public class Match {
 
     /**
      * Create new map random, if it not exists
+     *
      * @param startValue giá trị bắt đẩu
      * @param endValue   giá trị kết thúc
      */
     public void createRandomMap(int startValue, int endValue) {
 //        check is NULL
-        if (map == null ) {
+        if (map == null) {
             map = new Map();
         }
         if (stacks == null) {
             stacks = new Stack<>();
         }
 
-//        Check input value
-        if (startValue != NULL || endValue != NULL) {
-            map.setStartValue(startValue);
-            map.setEndValue(endValue);
-        } else {
-            map.setStartValue(1);
-            map.setEndValue(100);
-        }
+        map.setStartValue(startValue);
+        map.setEndValue(endValue);
 
         map.createNew(770, 0, 470, 0);
 
@@ -49,21 +42,20 @@ public class Match {
     }
 
     public void createRandomMap() {
-        createRandomMap(NULL, NULL);
+        createRandomMap(1, 100);
     }
 
     /**
+     * If dont have next value return -1
+     *
      * @return Next value for choice
      */
     public int getNextValue() {
+        if (stacks.isEmpty()) {
+            return -1;
+        }
         return stacks.pop();
     }
-
-
-
-
-
-
 
 
     public String getStrIdRoom() {

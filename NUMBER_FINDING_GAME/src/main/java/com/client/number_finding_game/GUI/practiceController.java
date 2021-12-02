@@ -15,13 +15,16 @@ import java.util.*;
 public class practiceController implements Initializable {
     @FXML
     private Pane pane2;
+    @FXML
+    private Label lblNumberFinding;
+
     private Match match;
     private int intNextValue;
 
     public void init(Pane pane) {
         match = new Match();
 
-        match.createRandomMap();
+        match.createRandomMap(10,15);
 
 //        create list label
         match.getMap().getList().forEach(model -> {
@@ -62,6 +65,7 @@ public class practiceController implements Initializable {
 
 //                    Print next value
                         intNextValue = match.getNextValue();
+                        lblNumberFinding.setText(String.valueOf(intNextValue));
                         System.out.println(intNextValue);
                     }
                 }
@@ -72,6 +76,7 @@ public class practiceController implements Initializable {
 
 //         create next random
         intNextValue = match.getNextValue();
+        lblNumberFinding.setText(String.valueOf(intNextValue));
         System.out.println(intNextValue);
     }
 
