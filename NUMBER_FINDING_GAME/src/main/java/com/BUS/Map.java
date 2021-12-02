@@ -90,6 +90,12 @@ public class Map {
         return false;
     }
 
+
+
+
+
+
+
     public List<NumberPoint> getList() {
         return list;
     }

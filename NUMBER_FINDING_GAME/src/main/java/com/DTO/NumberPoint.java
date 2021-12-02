@@ -49,6 +49,16 @@ public class NumberPoint {
         return false;
     }
 
+
+
+
+
+
+
+
+
+
+
     public int getIntValue() {
         return intValue;
     }

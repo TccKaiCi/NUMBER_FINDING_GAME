@@ -1,9 +1,7 @@
 package com.BUS;
 
-import com.BUS.Map;
 import com.DTO.NumberPoint;
 
-import java.util.Collections;
 import java.util.Stack;
 
 import static java.sql.Types.NULL;
@@ -20,15 +18,21 @@ public class Match {
     }
 
     /**
-     * Tạo ra một map random
+     * Create new map random, if it not exists
      * @param startValue giá trị bắt đẩu
      * @param endValue   giá trị kết thúc
      */
     public void createRandomMap(int startValue, int endValue) {
-        map = new Map();
-        stacks = new Stack<>();
+//        check is NULL
+        if (map == null ) {
+            map = new Map();
+        }
+        if (stacks == null) {
+            stacks = new Stack<>();
+        }
 
-        if (startValue != NULL) {
+//        Check input value
+        if (startValue != NULL || endValue != NULL) {
             map.setStartValue(startValue);
             map.setEndValue(endValue);
         } else {
@@ -38,6 +42,7 @@ public class Match {
 
         map.createNew(770, 0, 470, 0);
 
+//        Put in to stack
         for (NumberPoint DTO : map.getList()) {
             stacks.push(DTO.getIntValue());
         }
@@ -47,9 +52,19 @@ public class Match {
         createRandomMap(NULL, NULL);
     }
 
+    /**
+     * @return Next value for choice
+     */
     public int getNextValue() {
         return stacks.pop();
     }
+
+
+
+
+
+
+
 
     public String getStrIdRoom() {
         return strIdRoom;
