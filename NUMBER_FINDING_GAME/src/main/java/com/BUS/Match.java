@@ -6,13 +6,17 @@ import java.util.Stack;
 
 public class Match {
     private String strIdRoom;
-    private String strRoomName;
     private long longMatchTime;
 
     private Map map;
-    private Stack<Integer> stacks;
+    private Stack<NumberPoint> stacks;
 
     public Match() {
+    }
+
+    public Match(String strIdRoom, long longMatchTime) {
+        this.strIdRoom = strIdRoom;
+        this.longMatchTime = longMatchTime;
     }
 
     /**
@@ -37,7 +41,7 @@ public class Match {
 
 //        Put in to stack
         for (NumberPoint DTO : map.getList()) {
-            stacks.push(DTO.getIntValue());
+            stacks.push(DTO);
         }
     }
 
@@ -50,12 +54,26 @@ public class Match {
      *
      * @return Next value for choice
      */
-    public int getNextValue() {
+    public NumberPoint getNextValue() {
         if (stacks.isEmpty()) {
-            return -1;
+            return null;
         }
         return stacks.pop();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public String getStrIdRoom() {
@@ -64,14 +82,6 @@ public class Match {
 
     public void setStrIdRoom(String strIdRoom) {
         this.strIdRoom = strIdRoom;
-    }
-
-    public String getStrRoomName() {
-        return strRoomName;
-    }
-
-    public void setStrRoomName(String strRoomName) {
-        this.strRoomName = strRoomName;
     }
 
     public long getLongMatchTime() {
@@ -90,11 +100,11 @@ public class Match {
         this.map = map;
     }
 
-    public Stack<Integer> getStacks() {
+    public Stack<NumberPoint> getStacks() {
         return stacks;
     }
 
-    public void setStacks(Stack<Integer> stacks) {
+    public void setStacks(Stack<NumberPoint> stacks) {
         this.stacks = stacks;
     }
 }

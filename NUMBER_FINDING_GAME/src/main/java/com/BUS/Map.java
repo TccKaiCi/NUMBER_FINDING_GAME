@@ -28,6 +28,17 @@ public class Map {
             model.setIntValue(i);
             model.setStrChosenColor("6fcffa");
 
+            if (i % 10 == 0) {
+                model.setStrRare("Lucky");
+            } else {
+                if (i % 5 == 0) {
+                    model.setStrRare("Blind");
+                }
+                else {
+                    model.setStrRare("Normal");
+                }
+            }
+
 //             find a place for it
             do {
                 model.randomPosition(posXMax,posXMin,posYMax,posYMin);
