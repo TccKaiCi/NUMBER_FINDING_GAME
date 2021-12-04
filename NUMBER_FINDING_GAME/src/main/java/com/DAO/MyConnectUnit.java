@@ -14,7 +14,7 @@ public class MyConnectUnit {
 
     // hàm khởi tạo kết nối mặc định
     public MyConnectUnit() {
-        connect = new MySQLConnection("localhost", "root", "", "qlcuahanggiaydb");
+        connect = new MySQLConnection("localhost", "root", "", "numberfinding");
     }
 
     // hàm khởi tạo cơ bản

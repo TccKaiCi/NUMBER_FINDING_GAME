@@ -1,11 +1,16 @@
 package com.server.number_finding_game;
 
+import com.BUS.UserAccountBUS;
+import com.DAO.UserAccountDAO;
+import com.DTO.UserAccountDTO;
 import com.server.number_finding_game.ChatServerThread;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +31,8 @@ public class NewServer implements Runnable {
     private Thread thread = null;
     private ChatServerThread clients[] = new ChatServerThread[50];
     private Map<String,Lobby> ListLobby = new HashMap<>();
+    private UserAccountDTO[] UserList = new UserAccountDTO[90];
+
     Lobby tmp = new Lobby();
     private int clientCount = 0;
 public static void main(String[] args){
@@ -40,6 +47,8 @@ public static void main(String[] args){
             thread.start();
         } catch (IOException e) {
             System.out.println("Can not bind to port : " + e);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -76,7 +85,7 @@ public static void main(String[] args){
      * @param ID sdasda
      * @param input dsadsad
      */
-    public synchronized void handle(SocketAddress ID, String input) {
+    public synchronized void handle(SocketAddress ID, String input) throws Exception {
         System.out.println("Server get from Client "+ID+" "+input);
         if (input.equals("exit")) {
             clients[findClient(ID)].send("exit");
@@ -85,6 +94,27 @@ public static void main(String[] args){
             if(input.equalsIgnoreCase("start")){
              clients[findClient(ID)].send("YourLob;"+clients[findClient(ID)].getLobbyID());
             }
+            //Xử lí cú pháp
+            if(input.contains(";")){
+                String[] job=input.split(";");
+                int lenght=job.length;
+                switch (lenght){
+                //SIGNIN
+                    case 3:
+                        if(job[0].equalsIgnoreCase("SIGNIN")){
+                            UserAccountDTO dtotmp = new UserAccountDTO();
+                            UserAccountBUS bustmp = new UserAccountBUS();
+                            dtotmp.setStrUserName(job[1]);
+                            dtotmp.setStrPassWord(job[2]);
+                            if(bustmp.kiemTraDangNhap(dtotmp)) {
+                                System.out.println("valid user");
+                                clients[findClient(ID)].send("valid user");
+                            }
+                        }
+
+                }
+            }
+            //Phan luong
             Lobby temp=ListLobby.get(clients[findClient(ID)].getLobbyID());
             if(temp!=null)
             for (int i=0;i<3;i++){

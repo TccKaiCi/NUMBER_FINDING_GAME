@@ -17,11 +17,9 @@ public class NewClient implements Runnable {
     private DataOutputStream dos = null;
     private ChatClientThread client = null;
 public static void main(String[] args){
-    NewClient[] client=new NewClient[10];
-    for(int i =0;i<10;i++){
-        client[i]= new NewClient();
-        client[i].Connect();
-    }
+    NewClient client=new NewClient();
+    client.Connect();
+
 }
 public String getCurLobbyID(){
     return  CurLobbyID;
@@ -54,7 +52,6 @@ public void setCurLobbyID(String cur){
                 System.out.print("Message to server : ");
                 dos.writeUTF(dis.readLine());
                 dos.flush();
-
                 try {
                     thread.sleep(500);
                 } catch (InterruptedException e) {
@@ -73,7 +70,7 @@ public void setCurLobbyID(String cur){
         if (message.equals("exit")) {
             stop();
         } else {
-//            that is status messenger
+//
             if (message.equalsIgnoreCase("RESET") || message.equalsIgnoreCase("END")
                     || message.equalsIgnoreCase("Host win") || message.equalsIgnoreCase("Client win")) {
                     Memory.statusMessenger = message;
@@ -85,7 +82,6 @@ public void setCurLobbyID(String cur){
 //            /127.0.0.1:50194 says : 0 1 2
                     Memory.messenger = message;
                     System.out.println("Client "+socket.getLocalPort()+" nhan duoc " + Memory.messenger);
-                    //
                     if(message.contains(";")){
                        String[] job = message.split(";");
                        switch (job.length){
