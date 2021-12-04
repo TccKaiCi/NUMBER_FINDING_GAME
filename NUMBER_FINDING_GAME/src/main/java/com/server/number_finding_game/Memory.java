@@ -18,6 +18,8 @@ public class Memory {
      * Version 1.5 fix bug LAN
      * Version 1.6 add document and comment
      */
+    public static NewClient client = new NewClient();
+
     static String version = "Version 1.6";
     
 //    ======================================================================
@@ -28,7 +30,7 @@ public class Memory {
     static NewServer newServer;
     
 //    About Client to CLien
-    static String messenger = " ";
+    public static String messenger = " ";
     /**
      * true if there is a messenger come from the other client
      * <br>It mean in your turn is false

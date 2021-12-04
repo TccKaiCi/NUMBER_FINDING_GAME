@@ -2,6 +2,7 @@ package com.client.number_finding_game.GUI;
 
 import com.BUS.Match;
 import com.DTO.NumberPoint;
+import com.server.number_finding_game.Memory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -61,12 +62,17 @@ public class practiceController implements Initializable {
                         match.getMap().setColorByValue(model.getIntValue(), color);
 
 //                    Print value select
+//                      todo
                         System.out.println(label.getText()
-                                + " : "
+                                + " ; "
                                 + model.getIntValue()
-                                + " : "
+                                + " ; "
                                 + model.getStrChosenColor());
-
+                        Memory.client.sendMessenger(label.getText()
+                                + " ; "
+                                + model.getIntValue()
+                                + " ; "
+                                + model.getStrChosenColor());
 //                    Print next value
                         setLabelNumberFindingColor();
                     }

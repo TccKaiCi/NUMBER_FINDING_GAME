@@ -1,6 +1,7 @@
 package com.client.number_finding_game.GUI;
 
 import com.client.number_finding_game.LoginForm;
+import com.server.number_finding_game.Memory;
 import com.server.number_finding_game.NewClient;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -62,14 +63,22 @@ public class LoginController implements Initializable {
 //            UserModel u = new UserModel(tf_username.getText(),tf_password.getText());
 //            waitingRoomController.setUserModel(u);
             String SendingPack = "SIGNIN;" + tf_username.getText() + ";" + pf_password.getText();
-            NewClient client = new NewClient();
-            client.Connect();
-            client.sendMessenger(SendingPack);
+            Memory.client.Connect();
+            Memory.client.sendMessenger(SendingPack);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
             stage.setTitle("Number finding game");
             stage.setResizable(false);
-            stage.show();
+            //need add function prevent signin when password wrong
+            if(Memory.messenger.equalsIgnoreCase("Valid user")){
+                stage.setScene(new Scene(root));
+                stage.show();
+                System.out.println(Memory.messenger);
+            }
+            else {
+                //todo tuananh
+                lbl_Error.setVisible(true);
+                lbl_Error.setDisable(false);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
