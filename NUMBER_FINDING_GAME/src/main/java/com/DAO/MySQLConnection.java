@@ -25,7 +25,7 @@ public class MySQLConnection {
 
     protected void driveTest () throws Exception {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.jdbc.Driver");
         }
         catch (ClassNotFoundException e) {
             throw new Exception("My SQl not found driveTest");

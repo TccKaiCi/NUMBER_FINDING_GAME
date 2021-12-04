@@ -57,6 +57,8 @@ public class ChatServerThread extends Thread {
             }
         } catch (IOException e) {
             newServer.remove(ID);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
