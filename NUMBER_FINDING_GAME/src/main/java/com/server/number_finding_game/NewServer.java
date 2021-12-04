@@ -9,11 +9,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 // SERVER : Multi Server
@@ -86,6 +84,8 @@ public static void main(String[] args){
      * @param input dsadsad
      */
     public synchronized void handle(SocketAddress ID, String input) throws Exception {
+        UserAccountDTO dtotmp = new UserAccountDTO();
+        UserAccountBUS bustmp = new UserAccountBUS();
         System.out.println("Server get from Client "+ID+" "+input);
         if (input.equals("exit")) {
             clients[findClient(ID)].send("exit");
@@ -101,17 +101,36 @@ public static void main(String[] args){
                 switch (lenght){
                 //SIGNIN
                     case 3:
-                        if(job[0].equalsIgnoreCase("SIGNIN")){
-                            UserAccountDTO dtotmp = new UserAccountDTO();
-                            UserAccountBUS bustmp = new UserAccountBUS();
+                        if(job[0].equalsIgnoreCase("SIGNIN")) {
                             dtotmp.setStrUserName(job[1]);
                             dtotmp.setStrPassWord(job[2]);
-                            if(bustmp.kiemTraDangNhap(dtotmp)) {
+                            if (bustmp.kiemTraDangNhap(dtotmp)) {
                                 System.out.println("valid user");
                                 clients[findClient(ID)].send("valid user");
                             }
+                            dtotmp=new UserAccountDTO();
                         }
-
+                    case 6:
+                        //SIGNUP;UID;SIGNUP;UID;Username;Nameinf;Passwd;Gender
+                        if (job[0].equalsIgnoreCase("SIGNUP")){
+                            //set temp info
+                            dtotmp.setStrUid(job[1]);//need delete when have auto increasing mechanic
+                            dtotmp.setStrUserName(job[2]);
+                            dtotmp.setStrNameInf(job[3]);
+                            dtotmp.setStrPassWord(job[4]);
+                            dtotmp.setStrGender(job[5]);
+                            //need date time
+                            //hash paswd
+                            if(dtotmp.getStrPassWord()!=null){
+                                MessageDigest digest = MessageDigest.getInstance("SHA-256");
+                                byte[] encodedhash = digest.digest(
+                                        dtotmp.getStrPassWord().getBytes(StandardCharsets.UTF_8));
+                                dtotmp.setStrPassWord(bytesToHex(encodedhash));
+                                clients[findClient(ID)].send("Signin success");
+                                System.out.println("HashPasswd: " + bytesToHex(encodedhash));
+                            }
+                            bustmp.them(dtotmp);
+                        }
                 }
             }
             //Phan luong
@@ -173,5 +192,16 @@ public static void main(String[] args){
             ListLobby.put(tmp.LobbyID,tmp);
             tmp =new Lobby();
         }
+    }
+    private static String bytesToHex(byte[] hash) {
+        StringBuilder hexString = new StringBuilder(2 * hash.length);
+        for (int i = 0; i < hash.length; i++) {
+            String hex = Integer.toHexString(0xff & hash[i]);
+            if(hex.length() == 1) {
+                hexString.append('0');
+            }
+            hexString.append(hex);
+        }
+        return hexString.toString();
     }
 }

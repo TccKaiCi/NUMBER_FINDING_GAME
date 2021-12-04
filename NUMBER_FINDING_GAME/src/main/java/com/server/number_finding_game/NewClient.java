@@ -1,8 +1,4 @@
 package com.server.number_finding_game;
-
-import com.server.number_finding_game.ChatClientThread;
-import com.server.number_finding_game.Memory;
-
 import java.io.*;
 import java.net.Socket;
 
