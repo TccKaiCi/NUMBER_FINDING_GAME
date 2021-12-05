@@ -10,6 +10,7 @@ import java.util.*;
 public class Lobby extends Thread{
     public boolean isStart=false;
     public boolean isEnd=false;
+
     String LobbyID;
     List<ChatServerThread> ThreadChat = new ArrayList<>(3);
 }

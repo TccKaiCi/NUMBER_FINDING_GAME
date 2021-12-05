@@ -1,12 +1,16 @@
-# TRÒ CHƠI TÌM SỐ
+# Cú pháp function handle trong server
 
 ![Language](https://img.shields.io/badge/Language-Java-orange.svg)
 ![Language](https://img.shields.io/badge/Team-SGU-orange.svg)
 
 ## Team
-| MSSV | Họ và Tên  | Link |
-|------| ----- | ----- |
-| 3118410013 | Nguyễn Tuấn Anh | [FB](https://www.facebook.com/ProHZGOD) |
-| 3118410043 | Tăng Chí Chung | [FB](https://www.facebook.com/hiamkaito.404/) |
-| 3118410094 | Nguyễn Ngọc Tiến Em | [FB](https://www.facebook.com/nguyenngoctienem.nguyen) |
+| Cú pháp | Từ X đến Y | Ví dụ | Mô tả |
+|---| --- | --- | --- |
+| SIGNIN;username;passwd | Client -> Server | SIGNIN;Test;test | đăng nhập | 
+| MAP;Value | Server -> Client | Map | Tạo mạp random từ server cho các client |
 
+[comment]: <> (
+| start | cấp cho client một lobby còn trống |  |
+| exit | xóa client khỏi danh sách connect | |
+| reset | reconect client | |
+)

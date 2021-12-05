@@ -8,14 +8,17 @@ import java.net.Socket;
 import java.net.SocketAddress;
 
 public class ChatServerThread extends Thread {
-    private String LobbyID ="";
+    private String LobbyID = "";
+
     private NewServer newServer = null;
     private Socket socket = null;
     private SocketAddress ID = null;
+
     private BufferedInputStream bis = null;
     private DataInputStream dis = null;
     private BufferedOutputStream bos = null;
     private DataOutputStream dos = null;
+
     public ChatServerThread(NewServer _New_server, Socket _socket) {
         super();
         newServer = _New_server;
@@ -26,8 +29,25 @@ public class ChatServerThread extends Thread {
     public SocketAddress getID() {
         return ID;
     }
-    public String getLobbyID(){return LobbyID;}
-    public void setLobbyID(String Lobby){this.LobbyID=Lobby;}
+
+    public String getLobbyID() {
+        return LobbyID;
+    }
+
+    public void setLobbyID(String Lobby) {
+        this.LobbyID = Lobby;
+    }
+
+
+
+
+
+
+
+
+
+
+
     public void send(String message) {
         try {
             dos.writeUTF(message);
@@ -47,7 +67,7 @@ public class ChatServerThread extends Thread {
             dis = new DataInputStream(bis);
             bos = new BufferedOutputStream(socket.getOutputStream());
             dos = new DataOutputStream(bos);
-            
+
 //            CHANGE ATTIBUUE 
             Memory.playerConnect = true;
             Memory.playerConnectName = socket.getRemoteSocketAddress().toString();

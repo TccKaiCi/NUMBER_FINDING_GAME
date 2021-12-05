@@ -1,16 +1,18 @@
 package com;
 
+import com.BUS.Match;
 import com.DTO.NumberPoint;
 
 public class Test {
     public static void main(String[] args) {
-//        NumberPoint a ;
-//        a.setIntValue(1);
-//        if (a == null) {
-//            System.out.println("NULL");
-//        } else {
-//            System.out.println("NOT NULL");
-//        }
+        Match match;
+        match = new Match("R3", 300);
+
+        match.createRandomMap(14, 17);
+
+        match.display();
+
+        System.out.println( match.getNextValue().getIntValue());
     }
 
 }

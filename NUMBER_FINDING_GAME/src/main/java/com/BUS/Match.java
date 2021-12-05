@@ -45,13 +45,16 @@ public class Match {
         }
     }
 
+    /**
+     * Default is 1 to 100
+     */
     public void createRandomMap() {
         createRandomMap(1, 100);
     }
 
     /**
      * If dont have next value return -1
-     *
+     * <p style="color:yellow">Type NumberPoint</p>
      * @return Next value for choice
      */
     public NumberPoint getNextValue() {
@@ -61,6 +64,12 @@ public class Match {
         return stacks.pop();
     }
 
+    /**
+     * Display all point, map
+     */
+    public void display() {
+        map.display();
+    }
 
 
 
