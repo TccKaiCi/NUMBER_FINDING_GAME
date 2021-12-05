@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 
 public class LoginController implements Initializable {
     @FXML
-    public Button btn_Login, btn_Register, btn_Back;
+    public Button btn_Login, btn_Register, btn_Back, btn_submit;
     @FXML
     public TextField tf_username, dk_name, dk_username;
     @FXML
@@ -48,6 +48,8 @@ public class LoginController implements Initializable {
         btn_Register.setOnMouseExited(e -> btn_Register.setStyle(IDLE_BUTTON_STYLE));
         btn_Back.setOnMouseEntered(e -> btn_Back.setStyle(HOVERED_BUTTON_STYLE));
         btn_Back.setOnMouseExited(e -> btn_Back.setStyle(IDLE_BUTTON_STYLE));
+        btn_submit.setOnMouseEntered(e -> btn_submit.setStyle(HOVERED_BUTTON_STYLE));
+        btn_submit.setOnMouseExited(e -> btn_submit.setStyle(IDLE_BUTTON_STYLE));
 
         initRadioGroup();
     }
@@ -83,22 +85,20 @@ public class LoginController implements Initializable {
     }
 
     public void setBtn_RegisterOnClick(ActionEvent event) {
-        btn_Register.setText("Xác nhận");
-
-        Node[] signInPart = {btn_Login, lbl_name, lbl_pass, tf_username, pf_password};
+        Node[] signInPart = {btn_Login, lbl_name, lbl_pass, tf_username, pf_password, btn_Register};
         setVi_FALSE_Dis_TRUE(signInPart);
 
         Node[] registerPart = {lbl_1, lbl_2, lbl_3, lbl_4, lbl_5, lbl_6,
-                dk_retype, dk_dob, dk_pass, dk_name, dk_username, dk_male, dk_female, dk_other, btn_Back};
+                dk_retype, dk_dob, dk_pass, dk_name, dk_username, dk_male, dk_female, dk_other, btn_Back, btn_submit};
         setVi_TRUE_Dis_FALSE(registerPart);
     }
 
     public void setBtn_BackOnClick(ActionEvent event) {
-        Node[] signInPart = {btn_Login, lbl_name, lbl_pass, tf_username, pf_password};
+        Node[] signInPart = {btn_Login, lbl_name, lbl_pass, tf_username, pf_password, btn_Register};
         setVi_TRUE_Dis_FALSE(signInPart);
 
         Node[] registerPart = {lbl_1, lbl_2, lbl_3, lbl_4, lbl_5, lbl_6,
-                dk_retype, dk_dob, dk_pass, dk_name, dk_username, dk_male, dk_female, dk_other, btn_Back};
+                dk_retype, dk_dob, dk_pass, dk_name, dk_username, dk_male, dk_female, dk_other, btn_Back, btn_submit};
         setVi_FALSE_Dis_TRUE(registerPart);
 
         btn_Register.setText("Tạo tài khoản mới");

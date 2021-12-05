@@ -125,5 +125,10 @@
       </RadioButton>
       <PasswordField fx:id="dk_pass" disable="true" layoutX="277.0" layoutY="290.0" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black;" visible="false" AnchorPane.leftAnchor="250.0" />
       <PasswordField fx:id="dk_retype" disable="true" layoutX="276.0" layoutY="330.0" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black;" visible="false" AnchorPane.leftAnchor="250.0" />
+      <Button fx:id="btn_submit" defaultButton="true" disable="true" layoutX="241.0" layoutY="367.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="220.0" style="-fx-background-color: #D6B5A7; -fx-border-color: #000;" text="Xác nhận" visible="false">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
