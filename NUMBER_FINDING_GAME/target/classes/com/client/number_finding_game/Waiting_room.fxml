@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="451.0" prefWidth="683.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.client.number_finding_game.GUI.WaitingRoomController">
+<AnchorPane prefHeight="438.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.client.number_finding_game.GUI.WaitingRoomController">
    <children>
-      <ImageView fitHeight="424.0" fitWidth="602.0" layoutX="41.0" layoutY="17.0" opacity="0.77" pickOnBounds="true">
+      <ImageView fitHeight="438.0" fitWidth="700.0" layoutX="3.0" opacity="0.77" pickOnBounds="true">
          <image>
             <Image url="@assets/bg.jpg" />
          </image>
@@ -19,41 +19,41 @@
             <Glow level="0.37" />
          </effect>
       </ImageView>
-      <Button fx:id="btn_ranking" layoutX="159.0" layoutY="250.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="382.0" text="Bảng xếp hạng">
+      <Button fx:id="btn_ranking" layoutX="162.0" layoutY="269.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="382.0" style="-fx-background-color: #D6B5A7; -fx-border-color: lightgray;" text="Bảng xếp hạng">
          <font>
             <Font name="System Bold" size="21.0" />
          </font></Button>
-      <Button fx:id="btn_multi" layoutX="159.0" layoutY="146.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="382.0" text="Chơi nhiều người">
+      <Button fx:id="btn_multi" alignment="CENTER" layoutX="162.0" layoutY="165.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="382.0" style="-fx-background-color: #D6B5A7; -fx-border-color: lightgray;" text="Chơi nhiều người">
          <font>
             <Font name="System Bold" size="21.0" />
          </font></Button>
-      <Button fx:id="btn_practice" alignment="CENTER" layoutX="159.0" layoutY="197.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="382.0" text="Tập luyện" textAlignment="CENTER">
+      <Button fx:id="btn_practice" alignment="CENTER" layoutX="162.0" layoutY="216.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="382.0" style="-fx-background-color: #D6B5A7; -fx-border-color: lightgray;" text="Tập luyện" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="21.0" />
          </font></Button>
-      <Button fx:id="btn_account" layoutX="159.0" layoutY="302.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="181.0" text="Tài khoản">
+      <Button fx:id="btn_account" layoutX="162.0" layoutY="321.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="181.0" style="-fx-background-color: #D6B5A7; -fx-border-color: lightgray;" text="Tài khoản">
          <font>
             <Font name="System Bold" size="21.0" />
          </font></Button>
-      <Button fx:id="btn_quit" layoutX="359.0" layoutY="302.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="181.0" text="Thoát">
+      <Button fx:id="btn_quit" layoutX="362.0" layoutY="321.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="181.0" style="-fx-background-color: #D6B5A7; -fx-border-color: lightgray;" text="Thoát">
          <font>
             <Font name="System Bold" size="21.0" />
          </font></Button>
-      <Pane layoutX="144.0" layoutY="27.0" prefHeight="62.0" prefWidth="412.0" style="-fx-border-color: BLACK; -fx-border-radius: 20; -fx-border-width: 5;">
+      <Pane layoutX="147.0" layoutY="47.0" prefHeight="62.0" prefWidth="412.0" style="-fx-border-color: BLACK; -fx-border-radius: 20; -fx-border-width: 5;">
          <children>
-            <Label layoutX="105.0" layoutY="15.0" prefHeight="32.0" prefWidth="207.0" text="Tên User">
+            <Label fx:id="lbl_name" layoutX="105.0" layoutY="15.0" prefHeight="32.0" prefWidth="207.0" text="Tên User">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
             </Label>
-            <ImageView fitHeight="45.0" fitWidth="43.0" layoutX="14.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="img_rank" fitHeight="45.0" fitWidth="43.0" layoutX="14.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@assets/Rank/SILVER.png" />
                </image>
             </ImageView>
          </children>
       </Pane>
-      <Label id="lblVersion" layoutX="312.0" layoutY="354.0" prefHeight="17.0" prefWidth="76.0" text="Version 1.0">
+      <Label id="lblVersion" layoutX="315.0" layoutY="373.0" prefHeight="17.0" prefWidth="76.0" text="Version 1.0">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
