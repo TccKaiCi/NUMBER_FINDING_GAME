@@ -83,4 +83,34 @@ public class UserAccountBUS {
         }
         return false;
     }
+    public String getDefault() {
+        if (list_DTO.size() == 0)
+            return "3118410";
+        else {
+            String s = "311841";
+            int iNumb  = 0;
+
+            for (UserAccountDTO user : list_DTO) {
+                //3118410
+                String[] UID = user.getStrUid().split("311841");
+                iNumb = Integer.parseInt( UID[1] );
+                iNumb++;
+            }
+            switch (demSoChuSo(iNumb)) {
+                case 1:
+                    s +="0";
+                case 2:
+                    s +="0";
+                case 3:
+            }
+            s += iNumb;
+            return s;
+        }
+    }
+    public int demSoChuSo(int nInput){
+        if (nInput < 10) {
+            return 1;
+        }
+        return 1 + demSoChuSo(nInput / 10);
+    }
 }

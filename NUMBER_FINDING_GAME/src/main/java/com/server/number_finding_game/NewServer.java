@@ -132,10 +132,10 @@ public static void main(String[] args){
                             //need delete when have auto increasing mechanic
                             dtotmp.setStrUserName(job[1]);
                             dtotmp.setStrNameInf(job[2]);
-                            dtotmp.setStrPassWord(job[3]);
+                            dtotmp.setStrPassWord(job[3] +"+NumberFinding");
                             dtotmp.setStrGender(job[4]);
                             dtotmp.setStrDayOfBirth(job[5]);
-                            dtotmp.setStrUid("");
+                            dtotmp.setStrUid(bustmp.getDefault());
                             //need date time
                             //hash paswd
                             if(dtotmp.getStrPassWord()!=null){
@@ -149,7 +149,7 @@ public static void main(String[] args){
                                  clients[findClient(ID)].send("Success signup");
                                 }
                                 else {
-                                    clients[findClient(ID)].send("something gone wrong, cant signup this time");
+                                    clients[findClient(ID)].send("Something gone wrong, cant signup this time");
                                 }
                             }
 
@@ -166,6 +166,7 @@ public static void main(String[] args){
                 }
                 //chi nhung client co trong lobby moi nhan dc
                 clients[findClient(temp.ThreadChat.get(i).getID())].send(input);
+                System.out.println("send to"+ findClient(temp.ThreadChat.get(i).getID()));
             }
         }
     }
@@ -227,5 +228,6 @@ public static void main(String[] args){
         }
         return hexString.toString();
     }
+
 
 }

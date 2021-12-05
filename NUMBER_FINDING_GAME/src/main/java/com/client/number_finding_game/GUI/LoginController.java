@@ -57,12 +57,12 @@ public class LoginController implements Initializable {
 
     public void onClick(ActionEvent event) {
         try {
-            System.out.println("chu heg");
             FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("Waiting_room.fxml"));
             Parent root = fxmlLoader.load();
             String SendingPack = "SIGNIN;" + tf_username.getText() + ";" + pf_password.getText();
             if (validate(tf_username.getText())) {
                 Memory.client.sendMessenger(SendingPack);
+                System.out.println(SendingPack);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setTitle("Number finding game");
                 stage.setResizable(false);
