@@ -103,7 +103,15 @@ public static void main(String[] args){
                     case 3:
                         if(job[0].equalsIgnoreCase("SIGNIN")) {
                             dtotmp.setStrUserName(job[1]);
-                            dtotmp.setStrPassWord(job[2]);
+                            dtotmp.setStrPassWord(job[2]+"+NumberFinding");
+                            System.out.println(dtotmp.getStrPassWord());
+                                if(dtotmp.getStrPassWord()!=null){
+                                    MessageDigest digest = MessageDigest.getInstance("SHA-256");
+                                    byte[] encodedhash = digest.digest(
+                                            dtotmp.getStrPassWord().getBytes(StandardCharsets.UTF_8));
+                                    dtotmp.setStrPassWord(bytesToHex(encodedhash));
+                                    System.out.println(dtotmp.getStrPassWord());
+                            }
                             if (bustmp.kiemTraDangNhap(dtotmp)) {
                                 System.out.println("valid user");
                                 clients[findClient(ID)].send("valid user");
@@ -126,7 +134,7 @@ public static void main(String[] args){
                                 byte[] encodedhash = digest.digest(
                                         dtotmp.getStrPassWord().getBytes(StandardCharsets.UTF_8));
                                 dtotmp.setStrPassWord(bytesToHex(encodedhash));
-                                clients[findClient(ID)].send("Signin success");
+                                clients[findClient(ID)].send("Signup success");
                                 System.out.println("HashPasswd: " + bytesToHex(encodedhash));
                             }
                             bustmp.them(dtotmp);
@@ -204,4 +212,5 @@ public static void main(String[] args){
         }
         return hexString.toString();
     }
+
 }
