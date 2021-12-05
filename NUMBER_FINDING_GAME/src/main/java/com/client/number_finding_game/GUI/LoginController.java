@@ -90,12 +90,13 @@ public class LoginController implements Initializable {
         String toogleGroupValue = selectedRadioButton.getText();
         String SendingPack="";
         SendingPack="SIGNUP;"
-                +dk_username+";"
-                +dk_name+";"
-                +dk_pass+";"
+                +dk_username.getText()+";"
+                +dk_name.getText()+";"
+                +dk_pass.getText()+";"
                 +toogleGroupValue+";"
-                +dk_dob;
+                +dk_dob.getValue();
         Memory.client.sendMessenger(SendingPack);
+        System.out.println(SendingPack);
     }
     public void setBtn_RegisterOnClick(ActionEvent event) {
         Node[] signInPart = {btn_Login, lbl_name, lbl_pass, tf_username, pf_password, btn_Register};
