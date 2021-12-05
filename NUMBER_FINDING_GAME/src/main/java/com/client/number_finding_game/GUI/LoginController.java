@@ -22,16 +22,16 @@ public class LoginController implements Initializable {
     @FXML
     public Button btn_Login, btn_Register, btn_Back, btn_submit;
     @FXML
-    public TextField tf_username, dk_name, dk_username;
+    public TextField tf_username, dk_name, dk_username;//todo
     @FXML
-    public PasswordField pf_password, dk_pass, dk_retype;
+    public PasswordField pf_password, dk_pass, dk_retype;//todo
     @FXML
     public Label lbl_Error, lbl_name, lbl_pass, lbl_1, lbl_2, lbl_3, lbl_4, lbl_5, lbl_6;
     @FXML
-    public DatePicker dk_dob;
+    public DatePicker dk_dob;//todo
     @FXML
-    public RadioButton dk_male, dk_female, dk_other;
-
+    public RadioButton dk_male, dk_female, dk_other;//todo
+    ToggleGroup toggleGroup = new ToggleGroup();
     private static final String IDLE_BUTTON_STYLE = "-fx-background-color: #D6B5A7; -fx-border-color: #000;";
     private static final String HOVERED_BUTTON_STYLE = "-fx-background-color: #AD8E93; -fx-border-color: #000;";
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
@@ -39,6 +39,7 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Memory.client.Connect();
         btn_Login.setOnAction(this::onClick);
         btn_Register.setOnAction(this::setBtn_RegisterOnClick);
         btn_Back.setOnAction(this::setBtn_BackOnClick);
@@ -50,17 +51,17 @@ public class LoginController implements Initializable {
         btn_Back.setOnMouseExited(e -> btn_Back.setStyle(IDLE_BUTTON_STYLE));
         btn_submit.setOnMouseEntered(e -> btn_submit.setStyle(HOVERED_BUTTON_STYLE));
         btn_submit.setOnMouseExited(e -> btn_submit.setStyle(IDLE_BUTTON_STYLE));
-
+        btn_submit.setOnAction(this::setBtn_submit);
         initRadioGroup();
     }
 
     public void onClick(ActionEvent event) {
         try {
+            System.out.println("chu heg");
             FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("Waiting_room.fxml"));
             Parent root = fxmlLoader.load();
             String SendingPack = "SIGNIN;" + tf_username.getText() + ";" + pf_password.getText();
             if (validate(tf_username.getText())) {
-                Memory.client.Connect();
                 Memory.client.sendMessenger(SendingPack);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setTitle("Number finding game");
@@ -84,6 +85,18 @@ public class LoginController implements Initializable {
         }
     }
 
+    public void setBtn_submit(ActionEvent event){
+        RadioButton selectedRadioButton = (RadioButton) toggleGroup.getSelectedToggle();
+        String toogleGroupValue = selectedRadioButton.getText();
+        String SendingPack="";
+        SendingPack="SIGNUP;"
+                +dk_username+";"
+                +dk_name+";"
+                +dk_pass+";"
+                +toogleGroupValue+";"
+                +dk_dob;
+        Memory.client.sendMessenger(SendingPack);
+    }
     public void setBtn_RegisterOnClick(ActionEvent event) {
         Node[] signInPart = {btn_Login, lbl_name, lbl_pass, tf_username, pf_password, btn_Register};
         setVi_FALSE_Dis_TRUE(signInPart);
@@ -123,11 +136,9 @@ public class LoginController implements Initializable {
     }
 
     public void initRadioGroup() {
-        ToggleGroup toggleGroup = new ToggleGroup();
         dk_male.setToggleGroup(toggleGroup);
         dk_female.setToggleGroup(toggleGroup);
         dk_other.setToggleGroup(toggleGroup);
-
         //listen to changes in selected toggle
         toggleGroup.selectedToggleProperty().addListener((observable, oldVal, newVal) -> System.out.println(newVal + " was selected"));
     }

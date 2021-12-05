@@ -13,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 // SERVER : Multi Server
 // TIPE : Two-Way Communication (Client to Server, Server to Client)
@@ -23,14 +24,13 @@ import java.util.Map;
 // this means the Server has to receive and send, and the client has to send as well as receive.
 // If the client user types "exit", the client will quit.
 public class NewServer implements Runnable {
-
+    public int softLimit=10;
+    public int hardLimit=15;
     private int port = 8081;
     private ServerSocket serverSocket = null;
     private Thread thread = null;
-    private ChatServerThread clients[] = new ChatServerThread[50];
+    private ChatServerThread clients[] = new ChatServerThread[hardLimit];
     private Map<String,Lobby> ListLobby = new HashMap<>();
-    private UserAccountDTO[] UserList = new UserAccountDTO[90];
-
     Lobby tmp = new Lobby();
     private int clientCount = 0;
 public static void main(String[] args){
@@ -84,6 +84,12 @@ public static void main(String[] args){
      * @param input dsadsad
      */
     public synchronized void handle(SocketAddress ID, String input) throws Exception {
+        if (clientCount>softLimit){
+            clients[findClient(ID)].send("Server is very busy now");
+            clients[findClient(ID)].send("exit");
+            remove(ID);
+            return;
+        }
         UserAccountDTO dtotmp = new UserAccountDTO();
         UserAccountBUS bustmp = new UserAccountBUS();
         System.out.println("Server get from Client "+ID+" "+input);
@@ -116,17 +122,20 @@ public static void main(String[] args){
                                 System.out.println("valid user");
                                 clients[findClient(ID)].send("valid user");
                             }
+
                             dtotmp=new UserAccountDTO();
                         }
                     case 6:
-                        //SIGNUP;UID;SIGNUP;UID;Username;Nameinf;Passwd;Gender
+                        //SIGNUP;UID;SIGNUP;Username;Nameinf;Passwd;Gender
                         if (job[0].equalsIgnoreCase("SIGNUP")){
                             //set temp info
-                            dtotmp.setStrUid(job[1]);//need delete when have auto increasing mechanic
-                            dtotmp.setStrUserName(job[2]);
-                            dtotmp.setStrNameInf(job[3]);
-                            dtotmp.setStrPassWord(job[4]);
-                            dtotmp.setStrGender(job[5]);
+                            //need delete when have auto increasing mechanic
+                            dtotmp.setStrUserName(job[1]);
+                            dtotmp.setStrNameInf(job[2]);
+                            dtotmp.setStrPassWord(job[3]);
+                            dtotmp.setStrGender(job[4]);
+                            dtotmp.setStrDayOfBirth(job[5]);
+                            dtotmp.setStrUid("");
                             //need date time
                             //hash paswd
                             if(dtotmp.getStrPassWord()!=null){
@@ -135,9 +144,15 @@ public static void main(String[] args){
                                         dtotmp.getStrPassWord().getBytes(StandardCharsets.UTF_8));
                                 dtotmp.setStrPassWord(bytesToHex(encodedhash));
                                 clients[findClient(ID)].send("Signup success");
-                                System.out.println("HashPasswd: " + bytesToHex(encodedhash));
+                                bustmp.them(dtotmp);
+                                if(bustmp.kiemTraDangNhap(dtotmp)){
+                                 clients[findClient(ID)].send("Success signup");
+                                }
+                                else {
+                                    clients[findClient(ID)].send("something gone wrong, cant signup this time");
+                                }
                             }
-                            bustmp.them(dtotmp);
+
                         }
                 }
             }
