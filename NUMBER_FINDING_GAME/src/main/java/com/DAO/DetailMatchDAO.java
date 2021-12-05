@@ -87,7 +87,7 @@ public class DetailMatchDAO {
 
         String condition = " UID = '" + tk.getStrUid() + "'";
 
-        Boolean check = connect.Update("tbltaikhoan", insertValues, condition);
+        Boolean check = connect.Update(strTableName, insertValues, condition);
 
         connect.Close();
         return check;

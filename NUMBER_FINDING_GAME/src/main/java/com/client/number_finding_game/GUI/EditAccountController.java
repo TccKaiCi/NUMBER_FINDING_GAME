@@ -17,6 +17,10 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class EditAccountController implements Initializable {
@@ -30,7 +34,6 @@ public class EditAccountController implements Initializable {
     public DatePicker Edt_Dob;
 
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -38,10 +41,10 @@ public class EditAccountController implements Initializable {
         Edt_btnChangePass.setOnAction(this::setEdt_btnChangePass);
         Edt_btnCancel.setOnAction(this::setEdt_btnCancel);
         Edt_btnSave.setOnAction(this::setEdt_btnSave);
-
+        Edt_Dob.setOnAction(this::getDatePicker);
     }
 
-    public void setEdt_btnChangePass(ActionEvent event)  {
+    public void setEdt_btnChangePass(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("ChangePassword.fxml"));
             Parent parent = fxmlLoader.load();
@@ -52,12 +55,12 @@ public class EditAccountController implements Initializable {
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setTitle("Edit Account Info");
             stage.show();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void initRadioGroup(){
+    public void initRadioGroup() {
         ToggleGroup toggleGroup = new ToggleGroup();
         Edt_RBMale.setToggleGroup(toggleGroup);
         Edt_RBFemale.setToggleGroup(toggleGroup);
@@ -77,5 +80,8 @@ public class EditAccountController implements Initializable {
         stage.close();
     }
 
+    public void getDatePicker(ActionEvent event) {
+        System.out.println(Edt_Dob.getValue());
+    }
 
 }

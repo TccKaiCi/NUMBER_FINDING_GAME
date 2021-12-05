@@ -26,6 +26,7 @@ public class UserAccountDAO {
             taokhoan.setStrPassWord(result.getString("passwd"));
             taokhoan.setStrNameInf(result.getString("nameinf"));
             taokhoan.setStrGender(result.getString("gender"));
+            taokhoan.setStrDayOfBirth(result.getString("dayofbirth"));
 
             DTOs.add(taokhoan);
         }
@@ -56,6 +57,7 @@ public class UserAccountDAO {
         insertValues.put("passwd", tk.getStrPassWord());
         insertValues.put("nameinf", tk.getStrNameInf());
         insertValues.put("gender", tk.getStrGender());
+        insertValues.put("dayofbirth", tk.getStrDayOfBirth());
 
         Boolean check = connect.Insert(strTableName, insertValues);
 
@@ -92,7 +94,7 @@ public class UserAccountDAO {
 
         String condition = " UID = '" + tk.getStrUid() + "'";
 
-        Boolean check = connect.Update("tbltaikhoan", insertValues, condition);
+        Boolean check = connect.Update(strTableName, insertValues, condition);
 
         connect.Close();
         return check;

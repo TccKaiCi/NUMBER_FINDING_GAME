@@ -6,17 +6,18 @@ public class UserAccountDTO {
     private String strNameInf;
     private String strPassWord;
     private String strGender;
-//    dateTime
+    private String strDayOfBirth;
 
     public UserAccountDTO() {
     }
 
-    public UserAccountDTO(String strUid, String strUserName, String strNameInf, String strPassWord, String strGender) {
+    public UserAccountDTO(String strUid, String strUserName, String strNameInf, String strPassWord, String strGender, String strDayOfBirth) {
         this.strUid = strUid;
         this.strUserName = strUserName;
         this.strNameInf = strNameInf;
         this.strPassWord = strPassWord;
         this.strGender = strGender;
+        this.strDayOfBirth = strDayOfBirth;
     }
 
     public String getStrNameInf() {
@@ -57,5 +58,13 @@ public class UserAccountDTO {
 
     public void setStrGender(String strGender) {
         this.strGender = strGender;
+    }
+
+    public String getStrDayOfBirth() {
+        return strDayOfBirth;
+    }
+
+    public void setStrDayOfBirth(String strDayOfBirth) {
+        this.strDayOfBirth = strDayOfBirth;
     }
 }
