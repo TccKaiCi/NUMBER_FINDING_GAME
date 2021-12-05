@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class UserAccountDAO {
     MyConnectUnit connect;
-    String strTableName = "useraccount";
+    String strTableName = "tbluseraccount";
 
     /**
      * Lấy thông tin từ Database
