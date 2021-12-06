@@ -31,6 +31,14 @@ public class ChangePasswordController implements Initializable {
         setShowPassword();
         CP_BtnCancel.setOnAction(this::setCP_BtnCancel);
         CP_BtnSave.setOnAction(this::setCP_BtnSave);
+
+        setButtonHover(CP_BtnCancel, "-fx-background-color: gray;", "-fx-background-color: lightgray;");
+        setButtonHover(CP_BtnSave, "-fx-background-color: #FE6845;", "-fx-background-color: #FFA259;");
+    }
+
+    public void setButtonHover(Node node, String colorEnter, String colorExit){
+        node.setOnMouseEntered(mouseEvent -> { node.setStyle(colorEnter); });
+        node.setOnMouseExited(mouseEvent -> { node.setStyle(colorExit); });
     }
 
     public void setShowPassword(){

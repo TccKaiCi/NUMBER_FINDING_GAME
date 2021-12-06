@@ -10,7 +10,7 @@ import java.util.*;
 public class Map {
     private List<NumberPoint> list;
     private int startValue, endValue;
-
+    private String DEFAULT_COLOR = "#23f2eb";
     public Map() {
         list = new ArrayList<>();
     }
@@ -26,7 +26,7 @@ public class Map {
             NumberPoint model = new NumberPoint();
 
             model.setIntValue(i);
-            model.setStrChosenColor("6fcffa");
+            model.setStrChosenColor(DEFAULT_COLOR);
 
             if (i % 10 == 0) {
                 model.setStrRare("Lucky");
@@ -92,7 +92,7 @@ public class Map {
     public boolean isChosen(int value) {
         for (NumberPoint model : list) {
             if (model.getIntValue() == value) {
-                if (Objects.equals(model.getStrChosenColor(), "6fcffa")) {
+                if (Objects.equals(model.getStrChosenColor(), DEFAULT_COLOR)) {
                     return true;
                 }
             }

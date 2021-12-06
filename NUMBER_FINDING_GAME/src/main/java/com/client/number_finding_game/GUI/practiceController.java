@@ -5,7 +5,9 @@ import com.DTO.NumberPoint;
 import com.server.number_finding_game.Memory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -19,11 +21,17 @@ public class practiceController implements Initializable {
     private Pane pane2;
     @FXML
     private Label lblNumberFinding;
+    @FXML
+    private AnchorPane anchor;
 
     private Match match;
     private NumberPoint nextPoint;
+    private List<Rectangle> RecList;
+
+    public static final String DEFAULT_COLOR = "#23f2eb";
 
     public void init(Pane pane) {
+        RecList = new ArrayList<>();
         match = new Match("R3", 300);
 
         match.createRandomMap(14, 17);
@@ -35,17 +43,20 @@ public class practiceController implements Initializable {
             Label label = new Label();
 
             label.setText(String.valueOf(model.getIntValue()));
-            stackPane.setId("SP_" + model.getIntValue());
-            rectangle.setFill(Color.valueOf("6fcffa"));
+            rectangle.setId("SP_" + model.getIntValue());
+
+
+            rectangle.setFill(Color.web(DEFAULT_COLOR));
 
             stackPane.getChildren().addAll(rectangle, label);
+            RecList.add(rectangle);
 
             stackPane.setLayoutX(model.getIntPosX());
             stackPane.setLayoutY(model.getIntPosY());
 
 //            Event click
             stackPane.setOnMouseClicked(mouseEvent -> {
-//                This can be change for player color
+//                This can be change for player input
                 String color;
                 if (model.getIntValue() % 2 == 0)
                     color = "0xffa500ff";
@@ -57,7 +68,7 @@ public class practiceController implements Initializable {
                     if (match.getMap().isChosen(model.getIntValue())) {
 //                        Point
                         getPoint();
-//                    Change color
+//                    Change input
                         rectangle.setFill(Color.valueOf(color));
                         match.getMap().setColorByValue(model.getIntValue(), color);
 
@@ -78,6 +89,8 @@ public class practiceController implements Initializable {
                     }
                 }
             });
+
+
 
 //            add to Panel/ UI
             pane.getChildren().add(stackPane);
@@ -119,18 +132,43 @@ public class practiceController implements Initializable {
             } else {
                 if (Objects.equals(nextPoint.getStrRare(), "Blind")) {
 //                    Tuấn Anh làm
-                    pane2.setVisible(false);
+//                    System.out.println("CHUA HE");
+//                    Pane panel = new Pane();
+//                    panel.setLayoutX(0);
+//                    panel.setLayoutY(100);
+//                    panel.setPrefWidth(800);
+//                    panel.setPrefHeight(500);
+//                    panel.setStyle("-fx-background-input: red; ");
+//                    panel.setVisible(true);
+//                    anchor.getChildren().add(panel);
+//                    pane2.setOpacity(0);
+//                    pane2.setVisible(false);
 
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                        System.out.println(e.getMessage());
-                    }
-                    pane2.setVisible(true);
+//                    try {
+//
+////                        Thread.sleep(3000);
+//
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                        System.out.println(e.getMessage());
+//                    }
+//                    pane2.setOpacity(1);
+//                    pane2.setVisible(true);
                 } else {
                     System.out.println("1 điểm");
                 }
+            }
+        }
+    }
+    // 16 ; 16 ; #hex_color
+    public void setColorToNumber(String input){
+        String[] color = input.split(";");
+        System.out.println("dadasdsa");
+        for (Rectangle item : RecList){
+            System.out.println(item.getId());
+            if(item.getId().equalsIgnoreCase("SP_"+color[0])){
+                System.out.println("trong if "+ color[0]+ color[1]+ color[2]);
+                item.setFill(Color.web(color[2]));
             }
         }
     }
@@ -138,5 +176,6 @@ public class practiceController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         init(pane2);
+        setColorToNumber("16;16;#000");
     }
 }

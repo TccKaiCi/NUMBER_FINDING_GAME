@@ -10,11 +10,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane fx:id="LEFTPANE" prefHeight="438.0" prefWidth="700.0" style="-fx-background-radius: 0.5EM;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.client.number_finding_game.GUI.LoginController">
    <children>
@@ -38,36 +34,20 @@
             <Font name="System Bold" size="21.0" />
          </font>
       </Label>
-      <Button fx:id="btn_Login" defaultButton="true" layoutX="242.0" layoutY="312.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="220.0" style="-fx-background-color: #D6B5A7; -fx-border-color: #000;" text="Đăng nhập">
+      <Button fx:id="btn_Login" defaultButton="true" layoutX="242.0" layoutY="312.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="220.0" style="-fx-background-color: #A7DA46;" text="Đăng nhập">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="btn_Register" defaultButton="true" layoutX="242.0" layoutY="367.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="220.0" style="-fx-background-color: #D6B5A7; -fx-border-color: #000;" text="Tạo tài khoản mới">
+      <Button fx:id="btn_Register" defaultButton="true" layoutX="242.0" layoutY="367.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="220.0" style="-fx-background-color: #A7DA46;" text="Tạo tài khoản mới">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Label layoutX="109.0" layoutY="25.0" text="Number Finding Game ">
+      <Label layoutX="109.0" layoutY="25.0" text="Number Finding Game " textFill="RED">
          <font>
             <Font name="System Bold" size="44.0" />
          </font>
-         <textFill>
-            <LinearGradient endX="1.0" endY="0.5497630331753555" startX="0.4312796208530806" startY="0.4644549763033175">
-               <stops>
-                  <Stop>
-                     <color>
-                        <Color red="0.7764706015586853" green="0.18431372940540314" blue="0.8352941274642944" />
-                     </color>
-                  </Stop>
-                  <Stop offset="1.0">
-                     <color>
-                        <Color green="0.2235294133424759" blue="0.8627451062202454" />
-                     </color>
-                  </Stop>
-               </stops>
-            </LinearGradient>
-         </textFill>
       </Label>
       <Button fx:id="btn_Back" defaultButton="true" disable="true" layoutX="190.0" layoutY="370.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" style="-fx-background-color: #D6B5A7; -fx-border-color: #000;" text="←" visible="false">
          <font>

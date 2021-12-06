@@ -11,19 +11,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="340.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.client.number_finding_game.GUI.EditAccountController">
+<AnchorPane prefHeight="340.0" prefWidth="300.0" style="-fx-background-color: #FFE8D6;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.client.number_finding_game.GUI.EditAccountController">
    <children>
       <VBox prefHeight="340.0" prefWidth="300.0">
          <children>
-            <Label alignment="CENTER" prefHeight="27.0" prefWidth="140.0" text="Edit account info" textFill="#0205a1">
+            <Label alignment="CENTER" prefHeight="27.0" prefWidth="160.0" text="Chỉnh sửa thông tin">
                <font>
                   <Font size="18.0" />
                </font>
                <VBox.margin>
-                  <Insets left="80.0" top="10.0" />
+                  <Insets left="70.0" top="10.0" />
                </VBox.margin>
             </Label>
-            <Label prefHeight="19.0" prefWidth="61.0" text="Username">
+            <Label prefHeight="19.0" prefWidth="130.0" text="Tên đăng nhập (email)">
                <VBox.margin>
                   <Insets left="20.0" />
                </VBox.margin>
@@ -39,7 +39,7 @@
                   <Insets left="20.0" right="20.0" />
                </VBox.margin>
             </TextField>
-            <Label layoutX="10.0" layoutY="37.0" text="Name">
+            <Label layoutX="10.0" layoutY="37.0" text="Tên người dùng">
                <font>
                   <Font size="13.0" />
                </font>
@@ -55,7 +55,7 @@
                   <Insets left="20.0" right="20.0" />
                </VBox.margin>
             </TextField>
-            <Label layoutX="10.0" layoutY="163.0" text="Gender">
+            <Label layoutX="10.0" layoutY="163.0" text="Giới tính">
                <font>
                   <Font size="13.0" />
                </font>
@@ -68,7 +68,7 @@
                   <Insets left="20.0" />
                </padding>
                <children>
-                  <RadioButton fx:id="Edt_RBMale" mnemonicParsing="false" text="Male">
+                  <RadioButton fx:id="Edt_RBMale" mnemonicParsing="false" text="Nam">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -76,7 +76,7 @@
                         <Insets right="20.0" />
                      </padding>
                   </RadioButton>
-                  <RadioButton fx:id="Edt_RBFemale" layoutX="30.0" layoutY="10.0" mnemonicParsing="false" text="Female">
+                  <RadioButton fx:id="Edt_RBFemale" layoutX="30.0" layoutY="10.0" mnemonicParsing="false" text="Nữ">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -84,10 +84,10 @@
                         <Insets right="20.0" />
                      </padding>
                   </RadioButton>
-                  <RadioButton fx:id="Edt_RBOthers" layoutX="117.0" layoutY="10.0" mnemonicParsing="false" text="Others" />
+                  <RadioButton fx:id="Edt_RBOthers" layoutX="117.0" layoutY="10.0" mnemonicParsing="false" text="Khác" />
                </children>
             </HBox>
-            <Label layoutX="10.0" layoutY="205.0" text="Day Of Birth">
+            <Label layoutX="10.0" layoutY="205.0" text="Ngày sinh">
                <font>
                   <Font size="13.0" />
                </font>
@@ -100,7 +100,7 @@
                   <Insets left="20.0" right="20.0" />
                </VBox.margin>
             </DatePicker>
-            <Button fx:id="Edt_btnChangePass" mnemonicParsing="false" style="-fx-background-color: lightgray;" text="Change Password">
+            <Button fx:id="Edt_btnChangePass" mnemonicParsing="false" style="-fx-background-color: lightgray;" text="Đổi mật khẩu">
                <font>
                   <Font size="13.0" />
                </font>
@@ -110,7 +110,7 @@
             </Button>
             <HBox>
                <children>
-                  <Button fx:id="Edt_btnCancel" mnemonicParsing="false" style="-fx-background-color: lightgray;" text="Cancel">
+                  <Button fx:id="Edt_btnCancel" mnemonicParsing="false" style="-fx-background-color: #A7DA46;" text="Hủy">
                      <font>
                         <Font size="13.0" />
                      </font>
@@ -118,12 +118,12 @@
                         <Insets left="40.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="Edt_btnSave" mnemonicParsing="false" style="-fx-background-color: lightblue;" text="Save Changes">
+                  <Button fx:id="Edt_btnSave" mnemonicParsing="false" style="-fx-background-color: #FFA259;" text="Lưu thay đổi">
                      <font>
                         <Font size="13.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="20.0" />
+                        <Insets left="40.0" />
                      </HBox.margin>
                   </Button>
                </children>

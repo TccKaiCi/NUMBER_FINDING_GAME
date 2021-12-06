@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.client.number_finding_game.GUI.MultiplayerController">
+   <children>
+      <BorderPane prefHeight="500.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <left>
+            <Pane prefWidth="200.0">
+               <children>
+                  <Pane prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: #FFA259; -fx-border-color: black;">
+                     <children>
+                        <ImageView fx:id="img_player" fitHeight="55.0" fitWidth="55.0" layoutX="5.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" x="10.0">
+                           <image>
+                              <Image url="@assets/Rank/Season_2019_-_Grandmaster_1.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="lbl_playerName" layoutX="80.0" layoutY="5.0" text="Player Name">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lbl_score" layoutX="80.0" layoutY="30.0" text="Score: 0">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane layoutY="560.0" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #FFA259; -fx-border-color: black;">
+                     <children>
+                        <ImageView fx:id="btn_back" fitHeight="25.0" fitWidth="25.0" layoutX="14.0" layoutY="8.0" opacity="0.78" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/Rank/backicon.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
+                        <ImageView fx:id="btn_setting" fitHeight="25.0" fitWidth="25.0" layoutX="161.0" layoutY="8.0" opacity="0.78" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/Rank/setting.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <VBox fx:id="vb_playerList" layoutY="60.0" prefHeight="500.0" prefWidth="200.0" style="-fx-background-color: #EDF0C7; -fx-border-color: #000;" />
+               </children>
+            </Pane>
+         </left>
+         <center>
+            <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Pane prefHeight="60.0" prefWidth="820.0" style="-fx-border-color: black; -fx-background-color: FA4252;">
+                     <children>
+                        <StackPane layoutX="370.0" prefHeight="60.0" prefWidth="80.0">
+                           <children>
+                              <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" rotate="11.3">
+                                 <image>
+                                    <Image url="@assets/Rank/lookingglass.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="lbl_findingNum" text="100">
+                                 <font>
+                                    <Font name=".VnAvant Bold" size="21.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets bottom="8.0" left="8.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                        </StackPane>
+                        <StackPane layoutX="720.0" prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: #FFA259; -fx-border-color: black;">
+                           <children>
+                              <Label fx:id="lbl_time" text="0:50">
+                                 <font>
+                                    <Font name=".VnAvant Bold" size="24.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="60.0" prefWidth="100.0" style="-fx-background-color: #FFA259; -fx-border-color: black;">
+                           <children>
+                              <Label text="?">
+                                 <font>
+                                    <Font name=".VnAvant Bold" size="24.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="pane_main" layoutY="60.0" prefHeight="540.0" prefWidth="820.0" style="-fx-border-color: black; -fx-background-color: #91BD3A;">
+                     <children>
+                        <StackPane layoutX="170.0" layoutY="229.0" prefHeight="0.0" prefWidth="35.0" style="-fx-background-color: #000;" />
+                     </children></Pane>
+               </children>
+            </Pane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
