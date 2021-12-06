@@ -22,11 +22,11 @@ public class LoginController implements Initializable {
     @FXML
     public Button btn_Login, btn_Register, btn_Back, btn_submit;
     @FXML
-    public TextField tf_username, dk_name, dk_username;//todo
+    public TextField tf_username, dk_name, dk_username;
     @FXML
     public PasswordField pf_password, dk_pass, dk_retype;//todo
     @FXML
-    public Label lbl_Error, lbl_name, lbl_pass, lbl_1, lbl_2, lbl_3, lbl_4, lbl_5, lbl_6;
+    public Label lbl_Error, lbl_name, lbl_pass, lbl_1, lbl_2, lbl_3, lbl_4, lbl_5, lbl_6, dk_passError, dk_emailError;
     @FXML
     public DatePicker dk_dob;//todo
     @FXML
@@ -60,7 +60,7 @@ public class LoginController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("Waiting_room.fxml"));
             Parent root = fxmlLoader.load();
             String SendingPack = "SIGNIN;" + tf_username.getText() + ";" + pf_password.getText();
-            if (validate(tf_username.getText())) {
+            if (validate(tf_username.getText()) || !pf_password.getText().equals("")) {
                 Memory.client.sendMessenger(SendingPack);
                 System.out.println(SendingPack);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -85,19 +85,35 @@ public class LoginController implements Initializable {
         }
     }
 
-    public void setBtn_submit(ActionEvent event){
+    public void setBtn_submit(ActionEvent event) {
         RadioButton selectedRadioButton = (RadioButton) toggleGroup.getSelectedToggle();
         String toogleGroupValue = selectedRadioButton.getText();
-        String SendingPack="";
-        SendingPack="SIGNUP;"
-                +dk_username.getText()+";"
-                +dk_name.getText()+";"
-                +dk_pass.getText()+";"
-                +toogleGroupValue+";"
-                +dk_dob.getValue();
-        Memory.client.sendMessenger(SendingPack);
-        System.out.println(SendingPack);
+        if (!toogleGroupValue.isBlank() && isInputValidate() ) {
+            if (validate(dk_username.getText())) {
+                if (dk_pass.getText().equals(dk_retype.getText())) {
+                    String SendingPack = "";
+                    SendingPack = "SIGNUP;"
+                            + dk_username.getText() + ";"
+                            + dk_name.getText() + ";"
+                            + dk_pass.getText() + ";"
+                            + toogleGroupValue + ";"
+                            + dk_dob.getValue();
+                    Memory.client.sendMessenger(SendingPack);
+                    System.out.println(SendingPack);
+                    dk_passError.setVisible(false);
+                } else {
+                    dk_passError.setVisible(true);
+                }
+                dk_emailError.setVisible(false);
+            } else {
+                dk_emailError.setVisible(true);
+            }
+        } else {
+            System.out.println("DK ko thah cong");
+        }
     }
+
+
     public void setBtn_RegisterOnClick(ActionEvent event) {
         Node[] signInPart = {btn_Login, lbl_name, lbl_pass, tf_username, pf_password, btn_Register};
         setVi_FALSE_Dis_TRUE(signInPart);
@@ -125,10 +141,12 @@ public class LoginController implements Initializable {
             items.setVisible(true);
         }
     }
+
     public void setVi_TRUE_Dis_FALSE(Node node) {
-            node.setDisable(false);
-            node.setVisible(true);
+        node.setDisable(false);
+        node.setVisible(true);
     }
+
     public void setVi_FALSE_Dis_TRUE(Node[] node) {
         for (Node items : node) {
             items.setDisable(true);
@@ -144,7 +162,26 @@ public class LoginController implements Initializable {
         toggleGroup.selectedToggleProperty().addListener((observable, oldVal, newVal) -> System.out.println(newVal + " was selected"));
     }
 
-
+    //return true if nothing empty or right email type - else return false
+    public boolean isInputValidate() {
+        boolean check = true;
+        boolean nameCheck = dk_name.getText().isBlank();
+        boolean usernameCheck = dk_username.getText().isBlank();
+        boolean dobCheck = false;
+        try {
+            dobCheck = dk_dob.getValue().toString().isBlank();
+        } catch (NullPointerException e) {
+            dobCheck = true;
+        }
+        boolean passCheck = dk_pass.getText().isBlank();
+        boolean repassCheck = dk_pass.getText().isBlank();
+        if (nameCheck || usernameCheck || dobCheck || passCheck || repassCheck) {
+            check = false;
+            System.out.println("trong vong lap: " + check);
+        }
+        System.out.println("Ngoai vong lap: " + check);
+        return check;
+    }
 
     public static boolean validate(String emailStr) {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);

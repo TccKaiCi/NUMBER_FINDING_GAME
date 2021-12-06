@@ -49,7 +49,7 @@
             <Font name="System Bold" size="44.0" />
          </font>
       </Label>
-      <Button fx:id="btn_Back" defaultButton="true" disable="true" layoutX="190.0" layoutY="370.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" style="-fx-background-color: #D6B5A7; -fx-border-color: #000;" text="←" visible="false">
+      <Button fx:id="btn_Back" defaultButton="true" disable="true" layoutX="190.0" layoutY="370.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" style="-fx-background-color: #A7DA46;" text="←" visible="false">
          <font>
             <Font name="Alien Encounters Solid" size="14.0" />
          </font>
@@ -88,7 +88,7 @@
       <TextField fx:id="dk_name" disable="true" layoutX="277.0" layoutY="130.0" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black;" visible="false" AnchorPane.leftAnchor="250.0" />
       <TextField fx:id="dk_username" disable="true" layoutX="277.0" layoutY="170.0" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black;" visible="false" AnchorPane.leftAnchor="250.0" />
       <DatePicker fx:id="dk_dob" disable="true" layoutX="277.0" layoutY="210.0" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black;" visible="false" AnchorPane.leftAnchor="250.0" />
-      <RadioButton fx:id="dk_male" disable="true" layoutX="277.0" layoutY="250.0" mnemonicParsing="false" text="Nam" visible="false" AnchorPane.leftAnchor="250.0">
+      <RadioButton fx:id="dk_male" disable="true" layoutX="277.0" layoutY="250.0" mnemonicParsing="false" selected="true" text="Nam" visible="false" AnchorPane.leftAnchor="250.0">
          <font>
             <Font size="14.0" />
          </font>
@@ -105,10 +105,12 @@
       </RadioButton>
       <PasswordField fx:id="dk_pass" disable="true" layoutX="277.0" layoutY="290.0" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black;" visible="false" AnchorPane.leftAnchor="250.0" />
       <PasswordField fx:id="dk_retype" disable="true" layoutX="276.0" layoutY="330.0" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black;" visible="false" AnchorPane.leftAnchor="250.0" />
+      <Label fx:id="dk_passError" alignment="CENTER" layoutX="491.0" layoutY="335.0" prefHeight="17.0" prefWidth="180.0" style="-fx-background-color: red;" text="Nhập lại không giống mật khẩu" textFill="WHITE" visible="false" />
       <Button fx:id="btn_submit" defaultButton="true" disable="true" layoutX="241.0" layoutY="367.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="220.0" style="-fx-background-color: #D6B5A7; -fx-border-color: #000;" text="Xác nhận" visible="false">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
+      <Label fx:id="dk_emailError" alignment="CENTER" layoutX="491.0" layoutY="174.0" prefHeight="17.0" prefWidth="111.0" style="-fx-background-color: red;" text="Sai cú pháp email" textFill="WHITE" visible="false" />
    </children>
 </AnchorPane>
