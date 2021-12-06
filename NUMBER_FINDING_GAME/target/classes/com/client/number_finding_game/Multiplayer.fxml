@@ -103,7 +103,10 @@
                         </StackPane>
                      </children>
                   </Pane>
-                  <Pane fx:id="pane_main" layoutY="60.0" prefHeight="540.0" prefWidth="820.0" style="-fx-border-color: black; -fx-background-color: #91BD3A;" />
+                  <Pane fx:id="pane_main" layoutY="60.0" prefHeight="540.0" prefWidth="820.0" style="-fx-border-color: black; -fx-background-color: #91BD3A;">
+                     <children>
+                        <StackPane layoutX="170.0" layoutY="229.0" prefHeight="0.0" prefWidth="35.0" style="-fx-background-color: #000;" />
+                     </children></Pane>
                </children>
             </Pane>
          </center>
