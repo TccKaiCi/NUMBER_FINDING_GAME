@@ -33,7 +33,6 @@ public class EditAccountController implements Initializable {
     @FXML
     public DatePicker Edt_Dob;
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -42,6 +41,15 @@ public class EditAccountController implements Initializable {
         Edt_btnCancel.setOnAction(this::setEdt_btnCancel);
         Edt_btnSave.setOnAction(this::setEdt_btnSave);
         Edt_Dob.setOnAction(this::getDatePicker);
+
+        setButtonHover(Edt_btnChangePass, "-fx-background-color: gray;", "-fx-background-color: lightgray;");
+        setButtonHover(Edt_btnCancel,  "-fx-background-color: #4E9525;", "-fx-background-color: #A7DA46;");
+        setButtonHover(Edt_btnSave, "-fx-background-color: #FE6845;", "-fx-background-color: #FFA259;");
+    }
+
+    public void setButtonHover(Node node, String colorEnter, String colorExit){
+        node.setOnMouseEntered(mouseEvent -> { node.setStyle(colorEnter); });
+        node.setOnMouseExited(mouseEvent -> { node.setStyle(colorExit); });
     }
 
     public void setEdt_btnChangePass(ActionEvent event) {

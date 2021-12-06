@@ -25,11 +25,12 @@ public class WaitingRoomController implements Initializable {
 
 
     private static final DropShadow hoverEffect = new DropShadow();
-    private static final String IDLE_BUTTON_STYLE = "-fx-background-color: #D6B5A7; ";
-    private static final String HOVERED_BUTTON_STYLE = "-fx-background-color: #AD8E93; -fx-border-color: #000;";
+    private static final String IDLE_BUTTON_STYLE = "-fx-background-color: #A7DA46; ";
+    private static final String HOVERED_BUTTON_STYLE = "-fx-background-color: #4E9525; ";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        btn_multi.setOnAction(this::setBtn_multiOnClick);
         btn_practice.setOnAction(this::setBtn_practiceOnclick);
         btn_account.setOnAction(this::setBtn_accountOnClick);
         btn_quit.setOnAction(this::setBtn_quit);
@@ -39,15 +40,15 @@ public class WaitingRoomController implements Initializable {
     }
 
     public void setHoverEffect(){
-        hoverEffect.setColor(Color.rgb(191, 27, 27));
-        hoverEffect.setRadius(34.18);
-        hoverEffect.setWidth(85.48);
-        hoverEffect.setHeight(53.24);
+        hoverEffect.setColor(Color.web("#FFE8D6"));
+        hoverEffect.setRadius(35);
+        hoverEffect.setWidth(40);
+        hoverEffect.setHeight(40);
     }
 
     public void setButtonAnimate(Node[] node){
         for (Node item: node ) {
-            item.setOnMouseEntered(mouseEvent -> item.setEffect(hoverEffect));
+            item.setOnMouseEntered(mouseEvent -> {item.setEffect(hoverEffect); item.setStyle(HOVERED_BUTTON_STYLE);});
             item.setOnMouseExited(mouseEvent -> {item.setEffect(null); item.setStyle(IDLE_BUTTON_STYLE);});
             item.setOnMousePressed(mouseEvent -> item.setStyle(HOVERED_BUTTON_STYLE));
             item.setOnMouseReleased(mouseEvent -> item.setStyle(IDLE_BUTTON_STYLE));
@@ -78,6 +79,22 @@ public class WaitingRoomController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setTitle("Edit Account Info");
+            stage.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void setBtn_multiOnClick(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("Multiplayer.fxml"));
+            Parent parent = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(parent));
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setTitle("Multiplayer");
             stage.show();
         }catch (Exception e){
             e.printStackTrace();

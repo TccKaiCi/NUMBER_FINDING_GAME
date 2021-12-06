@@ -32,9 +32,9 @@ public class LoginController implements Initializable {
     @FXML
     public RadioButton dk_male, dk_female, dk_other;//todo
     ToggleGroup toggleGroup = new ToggleGroup();
-    private static final String IDLE_BUTTON_STYLE = "-fx-background-color: #D6B5A7; -fx-border-color: #000;";
-    private static final String HOVERED_BUTTON_STYLE = "-fx-background-color: #AD8E93; -fx-border-color: #000;";
-    private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+    public static final String IDLE_BUTTON_STYLE = "-fx-background-color: #A7DA46; ";
+    public static final String HOVERED_BUTTON_STYLE = "-fx-background-color: #4E9525; ";
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
     @Override
