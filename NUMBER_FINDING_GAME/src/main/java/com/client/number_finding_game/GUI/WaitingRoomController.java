@@ -88,6 +88,7 @@ public class WaitingRoomController implements Initializable {
     }
 
     public void setBtn_multiOnClick(ActionEvent event) {
+        Memory.client.sendMessenger("start");
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("Multiplayer.fxml"));
             Parent parent = fxmlLoader.load();

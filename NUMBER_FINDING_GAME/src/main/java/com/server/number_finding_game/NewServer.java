@@ -23,21 +23,23 @@ import java.util.*;
 // this means the Server has to receive and send, and the client has to send as well as receive.
 // If the client user types "exit", the client will quit.
 public class NewServer implements Runnable {
-    public int softLimit=40;
-    public int hardLimit=45;
+    public int softLimit = 40;
+    public int hardLimit = 45;
     private int port = 8081;
     private ServerSocket serverSocket = null;
     private Thread thread = null;
     private ChatServerThread clients[] = new ChatServerThread[hardLimit];
     private int clientCount = 0;
     private List<Lobby> ListLobby;
-public static void main(String[] args){
-    NewServer news = new NewServer();
-}
+
+    public static void main(String[] args) {
+        NewServer news = new NewServer();
+    }
+
     public NewServer() {
         try {
             serverSocket = new ServerSocket(port);
-            ListLobby=new ArrayList<>();
+            ListLobby = new ArrayList<>();
             System.out.println("Server started on port " + serverSocket.getLocalPort() + "...");
             System.out.println("Waiting for client...");
             thread = new Thread(this);
@@ -79,11 +81,12 @@ public static void main(String[] args){
 
     /**
      * Xu li cu phap
-     * @param ID sdasda
+     *
+     * @param ID    sdasda
      * @param input dsadsad
      */
     public synchronized void handle(SocketAddress ID, String input) throws Exception {
-        if (clientCount>softLimit){
+        if (clientCount > softLimit) {
             clients[findClient(ID)].send("Server is very busy now");
             clients[findClient(ID)].send("exit");
             remove(ID);
@@ -91,72 +94,80 @@ public static void main(String[] args){
         }
         UserAccountDTO dtotmp = new UserAccountDTO();
         UserAccountBUS bustmp = new UserAccountBUS();
-        System.out.println("Server get from Client "+ID+" "+input);
+        System.out.println("Server get from Client " + ID + " " + input);
         if (input.equals("exit")) {
             clients[findClient(ID)].send("exit");
             remove(ID);
         } else {
-            if(input.equalsIgnoreCase("start")){
-                String idLobby=findLobbyFree(ID);
+            if (input.equalsIgnoreCase("start")) {
+                String idLobby = findLobbyFree(ID);
                 clients[findClient(ID)].setLobbyID(idLobby);
-             clients[findClient(ID)].send("YourLob;"+clients[findClient(ID)].getLobbyID());
-             Lobby tmp =findDirectLobby(ID);
-            //todo
-                if(tmp.state.equalsIgnoreCase("isFull")&&tmp!=null){
-                    tmp.Match=new Match(clients[findClient(ID)].getLobbyID(),300);
-                    tmp.Match.createRandomMap();
-             clients[findClient(ID)].send(tmp.Match.getMap().getList().toString());
+                clients[findClient(ID)].send("YourLob;" + clients[findClient(ID)].getLobbyID());
+                Lobby tmp = findDirectLobby(ID);
+
+//                if room/ lobby is full 3/3 player or client
+                if (tmp.state.equalsIgnoreCase("isFull") && tmp != null) {
+//                    Create idRoom and time
+                    tmp.Match = new Match(clients[findClient(ID)].getLobbyID(), 300);
+//                    Create random map
+//                    Set up
+                    tmp.Match.createRandomMap(1,100,790,0, 510, 0);
+
+//                    Send map for all player in lobby
+                    for (int i = 0; i < 3; i++) {
+                        SocketAddress temp =  tmp.addr.get(i);
+                        clients[findClient(temp)].send(tmp.Match.getMapByJSon());
+                    }
                 }
             }
             //Xử lí cú pháp
-            if(input.contains(";")){
-                String[] job=input.split(";");
-                int lenght=job.length;
-                switch (lenght){
-                //SIGNIN
+            if (input.contains(";")) {
+                String[] job = input.split(";");
+                int lenght = job.length;
+                switch (lenght) {
+                    //SIGNIN
                     case 3:
-                        if(job[0].equalsIgnoreCase("SIGNIN")) {
+                        if (job[0].equalsIgnoreCase("SIGNIN")) {
                             dtotmp.setStrUserName(job[1]);
-                            dtotmp.setStrPassWord(job[2]+"+NumberFinding");
+                            dtotmp.setStrPassWord(job[2] + "+NumberFinding");
                             System.out.println(dtotmp.getStrPassWord());
-                                if(dtotmp.getStrPassWord()!=null){
-                                    MessageDigest digest = MessageDigest.getInstance("SHA-256");
-                                    byte[] encodedhash = digest.digest(
-                                            dtotmp.getStrPassWord().getBytes(StandardCharsets.UTF_8));
-                                    dtotmp.setStrPassWord(bytesToHex(encodedhash));
-                                    System.out.println(dtotmp.getStrPassWord());
+                            if (dtotmp.getStrPassWord() != null) {
+                                MessageDigest digest = MessageDigest.getInstance("SHA-256");
+                                byte[] encodedhash = digest.digest(
+                                        dtotmp.getStrPassWord().getBytes(StandardCharsets.UTF_8));
+                                dtotmp.setStrPassWord(bytesToHex(encodedhash));
+                                System.out.println(dtotmp.getStrPassWord());
                             }
                             if (bustmp.kiemTraDangNhap(dtotmp)) {
                                 System.out.println("valid user");
                                 clients[findClient(ID)].send("valid user");
                             }
 
-                            dtotmp=new UserAccountDTO();
+                            dtotmp = new UserAccountDTO();
                         }
                     case 6:
                         //SIGNUP;UID;SIGNUP;Username;Nameinf;Passwd;Gender
-                        if (job[0].equalsIgnoreCase("SIGNUP")){
+                        if (job[0].equalsIgnoreCase("SIGNUP")) {
                             //set temp info
                             //need delete when have auto increasing mechanic
                             dtotmp.setStrUserName(job[1]);
                             dtotmp.setStrNameInf(job[2]);
-                            dtotmp.setStrPassWord(job[3] +"+NumberFinding");
+                            dtotmp.setStrPassWord(job[3] + "+NumberFinding");
                             dtotmp.setStrGender(job[4]);
                             dtotmp.setStrDayOfBirth(job[5]);
                             dtotmp.setStrUid(bustmp.getDefault());
                             //need date time
                             //hash paswd
-                            if(dtotmp.getStrPassWord()!=null){
+                            if (dtotmp.getStrPassWord() != null) {
                                 MessageDigest digest = MessageDigest.getInstance("SHA-256");
                                 byte[] encodedhash = digest.digest(
                                         dtotmp.getStrPassWord().getBytes(StandardCharsets.UTF_8));
                                 dtotmp.setStrPassWord(bytesToHex(encodedhash));
                                 clients[findClient(ID)].send("Signup success");
                                 bustmp.them(dtotmp);
-                                if(bustmp.kiemTraDangNhap(dtotmp)){
-                                 clients[findClient(ID)].send("Success signup");
-                                }
-                                else {
+                                if (bustmp.kiemTraDangNhap(dtotmp)) {
+                                    clients[findClient(ID)].send("Success signup");
+                                } else {
                                     clients[findClient(ID)].send("Something gone wrong, cant signup this time");
                                 }
                             }
@@ -164,8 +175,8 @@ public static void main(String[] args){
                         }
                     case 2:
                         //gui vs cu phap play nghia la dang trong tran
-                        if(job[0].equalsIgnoreCase("Pickup")){
-                            phanluong(ID,input);
+                        if (job[0].equalsIgnoreCase("Pickup")) {
+                            phanluong(ID, input);
                         }
 
                 }
@@ -173,72 +184,76 @@ public static void main(String[] args){
         }
     }
 
-    public void phanluong(SocketAddress ID,String input){
-        if(!clients[findClient(ID)].getLobbyID().equalsIgnoreCase("")){
-            for (int i=0;i<clientCount;i++){
-                if(clients[i].getLobbyID().equalsIgnoreCase(clients[findClient(ID)].getLobbyID())){
+    public void phanluong(SocketAddress ID, String input) {
+        if (!clients[findClient(ID)].getLobbyID().equalsIgnoreCase("")) {
+            for (int i = 0; i < clientCount; i++) {
+                if (clients[i].getLobbyID().equalsIgnoreCase(clients[findClient(ID)].getLobbyID())) {
                     if (clients[i].getID() == ID) {
                         // if this client ID is the sender, just skip it
                         continue;
                     }
-                    if(!input.equalsIgnoreCase("start"))
+                    if (!input.equalsIgnoreCase("start"))
                         clients[i].send(input);
                 }
             }
         }
     }
-    public synchronized void removeFromLobby(ChatServerThread client){
-        int remove=Integer.parseInt(client.getLobbyID());
-       ListLobby.get(remove).addr.remove(client.getID());
+
+    public synchronized void removeFromLobby(ChatServerThread client) {
+        int remove = Integer.parseInt(client.getLobbyID());
+        ListLobby.get(remove).addr.remove(client.getID());
     }
-    public synchronized String findLobbyFree(SocketAddress addr){
-        String res="";
-        Lobby lobby=new Lobby();
-        if (ListLobby.size()==0){
-            Lobby lobbyPrime=new Lobby();
-            lobbyPrime.LobbyID=String.valueOf(ListLobby.size());
+
+    public synchronized String findLobbyFree(SocketAddress addr) {
+        String res = "";
+        Lobby lobby = new Lobby();
+        if (ListLobby.size() == 0) {
+            Lobby lobbyPrime = new Lobby();
+            lobbyPrime.LobbyID = String.valueOf(ListLobby.size());
             ListLobby.add(lobbyPrime);
         }
-        for (int i=0;i<ListLobby.size();i++){
-            if(ListLobby.get(i).addr.size()==3&&i==ListLobby.size()-1){
-                lobby.LobbyID=String.valueOf(ListLobby.size());
+        for (int i = 0; i < ListLobby.size(); i++) {
+            if (ListLobby.get(i).addr.size() == 3 && i == ListLobby.size() - 1) {
+                lobby.LobbyID = String.valueOf(ListLobby.size());
                 lobby.addr.add(addr);
                 ListLobby.add(lobby);
-                 res= lobby.LobbyID;
+                res = lobby.LobbyID;
                 System.out.println("ListLobby==3");
-                 lobby=new Lobby();
-                 return res;
+                lobby = new Lobby();
+                return res;
             }
             //bo dieu kien isfull = isstart neu co lam lobby 2 nguoi hoac waiting time
 
-             if(ListLobby.get(i).addr.size()<3&&!ListLobby.get(i).state.equalsIgnoreCase("isFull")){
-                 ListLobby.get(i).addr.add(addr);
-                 res=String.valueOf(i);
-                 System.out.println("listLobby<3");
-                 if (ListLobby.get(i).addr.size()==3){
-                     ListLobby.get(i).state="isFull";
-                     System.out.println(ListLobby.get(i).state);
-                 }
-                 lobby=new Lobby();
-                 return res;
+            if (ListLobby.get(i).addr.size() < 3 && !ListLobby.get(i).state.equalsIgnoreCase("isFull")) {
+                ListLobby.get(i).addr.add(addr);
+                res = String.valueOf(i);
+                System.out.println("listLobby<3");
+                if (ListLobby.get(i).addr.size() == 3) {
+                    ListLobby.get(i).state = "isFull";
+                    System.out.println(ListLobby.get(i).state);
+                }
+                lobby = new Lobby();
+                return res;
             }
 
         }
         return res;
     }
-    public Lobby findDirectLobby(SocketAddress addr){
-        for (int i=0;i<ListLobby.size();i++){
-            for (int j=0;j<3;j++){
-                if(ListLobby.get(i).addr.get(j)==addr){
+
+    public Lobby findDirectLobby(SocketAddress addr) {
+        for (int i = 0; i < ListLobby.size(); i++) {
+            for (int j = 0; j < 3; j++) {
+                if (ListLobby.get(i).addr.get(j) == addr) {
                     return ListLobby.get(i);
                 }
             }
         }
         return new Lobby();
     }
+
     public synchronized void remove(SocketAddress ID) {
-        if(!clients[findClient(ID)].getLobbyID().equalsIgnoreCase(""))
-        removeFromLobby(clients[findClient(ID)]);
+        if (!clients[findClient(ID)].getLobbyID().equalsIgnoreCase(""))
+            removeFromLobby(clients[findClient(ID)]);
         int index = findClient(ID);
         if (index >= 0) {
             ChatServerThread threadToTerminate = clients[index];
@@ -271,7 +286,7 @@ public static void main(String[] args){
         StringBuilder hexString = new StringBuilder(2 * hash.length);
         for (int i = 0; i < hash.length; i++) {
             String hex = Integer.toHexString(0xff & hash[i]);
-            if(hex.length() == 1) {
+            if (hex.length() == 1) {
                 hexString.append('0');
             }
             hexString.append(hex);

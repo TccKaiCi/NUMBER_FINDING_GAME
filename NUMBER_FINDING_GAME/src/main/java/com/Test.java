@@ -8,11 +8,10 @@ public class Test {
         Match match;
         match = new Match("R3", 300);
 
-        match.createRandomMap(14, 17);
+        match.createRandomMap(1, 10, 1020, 200, 600, 60);
 
-        match.display();
 
-        System.out.println( match.getNextValue().getIntValue());
+        System.out.println( match.getMapByJSon());
     }
 
 }

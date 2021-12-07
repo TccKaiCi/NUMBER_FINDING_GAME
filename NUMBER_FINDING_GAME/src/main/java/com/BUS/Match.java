@@ -25,6 +25,32 @@ public class Match {
      * @param startValue giá trị bắt đẩu
      * @param endValue   giá trị kết thúc
      */
+    public void createRandomMap(int startValue, int endValue, int posXMax, int posXMin, int posYMax, int posYMin) {
+//        check is NULL
+        if (map == null) {
+            map = new Map();
+        }
+        if (stacks == null) {
+            stacks = new Stack<>();
+        }
+
+        map.setStartValue(startValue);
+        map.setEndValue(endValue);
+
+        map.createNew(posXMax, posXMin, posYMax, posYMin);
+
+//        Put in to stack
+        for (NumberPoint DTO : map.getList()) {
+            stacks.push(DTO);
+        }
+    }
+
+    /**
+     * Create new map random, if it not exists
+     *
+     * @param startValue giá trị bắt đẩu
+     * @param endValue   giá trị kết thúc
+     */
     public void createRandomMap(int startValue, int endValue) {
 //        check is NULL
         if (map == null) {
@@ -71,7 +97,9 @@ public class Match {
         map.display();
     }
 
-
+    public String getMapByJSon() {
+        return map.getMapByJSon();
+    }
 
 
 

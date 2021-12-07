@@ -101,7 +101,31 @@ public class Map {
         return false;
     }
 
+    public String getMapByJSon() {
+        StringBuilder sb = new StringBuilder();
 
+//        open json
+        sb.append("{\n" +
+                "  \"data\": {");
+
+        list.forEach(model -> {
+            sb.append("\"NumberPoint"+ model.getIntValue()+"\": {\n" +
+                    "      \"intValue\": "+model.getIntValue()+" ,\n" +
+                    "      \"intPosX\": "+model.getIntPosX()+",\n" +
+                    "      \"intPosY\": "+model.getIntPosY()+",\n" +
+                    "      \"strChosenColor\" : \""+model.getStrChosenColor()+"\",\n" +
+                    "      \"strRare\" : \""+model.getStrRare()+"\"\n" +
+                    "    },");
+        });
+
+//        delete end ","
+        sb.deleteCharAt(sb.length() - 1);
+//        close json
+        sb.append("\n" +
+                "  }\n" +
+                "}");
+        return sb.toString();
+    }
 
 
 

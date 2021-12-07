@@ -1,10 +1,11 @@
 package com.server.number_finding_game;
+
 import java.io.*;
 import java.net.Socket;
 
 // Client for Server4
 public class NewClient implements Runnable {
-    private String CurLobbyID ="";
+    private String CurLobbyID = "";
     private String serverName = "localhost";
     private int serverPort = 8081;
     private Socket socket = null;
@@ -12,19 +13,23 @@ public class NewClient implements Runnable {
     private DataInputStream dis = null;
     private DataOutputStream dos = null;
     private ChatClientThread client = null;
-public static void main(String[] args){
-    NewClient client=new NewClient();
-    client.Connect();
-    client.sendMessenger("start");
 
-}
-public String getCurLobbyID(){
-    return  CurLobbyID;
-}
-public void setCurLobbyID(String cur){
-    this.CurLobbyID=cur;
-}
-//    is connect tho server???
+    public static void main(String[] args) {
+        NewClient client = new NewClient();
+        client.Connect();
+        client.sendMessenger("start");
+
+    }
+
+    public String getCurLobbyID() {
+        return CurLobbyID;
+    }
+
+    public void setCurLobbyID(String cur) {
+        this.CurLobbyID = cur;
+    }
+
+    //    is connect tho server???
     public boolean Connect() {
         try {
             socket = new Socket(serverName, serverPort);
@@ -61,7 +66,7 @@ public void setCurLobbyID(String cur){
         }
     }
 
-//    Other client send messenger to here
+    //    Other client send messenger to here
     public void handleMessage(String message) {
 
         if (message.equals("exit")) {
@@ -70,36 +75,35 @@ public void setCurLobbyID(String cur){
 //
             if (message.equalsIgnoreCase("RESET") || message.equalsIgnoreCase("END")
                     || message.equalsIgnoreCase("Host win") || message.equalsIgnoreCase("Client win")) {
-                    Memory.statusMessenger = message;
-                    System.out.println("Tin nhan trang thai duoc dua vao hang doi: " + Memory.statusMessenger);
+                Memory.statusMessenger = message;
+                System.out.println("Tin nhan trang thai duoc dua vao hang doi: " + Memory.statusMessenger);
             } else {
                 if ((!message.equalsIgnoreCase(" "))) {
 //            say that we have a messenger
                     Memory.playerMessenger = true;
 //            /127.0.0.1:50194 says : 0 1 2
                     Memory.messenger = message;
-                    System.out.println("Client "+socket.getLocalPort()+" nhan duoc " + Memory.messenger);
-                    if(message.contains(";")){
-                       String[] job = message.split(";");
-                       switch (job.length){
-                           case 2:
-                           {
-                                if(job[0].equalsIgnoreCase("YourLob")){
+                    System.out.println("Client " + socket.getLocalPort() + " nhan duoc " + Memory.messenger);
+                    if (message.contains(";")) {
+                        String[] job = message.split(";");
+                        switch (job.length) {
+                            case 2: {
+                                if (job[0].equalsIgnoreCase("YourLob")) {
                                     setCurLobbyID(job[1]);
-                                    System.out.println("Current Lobby " +getCurLobbyID());
+                                    System.out.println("Current Lobby " + getCurLobbyID());
                                 }
-                           }
-                       }
+                            }
+                        }
                     }
-                    if(message.equalsIgnoreCase("test")){
-                        sendMessenger("; "+getCurLobbyID());
+                    if (message.equalsIgnoreCase("test")) {
+                        sendMessenger("; " + getCurLobbyID());
                     }
                 }
             }
         }
     }
 
-//    Stop the connection
+    //    Stop the connection
     public void stop() {
         try {
             thread = null;
@@ -116,7 +120,7 @@ public void setCurLobbyID(String cur){
         return String.valueOf(socket.getRemoteSocketAddress());
     }
 
-//    Try to find other servver
+    //    Try to find other servver
     public boolean findServer() {
         try {
             socket = new Socket(serverName, serverPort);
@@ -131,7 +135,7 @@ public void setCurLobbyID(String cur){
     }
 
     public void sendMessenger(String line) {
-    Memory.messenger=line;
+        Memory.messenger = line;
         try {
             dos.writeUTF(Memory.messenger);
             dos.flush();

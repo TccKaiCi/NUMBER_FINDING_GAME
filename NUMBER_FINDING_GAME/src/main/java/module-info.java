@@ -2,6 +2,7 @@ module com.client.number_finding_game {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires java.json;
 
 
     opens com.client.number_finding_game to javafx.fxml;
