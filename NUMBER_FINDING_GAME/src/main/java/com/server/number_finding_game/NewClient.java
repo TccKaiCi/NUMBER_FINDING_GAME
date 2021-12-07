@@ -15,6 +15,7 @@ public class NewClient implements Runnable {
 public static void main(String[] args){
     NewClient client=new NewClient();
     client.Connect();
+    client.sendMessenger("start");
 
 }
 public String getCurLobbyID(){

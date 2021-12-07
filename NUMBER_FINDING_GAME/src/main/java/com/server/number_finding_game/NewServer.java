@@ -1,5 +1,6 @@
 package com.server.number_finding_game;
 
+import com.BUS.Match;
 import com.BUS.UserAccountBUS;
 import com.DAO.UserAccountDAO;
 import com.DTO.UserAccountDTO;
@@ -11,9 +12,7 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 // SERVER : Multi Server
 // TIPE : Two-Way Communication (Client to Server, Server to Client)
@@ -24,19 +23,21 @@ import java.util.Random;
 // this means the Server has to receive and send, and the client has to send as well as receive.
 // If the client user types "exit", the client will quit.
 public class NewServer implements Runnable {
-    public int softLimit=10;
-    public int hardLimit=15;
+    public int softLimit=40;
+    public int hardLimit=45;
     private int port = 8081;
     private ServerSocket serverSocket = null;
     private Thread thread = null;
     private ChatServerThread clients[] = new ChatServerThread[hardLimit];
     private int clientCount = 0;
+    private List<Lobby> ListLobby;
 public static void main(String[] args){
     NewServer news = new NewServer();
 }
     public NewServer() {
         try {
             serverSocket = new ServerSocket(port);
+            ListLobby=new ArrayList<>();
             System.out.println("Server started on port " + serverSocket.getLocalPort() + "...");
             System.out.println("Waiting for client...");
             thread = new Thread(this);
@@ -96,8 +97,16 @@ public static void main(String[] args){
             remove(ID);
         } else {
             if(input.equalsIgnoreCase("start")){
-                clients[findClient(ID)].setLobbyID(String.valueOf(clientCount/3+1));
+                String idLobby=findLobbyFree(ID);
+                clients[findClient(ID)].setLobbyID(idLobby);
              clients[findClient(ID)].send("YourLob;"+clients[findClient(ID)].getLobbyID());
+             Lobby tmp =findDirectLobby(ID);
+            //todo
+                if(tmp.state.equalsIgnoreCase("isFull")&&tmp!=null){
+                    tmp.Match=new Match(clients[findClient(ID)].getLobbyID(),300);
+                    tmp.Match.createRandomMap();
+             clients[findClient(ID)].send(tmp.Match.getMap().getList().toString());
+                }
             }
             //Xử lí cú pháp
             if(input.contains(";")){
@@ -153,25 +162,83 @@ public static void main(String[] args){
                             }
 
                         }
+                    case 2:
+                        //gui vs cu phap play nghia la dang trong tran
+                        if(job[0].equalsIgnoreCase("Pickup")){
+                            phanluong(ID,input);
+                        }
+
                 }
             }
-            //Phan luong
-           if(!clients[findClient(ID)].getLobbyID().equalsIgnoreCase("")){
-               for (int i=0;i<clientCount;i++){
-                   if(clients[i].getLobbyID().equalsIgnoreCase(clients[findClient(ID)].getLobbyID())){
-                       if (clients[i].getID() == ID) {
-                           // if this client ID is the sender, just skip it
-                           continue;
-                       }
-                       if(input.equalsIgnoreCase("start"))
-                       clients[i].send(input);
-                   }
-               }
-           }
         }
     }
 
+    public void phanluong(SocketAddress ID,String input){
+        if(!clients[findClient(ID)].getLobbyID().equalsIgnoreCase("")){
+            for (int i=0;i<clientCount;i++){
+                if(clients[i].getLobbyID().equalsIgnoreCase(clients[findClient(ID)].getLobbyID())){
+                    if (clients[i].getID() == ID) {
+                        // if this client ID is the sender, just skip it
+                        continue;
+                    }
+                    if(!input.equalsIgnoreCase("start"))
+                        clients[i].send(input);
+                }
+            }
+        }
+    }
+    public synchronized void removeFromLobby(ChatServerThread client){
+        int remove=Integer.parseInt(client.getLobbyID());
+       ListLobby.get(remove).addr.remove(client.getID());
+    }
+    public synchronized String findLobbyFree(SocketAddress addr){
+        String res="";
+        Lobby lobby=new Lobby();
+        if (ListLobby.size()==0){
+            Lobby lobbyPrime=new Lobby();
+            lobbyPrime.LobbyID=String.valueOf(ListLobby.size());
+            ListLobby.add(lobbyPrime);
+        }
+        for (int i=0;i<ListLobby.size();i++){
+            if(ListLobby.get(i).addr.size()==3&&i==ListLobby.size()-1){
+                lobby.LobbyID=String.valueOf(ListLobby.size());
+                lobby.addr.add(addr);
+                ListLobby.add(lobby);
+                 res= lobby.LobbyID;
+                System.out.println("ListLobby==3");
+                 lobby=new Lobby();
+                 return res;
+            }
+            //bo dieu kien isfull = isstart neu co lam lobby 2 nguoi hoac waiting time
+
+             if(ListLobby.get(i).addr.size()<3&&!ListLobby.get(i).state.equalsIgnoreCase("isFull")){
+                 ListLobby.get(i).addr.add(addr);
+                 res=String.valueOf(i);
+                 System.out.println("listLobby<3");
+                 if (ListLobby.get(i).addr.size()==3){
+                     ListLobby.get(i).state="isFull";
+                     System.out.println(ListLobby.get(i).state);
+                 }
+                 lobby=new Lobby();
+                 return res;
+            }
+
+        }
+        return res;
+    }
+    public Lobby findDirectLobby(SocketAddress addr){
+        for (int i=0;i<ListLobby.size();i++){
+            for (int j=0;j<3;j++){
+                if(ListLobby.get(i).addr.get(j)==addr){
+                    return ListLobby.get(i);
+                }
+            }
+        }
+        return new Lobby();
+    }
     public synchronized void remove(SocketAddress ID) {
+        if(!clients[findClient(ID)].getLobbyID().equalsIgnoreCase(""))
+        removeFromLobby(clients[findClient(ID)]);
         int index = findClient(ID);
         if (index >= 0) {
             ChatServerThread threadToTerminate = clients[index];
