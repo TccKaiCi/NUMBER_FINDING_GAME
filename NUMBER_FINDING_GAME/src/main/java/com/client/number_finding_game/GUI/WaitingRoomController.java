@@ -1,6 +1,7 @@
 package com.client.number_finding_game.GUI;
 
 import com.client.number_finding_game.LoginForm;
+import com.server.number_finding_game.Memory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -64,6 +65,7 @@ public class WaitingRoomController implements Initializable {
             stage.setTitle("Practice play");
             stage.setResizable(false);
             stage.show();
+            Memory.client.sendMessenger("start");
         } catch (Exception e){
             e.printStackTrace();
         }

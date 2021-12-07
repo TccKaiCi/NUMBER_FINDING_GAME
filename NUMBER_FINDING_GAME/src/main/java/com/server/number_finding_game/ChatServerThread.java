@@ -9,7 +9,6 @@ import java.net.SocketAddress;
 
 public class ChatServerThread extends Thread {
     private String LobbyID = "";
-
     private NewServer newServer = null;
     private Socket socket = null;
     private SocketAddress ID = null;
