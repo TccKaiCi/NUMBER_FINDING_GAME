@@ -163,7 +163,7 @@ public static void main(String[] args){
                            // if this client ID is the sender, just skip it
                            continue;
                        }
-                       if(input.equalsIgnoreCase("start"))
+                       if(!input.equalsIgnoreCase("start"))
                        clients[i].send(input);
                    }
                }
