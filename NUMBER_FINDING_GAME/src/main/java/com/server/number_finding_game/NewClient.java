@@ -86,7 +86,13 @@ public class NewClient implements Runnable {
                     System.out.println("Client " + socket.getLocalPort() + " nhan duoc " + Memory.messenger);
                     if (message.contains(";")) {
                         String[] job = message.split(";");
+//                            xu ly tac vu
                         switch (job.length) {
+                            case 1:
+//                                setColorToNumber
+//                                Pickup;a:b
+
+                                break;
                             case 2: {
                                 if (job[0].equalsIgnoreCase("YourLob")) {
                                     setCurLobbyID(job[1]);

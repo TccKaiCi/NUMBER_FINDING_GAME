@@ -3,6 +3,7 @@ package com.server.number_finding_game;
 import com.BUS.Match;
 import com.BUS.UserAccountBUS;
 import com.DAO.UserAccountDAO;
+import com.DTO.NumberPoint;
 import com.DTO.UserAccountDTO;
 import com.server.number_finding_game.ChatServerThread;
 
@@ -111,13 +112,22 @@ public class NewServer implements Runnable {
                     tmp.Match = new Match(clients[findClient(ID)].getLobbyID(), 300);
 //                    Create random map
 //                    Set up
-                    tmp.Match.createRandomMap(1,10,790,0, 510, 0);
+                    tmp.Match.createRandomMap(1, 20, 790, 0, 510, 0);
 
 //                    Send map for all player in lobby
+
                     for (int i = 0; i < 3; i++) {
-                        SocketAddress temp =  tmp.addr.get(i);
+                        SocketAddress temp = tmp.addr.get(i);
                         clients[findClient(temp)].send(tmp.Match.getMapByJSon());
                     }
+
+
+                    Thread.sleep(1000);
+//                    Send next number to all player in lobby
+                    NumberPoint DTO = findDirectLobby(ID).Match.getNextValue();
+                    String output = "NextNumber;"
+                            + DTO.getIntValue() + ":" + DTO.getStrRare();
+                    sendMessengerToAllInLobby(ID, output);
                 }
             }
             //Xử lí cú pháp
@@ -176,7 +186,29 @@ public class NewServer implements Runnable {
                     case 2:
                         //gui vs cu phap play nghia la dang trong tran
                         if (job[0].equalsIgnoreCase("Pickup")) {
-                            phanluong(ID, input);
+
+                            String[] arr = job[1].split(":");
+//                            Check is the point chosen
+//                            Input is value
+                            if (findDirectLobby(ID).Match.getMap().isChosen(Integer.parseInt(arr[0]))) {
+                                findDirectLobby(ID).Match.getMap().setColorByValue(Integer.parseInt(arr[0]), arr[1]);
+
+                                phanluong(ID, input);
+
+                                Thread.sleep(1000);
+
+//                                Send and color the value number (Input)
+                                String output = "FillColor;" + arr[0] + ":" + arr[1];
+                                sendMessengerToAllInLobby(ID, output);
+
+                                Thread.sleep(1000);
+
+//                                Send next color to choice
+                                NumberPoint DTO = findDirectLobby(ID).Match.getNextValue();
+                                output = "NextNumber;"
+                                        + DTO.getIntValue() + ":" + DTO.getStrRare();
+                                sendMessengerToAllInLobby(ID, output);
+                            }
                         }
 
                 }
@@ -185,13 +217,26 @@ public class NewServer implements Runnable {
     }
 
     public void phanluong(SocketAddress ID, String input) {
+
         if (!clients[findClient(ID)].getLobbyID().equalsIgnoreCase("")) {
             for (int i = 0; i < clientCount; i++) {
                 if (clients[i].getLobbyID().equalsIgnoreCase(clients[findClient(ID)].getLobbyID())) {
                     if (clients[i].getID() == ID) {
-                        // if this client ID is the sender, just skip it
+//                         if this client ID is the sender, just skip it
                         continue;
                     }
+                    if (!input.equalsIgnoreCase("start"))
+                        clients[i].send(input);
+                }
+            }
+        }
+    }
+
+    public void sendMessengerToAllInLobby(SocketAddress ID, String input) {
+
+        if (!clients[findClient(ID)].getLobbyID().equalsIgnoreCase("")) {
+            for (int i = 0; i < clientCount; i++) {
+                if (clients[i].getLobbyID().equalsIgnoreCase(clients[findClient(ID)].getLobbyID())) {
                     if (!input.equalsIgnoreCase("start"))
                         clients[i].send(input);
                 }

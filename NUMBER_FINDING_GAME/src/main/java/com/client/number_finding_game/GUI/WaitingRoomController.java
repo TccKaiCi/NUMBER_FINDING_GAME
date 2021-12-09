@@ -79,7 +79,7 @@ public class WaitingRoomController implements Initializable {
             stage.setScene(new Scene(parent));
             stage.setResizable(false);
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.UNDECORATED);
+//            stage.initStyle(StageStyle.UNDECORATED);
             stage.setTitle("Edit Account Info");
             stage.show();
         }catch (Exception e){
@@ -96,7 +96,7 @@ public class WaitingRoomController implements Initializable {
             stage.setScene(new Scene(parent));
             stage.setResizable(false);
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.UNDECORATED);
+//            stage.initStyle(StageStyle.UNDECORATED);
             stage.setTitle("Multiplayer");
             stage.show();
         }catch (Exception e){

@@ -33,12 +33,8 @@ public class Match {
         if (map == null) {
             map = new Map();
         }
-        if (stacks == null) {
-            stacks = new Stack<>();
-        }
 
         map.addPoint(point);
-        stacks.push(point);
     }
 
     /**

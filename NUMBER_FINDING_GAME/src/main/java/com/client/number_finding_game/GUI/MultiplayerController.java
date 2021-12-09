@@ -3,6 +3,7 @@ package com.client.number_finding_game.GUI;
 import com.BUS.Match;
 import com.DTO.NumberPoint;
 import com.server.number_finding_game.Memory;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -17,10 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import javafx.stage.Stage;
 import org.json.*;
@@ -41,12 +39,17 @@ public class MultiplayerController implements Initializable {
     public static final String DEFAULT_COLOR = "#23f2eb";
 
     public void init(Pane pane) {
+        if (nextPoint == null) {
+            nextPoint = new NumberPoint();
+        }
+
         RecList = new ArrayList<>();
         match = new Match("R3", 3000);
 
-//        todo
+//      get data from server
         try {
             JSONObject json = new JSONObject(Memory.messenger);
+            Memory.messenger = "";
 
             JSONArray recs = json.getJSONArray("data");
 
@@ -54,17 +57,18 @@ public class MultiplayerController implements Initializable {
                 JSONObject rec = recs.getJSONObject(i);
                 NumberPoint point = new NumberPoint();
 
-                point.setIntValue( Integer.parseInt(rec.get("intValue").toString() ) );
-                point.setIntPosX( Integer.parseInt(rec.get("intPosX").toString() ) );
-                point.setIntPosY( Integer.parseInt(rec.get("intPosY").toString() ) );
-                point.setStrChosenColor( rec.get("strChosenColor").toString() );
-                point.setStrRare( rec.get("strRare").toString() );
+                point.setIntValue(Integer.parseInt(rec.get("intValue").toString()));
+                point.setIntPosX(Integer.parseInt(rec.get("intPosX").toString()));
+                point.setIntPosY(Integer.parseInt(rec.get("intPosY").toString()));
+                point.setStrChosenColor(rec.get("strChosenColor").toString());
+                point.setStrRare(rec.get("strRare").toString());
 
                 match.addPointToMap(point);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
 //        create list label
         match.getMap().getList().forEach(model -> {
             Rectangle rectangle = new Rectangle(25, 25);
@@ -88,33 +92,20 @@ public class MultiplayerController implements Initializable {
 //                This can be change for player input
                 String color;
                 if (model.getIntValue() % 2 == 0)
-                    color = "0xffa500ff";
+                    color = "#ff0000";
                 else
-                    color = "ffee04";
+                    color = "#ff00eb";
 //                Check is nextValue
                 if (model.getIntValue() == nextPoint.getIntValue()) {
 //                    Check is chosen
                     if (match.getMap().isChosen(model.getIntValue())) {
 //                        Point
                         getPoint();
-//                    Change input
-                        rectangle.setFill(Color.valueOf(color));
-                        match.getMap().setColorByValue(model.getIntValue(), color);
 
 //                    Print value select
 //                      todo
-                        System.out.println(label.getText()
-                                + " ; "
-                                + model.getIntValue()
-                                + " ; "
-                                + model.getStrChosenColor());
-                        Memory.client.sendMessenger(label.getText()
-                                + " ; "
-                                + model.getIntValue()
-                                + " ; "
-                                + model.getStrChosenColor());
-//                    Print next value
-                        setLabelNumberFindingColor();
+                        Memory.client.sendMessenger("Pickup;"
+                                + model.getIntValue() + ":" + color);
                     }
                 }
             });
@@ -123,13 +114,9 @@ public class MultiplayerController implements Initializable {
 //            add to Panel/ UI
             pane.getChildren().add(stackPane);
         });
-
-//         create next random
-        setLabelNumberFindingColor();
     }
 
     public void setLabelNumberFindingColor() {
-        nextPoint = match.getNextValue();
 //        is have next number
         if (nextPoint == null) {
             lbl_findingNum.setText("NULL");
@@ -167,15 +154,28 @@ public class MultiplayerController implements Initializable {
         }
     }
 
-    // 16 ; 16 ; #hex_color
+    /**
+     * 16 : #hex_color
+     */
     public void setColorToNumber(String input) {
-        String[] color = input.split(";");
-        System.out.println("dadasdsa");
+        String[] inputs = input.split(":");
+
         for (Rectangle item : RecList) {
             System.out.println(item.getId());
-            if (item.getId().equalsIgnoreCase("SP_" + color[0])) {
-                System.out.println("trong if " + color[0] + color[1] + color[2]);
-                item.setFill(Color.web(color[2]));
+            if (item.getId().equalsIgnoreCase("SP_" + inputs[0])) {
+//                System.out.println("trong if " + inputs[0] + inputs[1] + inputs[2]);
+                item.setFill(Color.web(inputs[1]));
+            }
+        }
+    }
+
+    /**
+     * 16 : #hex_color
+     */
+    public void setColorToNumber(int value, String color) {
+        for (Rectangle item : RecList) {
+            if (item.getId().equalsIgnoreCase("SP_" + value)) {
+                item.setFill(Color.web(color));
             }
         }
     }
@@ -183,9 +183,11 @@ public class MultiplayerController implements Initializable {
     public void setBtn_back(Event event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
+//        exit lobby from server
+        Memory.client.stop();
     }
 
-    public void setBtn_setting(Event event){
+    public void setBtn_setting(Event event) {
 
     }
 
@@ -194,6 +196,58 @@ public class MultiplayerController implements Initializable {
         init(pane_main);
         btn_back.setOnMouseClicked(this::setBtn_back);
         btn_setting.setOnMouseClicked(this::setBtn_setting);
+
+        MyTask myTask = new MyTask();
+        Timer timer = new Timer();
+        timer.schedule(myTask, 0, 100);
+    }
+
+    public class MyTask extends TimerTask {
+        @Override
+        public void run() {
+            if (!Memory.messenger.equalsIgnoreCase("")) {
+                String tmp = Memory.messenger;
+
+//                Pickup;1:color
+                String[] arr = tmp.split(";");
+                String[] s = arr[1].split(":");
+
+
+//                Get X in X;a:b....etc
+                switch (arr[0]) {
+//                    Change color
+//                    type Number:Color
+                    case "Pickup":
+                        Platform.runLater(() -> {
+                            setColorToNumber(s[0]);
+                        });
+                        break;
+//                    setLabelNumberFindingColor
+//                    value:rare
+//                    NextNumber;10:Lucky
+                    case "NextNumber":
+                        Platform.runLater(() -> {
+                            if (nextPoint == null) {
+                                nextPoint = new NumberPoint();
+                            }
+                            System.out.println(arr[1]);
+                            nextPoint.setIntValue(Integer.parseInt(s[0]));
+                            nextPoint.setStrRare(s[1]);
+                            setLabelNumberFindingColor();
+                        });
+                        break;
+//                        Type: Number:Color
+                    case "FillColor":
+                        Platform.runLater(() -> {
+                            setColorToNumber(Integer.parseInt(s[0]), s[1]);
+                        });
+                        break;
+                }
+                Memory.messenger = "";
+            } else {
+
+            }
+        }
     }
 
 

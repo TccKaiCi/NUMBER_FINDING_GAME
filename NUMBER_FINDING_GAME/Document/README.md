@@ -4,10 +4,15 @@
 ![Language](https://img.shields.io/badge/Team-SGU-orange.svg)
 
 ## Team
-| Cú pháp | Từ X đến Y | Ví dụ | Mô tả |
+| Cú pháp | Luồng dữ liệu | Ví dụ | Mô tả |
 |---| --- | --- | --- |
 | SIGNIN;username;passwd | Client -> Server | SIGNIN;Test;test | đăng nhập | 
-| MAP;Value | Server -> Client | Map | Tạo mạp random từ server cho các client |
+| MAP;Value | Server -> Client | trả về Map | Tạo mạp random từ server cho các client |
+| start | Server <-> Client | Client join lobby | Cấp cho client một lobby còn trống |
+| exit | Client -> Server | Client thoát khỏi Server | Thoát khỏi lobby |
+| Pickup | Client <-> Server | Pickup;Number:Color | Gửi dữ liệu in game |
+| NextNumber | Server -> Client | NextNumber;Value:Rare | Số cần chọn kế tiếp |
+| FillColor | Client <-> Server | FillColor;Number:Color | Tô màu cho số |
 
 [comment]: <> (
 | start | cấp cho client một lobby còn trống |  |
