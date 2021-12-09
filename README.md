@@ -1,4 +1,4 @@
-# TRÒ CHƠI TÌM SỐ
+# TRÒ CHƠI TÌM SỐ [Document](https://github.com/HiamKaito/NUMBER_FINDING_GAME/blob/main/NUMBER_FINDING_GAME/Document/README.md)
 
 ![Language](https://img.shields.io/badge/Language-Java-orange.svg)
 ![Language](https://img.shields.io/badge/Team-SGU-orange.svg)
