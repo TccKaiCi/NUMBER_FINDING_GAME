@@ -11,6 +11,7 @@ public class Map {
     private List<NumberPoint> list;
     private int startValue, endValue;
     private String DEFAULT_COLOR = "#23f2eb";
+
     public Map() {
         list = new ArrayList<>();
     }
@@ -33,15 +34,14 @@ public class Map {
             } else {
                 if (i % 5 == 0) {
                     model.setStrRare("Blind");
-                }
-                else {
+                } else {
                     model.setStrRare("Normal");
                 }
             }
 
 //             find a place for it
             do {
-                model.randomPosition(posXMax,posXMin,posYMax,posYMin);
+                model.randomPosition(posXMax, posXMin, posYMax, posYMin);
             } while (isNearly(model));
 
             list.add(model);
@@ -58,6 +58,7 @@ public class Map {
 
     /**
      * Check 1 point to all list
+     *
      * @param value
      * @return <b>True is the 2 number nearly</b>
      */
@@ -72,6 +73,7 @@ public class Map {
 
     /**
      * Set color by Value Number
+     *
      * @param value The number's Value
      * @param color The Color You Want
      */
@@ -86,6 +88,7 @@ public class Map {
     /**
      * Try to check is the number already chosen
      * <b>Color default is: "6fcffa", you can edit it from this code</b>
+     *
      * @param value Value Number of the Number
      * @return <b>true if it is choice</b>
      */
@@ -101,20 +104,25 @@ public class Map {
         return false;
     }
 
+    /**
+     * Only Json
+     *
+     * @return
+     */
     public String getMapByJSon() {
         StringBuilder sb = new StringBuilder();
 
 //        open json
         sb.append("{\n" +
-                "  \"data\": {");
+                "  \"data\": [");
 
         list.forEach(model -> {
-            sb.append("\"NumberPoint"+ model.getIntValue()+"\": {\n" +
-                    "      \"intValue\": "+model.getIntValue()+" ,\n" +
-                    "      \"intPosX\": "+model.getIntPosX()+",\n" +
-                    "      \"intPosY\": "+model.getIntPosY()+",\n" +
-                    "      \"strChosenColor\" : \""+model.getStrChosenColor()+"\",\n" +
-                    "      \"strRare\" : \""+model.getStrRare()+"\"\n" +
+            sb.append("{\n" +
+                    "      \"intValue\": " + model.getIntValue() + " ,\n" +
+                    "      \"intPosX\": " + model.getIntPosX() + ",\n" +
+                    "      \"intPosY\": " + model.getIntPosY() + ",\n" +
+                    "      \"strChosenColor\" : \"" + model.getStrChosenColor() + "\",\n" +
+                    "      \"strRare\" : \"" + model.getStrRare() + "\"\n" +
                     "    },");
         });
 
@@ -122,13 +130,18 @@ public class Map {
         sb.deleteCharAt(sb.length() - 1);
 //        close json
         sb.append("\n" +
-                "  }\n" +
+                " \n]" +
                 "}");
         return sb.toString();
     }
 
-
-
+    /**
+     * Add point to map
+     * @param model must have full data, not allow null
+     */
+    public boolean addPoint(NumberPoint model) {
+        return list.add(model);
+    }
 
 
     public List<NumberPoint> getList() {

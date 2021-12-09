@@ -111,7 +111,7 @@ public class NewServer implements Runnable {
                     tmp.Match = new Match(clients[findClient(ID)].getLobbyID(), 300);
 //                    Create random map
 //                    Set up
-                    tmp.Match.createRandomMap(1,100,790,0, 510, 0);
+                    tmp.Match.createRandomMap(1,10,790,0, 510, 0);
 
 //                    Send map for all player in lobby
                     for (int i = 0; i < 3; i++) {

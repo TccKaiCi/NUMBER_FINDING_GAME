@@ -12,11 +12,33 @@ public class Match {
     private Stack<NumberPoint> stacks;
 
     public Match() {
+        if (map == null) {
+            map = new Map();
+        }
+        if (stacks == null) {
+            stacks = new Stack<>();
+        }
     }
 
     public Match(String strIdRoom, long longMatchTime) {
         this.strIdRoom = strIdRoom;
         this.longMatchTime = longMatchTime;
+    }
+
+    /**
+     * Create map by follow
+     */
+    public void addPointToMap(NumberPoint point) {
+//        check is NULL
+        if (map == null) {
+            map = new Map();
+        }
+        if (stacks == null) {
+            stacks = new Stack<>();
+        }
+
+        map.addPoint(point);
+        stacks.push(point);
     }
 
     /**
@@ -100,10 +122,6 @@ public class Match {
     public String getMapByJSon() {
         return map.getMapByJSon();
     }
-
-
-
-
 
 
 

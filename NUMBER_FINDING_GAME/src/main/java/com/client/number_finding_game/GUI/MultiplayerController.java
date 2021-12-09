@@ -44,8 +44,6 @@ public class MultiplayerController implements Initializable {
         RecList = new ArrayList<>();
         match = new Match("R3", 3000);
 
-        match.createRandomMap(1, 30, 790, 0, 510, 0);
-        System.out.println(Memory.messenger);
 //        todo
         try {
             JSONObject json = new JSONObject(Memory.messenger);
@@ -54,11 +52,16 @@ public class MultiplayerController implements Initializable {
 
             for (int i = 0; i < recs.length(); i++) {
                 JSONObject rec = recs.getJSONObject(i);
-                String id = rec.get("intValue").toString();
+                NumberPoint point = new NumberPoint();
 
-                System.out.println(id);
+                point.setIntValue( Integer.parseInt(rec.get("intValue").toString() ) );
+                point.setIntPosX( Integer.parseInt(rec.get("intPosX").toString() ) );
+                point.setIntPosY( Integer.parseInt(rec.get("intPosY").toString() ) );
+                point.setStrChosenColor( rec.get("strChosenColor").toString() );
+                point.setStrRare( rec.get("strRare").toString() );
+
+                match.addPointToMap(point);
             }
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
