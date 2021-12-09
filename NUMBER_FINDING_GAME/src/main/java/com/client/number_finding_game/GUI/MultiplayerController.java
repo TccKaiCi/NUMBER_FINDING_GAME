@@ -3,9 +3,14 @@ package com.client.number_finding_game.GUI;
 import com.BUS.Match;
 import com.DTO.NumberPoint;
 import com.server.number_finding_game.Memory;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -17,13 +22,17 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import javafx.stage.Stage;
 import org.json.*;
+import org.w3c.dom.events.MouseEvent;
 
 public class MultiplayerController implements Initializable {
     @FXML
     Pane pane_main;
     @FXML
     Label lbl_findingNum;
+    @FXML
+    ImageView btn_back, btn_setting;
 
     private Match match;
     private NumberPoint nextPoint;
@@ -168,8 +177,21 @@ public class MultiplayerController implements Initializable {
         }
     }
 
+    public void setBtn_back(Event event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
+    public void setBtn_setting(Event event){
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         init(pane_main);
+        btn_back.setOnMouseClicked(this::setBtn_back);
+        btn_setting.setOnMouseClicked(this::setBtn_setting);
     }
+
+
 }

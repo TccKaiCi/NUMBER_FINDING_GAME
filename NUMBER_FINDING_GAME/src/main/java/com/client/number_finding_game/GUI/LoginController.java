@@ -11,7 +11,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -101,6 +103,20 @@ public class LoginController implements Initializable {
                     Memory.client.sendMessenger(SendingPack);
                     System.out.println(SendingPack);
                     dk_passError.setVisible(false);
+                    try {
+                        FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("Alert.fxml"));
+                        Parent parent = fxmlLoader.load();
+                        Stage stage = new Stage();
+                        stage.setScene(new Scene(parent));
+                        stage.setResizable(false);
+                        stage.initModality(Modality.APPLICATION_MODAL);
+                        stage.initStyle(StageStyle.UNDECORATED);
+                        stage.setTitle("submit success");
+                        stage.show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    VisibleSignT_Re_F();
                 } else {
                     dk_passError.setVisible(true);
                 }
@@ -134,6 +150,16 @@ public class LoginController implements Initializable {
         btn_Register.setText("Tạo tài khoản mới");
     }
 
+    public void VisibleSignT_Re_F() {
+        Node[] signInPart = {btn_Login, lbl_name, lbl_pass, tf_username, pf_password, btn_Register};
+        setVi_TRUE_Dis_FALSE(signInPart);
+
+        Node[] registerPart = {lbl_1, lbl_2, lbl_3, lbl_4, lbl_5, lbl_6,
+                dk_retype, dk_dob, dk_pass, dk_name, dk_username, dk_male, dk_female, dk_other, btn_Back, btn_submit};
+        setVi_FALSE_Dis_TRUE(registerPart);
+
+        btn_Register.setText("Tạo tài khoản mới");
+    }
 
     public void setVi_TRUE_Dis_FALSE(Node[] node) {
         for (Node items : node) {
@@ -177,9 +203,7 @@ public class LoginController implements Initializable {
         boolean repassCheck = dk_pass.getText().isBlank();
         if (nameCheck || usernameCheck || dobCheck || passCheck || repassCheck) {
             check = false;
-            System.out.println("trong vong lap: " + check);
         }
-        System.out.println("Ngoai vong lap: " + check);
         return check;
     }
 

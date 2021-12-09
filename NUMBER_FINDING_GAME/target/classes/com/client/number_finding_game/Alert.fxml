@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="97.0" prefWidth="300.0" style="-fx-background-color: #EDF0C7; -fx-border-color: green;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.client.number_finding_game.GUI.AlertController">
+   <children>
+      <Label alignment="CENTER" layoutX="37.0" layoutY="24.0" prefHeight="25.0" prefWidth="227.0" text="Đăng kí tài khoản thành công" textFill="#1a00ff">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="btn_submit" layoutX="90.0" layoutY="61.0" mnemonicParsing="false" style="-fx-background-color: #A7DA46;" text="Đăng nhập">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+</AnchorPane>

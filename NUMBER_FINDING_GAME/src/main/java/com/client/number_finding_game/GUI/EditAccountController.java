@@ -84,6 +84,19 @@ public class EditAccountController implements Initializable {
     }
 
     public void setEdt_btnSave(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("Alert.fxml"));
+            Parent parent = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(parent));
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setTitle("Edit success");
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
