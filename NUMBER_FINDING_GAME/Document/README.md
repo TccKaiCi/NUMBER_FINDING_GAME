@@ -19,3 +19,7 @@
 | exit | xóa client khỏi danh sách connect | |
 | reset | reconect client | |
 )
+## Luồng 
+![image](https://user-images.githubusercontent.com/52872325/145433704-401a032e-7755-4d2b-b22c-41601eccb929.png)
+
+![image](https://user-images.githubusercontent.com/52872325/145433888-3576728d-5e46-408f-97e6-30a85fe143eb.png)
