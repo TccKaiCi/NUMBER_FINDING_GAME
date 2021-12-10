@@ -9,6 +9,7 @@ public class UserAccountDTO {
     private String strDayOfBirth;
 
     public UserAccountDTO() {
+        this.strUserName = "PLayer-Name: NULL";
     }
 
     public UserAccountDTO(String strUid, String strUserName, String strNameInf, String strPassWord, String strGender, String strDayOfBirth) {

@@ -10,7 +10,7 @@ import com.DTO.UserAccountDTO;
 public class Memory {
     public static NewClient client = new NewClient();
 
-    public static UserAccountDTO userAccountDTO;
+    public static UserAccountDTO userAccountDTO = new UserAccountDTO();
 
 //    ======================================================================
 //    ======================================================================

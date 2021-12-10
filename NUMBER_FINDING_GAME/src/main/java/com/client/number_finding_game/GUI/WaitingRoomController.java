@@ -42,7 +42,7 @@ public class WaitingRoomController implements Initializable {
         Node[] node = {btn_multi, btn_practice, btn_ranking, btn_account, btn_quit};
         setButtonAnimate(node);
 
-        lbl_name.setText(Memory.userAccountDTO.getStrUserName());
+        lbl_name.setText(Memory.userAccountDTO.getStrNameInf());
     }
 
     public void setHoverEffect(){

@@ -14,8 +14,9 @@ public class Test {
 //        Timer timer = new Timer();
 //        timer.schedule(myTask, 0, 10);
 
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        System.out.println(timestamp.getTime());        // 1616577123311
+        String s = "A;b:C";
+        String[] arr= s.split(";");
+        System.out.println(arr.length);
 
     }
 

@@ -210,6 +210,7 @@ public class NewServer implements Runnable {
                                 // set uid
                                 clients[findClient(ID)].setUid(dtotmp.getStrUid());
 
+                                Thread.sleep(1000);
 
                                 clients[findClient(ID)].send(sendmess);
                             }
