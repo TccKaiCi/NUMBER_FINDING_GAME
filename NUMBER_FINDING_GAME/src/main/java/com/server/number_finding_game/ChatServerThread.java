@@ -9,6 +9,7 @@ import java.net.SocketAddress;
 
 public class ChatServerThread extends Thread {
     private String LobbyID = "";
+    private String uid = "";
     private NewServer newServer = null;
     private Socket socket = null;
     private SocketAddress ID = null;
@@ -37,15 +38,13 @@ public class ChatServerThread extends Thread {
         this.LobbyID = Lobby;
     }
 
+    public String getUid() {
+        return uid;
+    }
 
-
-
-
-
-
-
-
-
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
     public void send(String message) {
         try {

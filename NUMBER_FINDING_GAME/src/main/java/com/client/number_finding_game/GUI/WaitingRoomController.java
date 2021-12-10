@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Effect;
 import javafx.scene.paint.Color;
@@ -23,6 +24,8 @@ import java.util.ResourceBundle;
 public class WaitingRoomController implements Initializable {
     @FXML
     private Button btn_multi, btn_practice, btn_ranking, btn_account, btn_quit;
+    @FXML
+    Label lbl_name;
 
 
     private static final DropShadow hoverEffect = new DropShadow();
@@ -38,6 +41,8 @@ public class WaitingRoomController implements Initializable {
         setHoverEffect();
         Node[] node = {btn_multi, btn_practice, btn_ranking, btn_account, btn_quit};
         setButtonAnimate(node);
+
+        lbl_name.setText(Memory.userAccountDTO.getStrUserName());
     }
 
     public void setHoverEffect(){

@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class DetailMatchDAO {
     MyConnectUnit connect;
-    String strTableName = "useraccount";
+    String strTableName = "tbldetailmatch";
 
     /**
      * Lấy thông tin từ Database
@@ -20,13 +20,14 @@ public class DetailMatchDAO {
         ResultSet result = this.connect.Select(strTableName, condition, orderBy);
         ArrayList<DetailMatchDTO> DTOs = new ArrayList<>();
         while (result.next()) {
-            DetailMatchDTO taokhoan = new DetailMatchDTO();
-            taokhoan.setStrUid(result.getString("UID"));
-//            taokhoan.setStrIdRoom(result.getString("UID"));
-//            taokhoan.setStrUid(result.getString("UID"));
-//            taokhoan.setStrUid(result.getString("UID"));
+            DetailMatchDTO DTO = new DetailMatchDTO();
+            DTO.setStrUid(result.getString("UID"));
+            DTO.setStrIdRoom(result.getString("IdRoom"));
+            DTO.setStrPlayerColor(result.getString("playerColor"));
+            DTO.setIntPoint(Integer.parseInt(result.getString("point")));
+            DTO.setStrKetQua(result.getString("KetQua"));
 
-            DTOs.add(taokhoan);
+            DTOs.add(DTO);
         }
         connect.Close();
         return DTOs;
@@ -51,6 +52,10 @@ public class DetailMatchDAO {
         // tạo đối tượng truyền vào
         HashMap<String, Object> insertValues = new HashMap<>();
         insertValues.put("UID", tk.getStrUid());
+        insertValues.put("IdRoom ", tk.getStrIdRoom());
+        insertValues.put("playerColor", tk.getStrPlayerColor());
+        insertValues.put("point", tk.getIntPoint());
+        insertValues.put("KetQua", tk.getStrKetQua());
 
         Boolean check = connect.Insert(strTableName, insertValues);
 

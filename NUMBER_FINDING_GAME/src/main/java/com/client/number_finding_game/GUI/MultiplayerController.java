@@ -44,7 +44,7 @@ public class MultiplayerController implements Initializable {
         }
 
         RecList = new ArrayList<>();
-        match = new Match("R3", 3000);
+        match = new Match("R2321321313", 3000);
 
 //      get data from server
         try {
@@ -99,13 +99,12 @@ public class MultiplayerController implements Initializable {
                 if (model.getIntValue() == nextPoint.getIntValue()) {
 //                    Check is chosen
                     if (match.getMap().isChosen(model.getIntValue())) {
-//                        Point
-                        getPoint();
-
 //                    Print value select
-//                      todo
+//                        Pickup;Value:color:rare:uid
                         Memory.client.sendMessenger("Pickup;"
-                                + model.getIntValue() + ":" + color);
+                                + model.getIntValue() + ":" + color
+                                + ":" + model.getStrRare()
+                                + ":" + Memory.userAccountDTO.getStrUid());
                     }
                 }
             });

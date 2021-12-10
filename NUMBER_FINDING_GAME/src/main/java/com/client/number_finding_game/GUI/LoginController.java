@@ -61,6 +61,8 @@ public class LoginController implements Initializable {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("Waiting_room.fxml"));
             Parent root = fxmlLoader.load();
+//            todo
+//            lỗi đăng nhập
             String SendingPack = "SIGNIN;" + tf_username.getText() + ";" + pf_password.getText();
             if (validate(tf_username.getText()) || !pf_password.getText().equals("")) {
                 Memory.client.sendMessenger(SendingPack);

@@ -1,11 +1,13 @@
 package com.server.number_finding_game;
 
+import com.DTO.UserAccountDTO;
+
 import java.io.*;
 import java.net.Socket;
 
 // Client for Server4
 public class NewClient implements Runnable {
-    private String CurLobbyID = "";
+    public String CurLobbyID = ""; //uid
     private String serverName = "localhost";
     private int serverPort = 8081;
     private Socket socket = null;
@@ -17,8 +19,7 @@ public class NewClient implements Runnable {
     public static void main(String[] args) {
         NewClient client = new NewClient();
         client.Connect();
-        client.sendMessenger("start");
-
+//        client.sendMessenger("start");
     }
 
     public String getCurLobbyID() {
@@ -89,8 +90,25 @@ public class NewClient implements Runnable {
 //                            xu ly tac vu
                         switch (job.length) {
                             case 1:
-//                                setColorToNumber
-//                                Pickup;a:b
+//                                "Account;" +
+//                                 0       dtotmp.getStrUid() + ":" +
+//                                 1       dtotmp.getStrUserName() + ":" +
+//                                 2       dtotmp.getStrNameInf() + ":" +
+//                                 3       dtotmp.getStrPassWord() + ":" +
+//                                 4       dtotmp.getStrGender() + ":" +
+//                                 5       dtotmp.getStrDayOfBirth();
+                                if (job[0].equalsIgnoreCase("Account")) {
+                                    String[] arr = job[1].split(":");
+
+                                    Memory.userAccountDTO = new UserAccountDTO();
+
+                                    Memory.userAccountDTO.setStrUid(arr[0]);
+                                    Memory.userAccountDTO.setStrUserName(arr[1]);
+                                    Memory.userAccountDTO.setStrNameInf(arr[2]);
+                                    Memory.userAccountDTO.setStrPassWord(arr[3]);
+                                    Memory.userAccountDTO.setStrGender(arr[4]);
+                                    Memory.userAccountDTO.setStrDayOfBirth(arr[5]);
+                                }
 
                                 break;
                             case 2: {
