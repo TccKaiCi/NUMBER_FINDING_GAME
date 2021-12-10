@@ -1,8 +1,10 @@
 package com.server.number_finding_game;
 
+import com.BUS.DetailMatchBUS;
 import com.BUS.Match;
 import com.BUS.UserAccountBUS;
 import com.DAO.UserAccountDAO;
+import com.DTO.DetailMatchDTO;
 import com.DTO.NumberPoint;
 import com.DTO.UserAccountDTO;
 import com.server.number_finding_game.ChatServerThread;
@@ -13,6 +15,7 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.sql.Timestamp;
 import java.util.*;
 
 // SERVER : Multi Server
@@ -33,6 +36,10 @@ public class NewServer implements Runnable {
     private int clientCount = 0;
     private List<Lobby> ListLobby;
 
+    UserAccountBUS bustmp;
+    DetailMatchBUS detailMatchBUS;
+
+
     public static void main(String[] args) {
         NewServer news = new NewServer();
     }
@@ -40,7 +47,11 @@ public class NewServer implements Runnable {
     public NewServer() {
         try {
             serverSocket = new ServerSocket(port);
+            // khởi tạo
             ListLobby = new ArrayList<>();
+            bustmp = new UserAccountBUS();
+            detailMatchBUS = new DetailMatchBUS();
+
             System.out.println("Server started on port " + serverSocket.getLocalPort() + "...");
             System.out.println("Waiting for client...");
             thread = new Thread(this);
@@ -93,8 +104,9 @@ public class NewServer implements Runnable {
             remove(ID);
             return;
         }
+        // khởi tạo
         UserAccountDTO dtotmp = new UserAccountDTO();
-        UserAccountBUS bustmp = new UserAccountBUS();
+
         System.out.println("Server get from Client " + ID + " " + input);
         if (input.equals("exit")) {
             clients[findClient(ID)].send("exit");
@@ -103,7 +115,10 @@ public class NewServer implements Runnable {
             if (input.equalsIgnoreCase("start")) {
                 String idLobby = findLobbyFree(ID);
                 clients[findClient(ID)].setLobbyID(idLobby);
+
                 clients[findClient(ID)].send("YourLob;" + clients[findClient(ID)].getLobbyID());
+
+//                lobby
                 Lobby tmp = findDirectLobby(ID);
 
 //                if room/ lobby is full 3/3 player or client
@@ -114,10 +129,40 @@ public class NewServer implements Runnable {
 //                    Set up
                     tmp.Match.createRandomMap(1, 20, 790, 0, 510, 0);
 
-//                    Send map for all player in lobby
+//                    set id lobby
+                    java.sql.Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                    String lobbyIdRoom = "Lobby" + timestamp.getTime();
 
+//                    Send map for all player in lobby
                     for (int i = 0; i < 3; i++) {
                         SocketAddress temp = tmp.addr.get(i);
+                        // tạo detail match
+                        DetailMatchDTO dto = new DetailMatchDTO();
+
+                        dto.setStrUid(clients[findClient(temp)].getUid());
+                        dto.setStrIdRoom(lobbyIdRoom);
+
+//                        set color
+                        String color = "";
+                        switch (i) {
+                            case 0:
+                                color = "#ff0000";
+                                break;
+                            case 1:
+                                color = "#ff00eb";
+                                break;
+                            case 2:
+                                color = "#7eff45";
+                                break;
+                        }
+                        dto.setStrPlayerColor(color);
+                        dto.setIntPoint(0);
+                        dto.setStrKetQua("");
+
+                        // add to bus detailmatch
+                        // write to database
+                        detailMatchBUS.add(dto);
+
                         clients[findClient(temp)].send(tmp.Match.getMapByJSon());
                     }
 
@@ -135,7 +180,7 @@ public class NewServer implements Runnable {
                 String[] job = input.split(";");
                 int lenght = job.length;
                 switch (lenght) {
-                    //SIGNIN
+                    //SIGNIN;tendangnhap;matkhau
                     case 3:
                         if (job[0].equalsIgnoreCase("SIGNIN")) {
                             dtotmp.setStrUserName(job[1]);
@@ -151,6 +196,22 @@ public class NewServer implements Runnable {
                             if (bustmp.kiemTraDangNhap(dtotmp)) {
                                 System.out.println("valid user");
                                 clients[findClient(ID)].send("valid user");
+
+                                // return for client all infor user
+                                dtotmp = bustmp.getUserAccountByUserName(dtotmp);
+                                String sendmess = "Account;" +
+                                        dtotmp.getStrUid() + ":" +
+                                        dtotmp.getStrUserName() + ":" +
+                                        dtotmp.getStrNameInf() + ":" +
+                                        dtotmp.getStrPassWord() + ":" +
+                                        dtotmp.getStrGender() + ":" +
+                                        dtotmp.getStrDayOfBirth();
+
+                                // set uid
+                                clients[findClient(ID)].setUid(dtotmp.getStrUid());
+
+
+                                clients[findClient(ID)].send(sendmess);
                             }
 
                             dtotmp = new UserAccountDTO();
@@ -185,20 +246,24 @@ public class NewServer implements Runnable {
                         }
                     case 2:
                         //gui vs cu phap play nghia la dang trong tran
+                        ;//Pickup;Number:Color
                         if (job[0].equalsIgnoreCase("Pickup")) {
-
                             String[] arr = job[1].split(":");
 //                            Check is the point chosen
 //                            Input is value
                             if (findDirectLobby(ID).Match.getMap().isChosen(Integer.parseInt(arr[0]))) {
                                 findDirectLobby(ID).Match.getMap().setColorByValue(Integer.parseInt(arr[0]), arr[1]);
 
+//                                tính điểm cho user
+
+                                // gửi cho các user còn lại
                                 phanluong(ID, input);
 
                                 Thread.sleep(1000);
 
 //                                Send and color the value number (Input)
                                 String output = "FillColor;" + arr[0] + ":" + arr[1];
+                                //gửi tất cả user
                                 sendMessengerToAllInLobby(ID, output);
 
                                 Thread.sleep(1000);

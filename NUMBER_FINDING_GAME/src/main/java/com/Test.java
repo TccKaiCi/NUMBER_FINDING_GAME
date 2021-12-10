@@ -4,15 +4,19 @@ import com.BUS.Match;
 import com.DTO.NumberPoint;
 import com.client.number_finding_game.GUI.MultiplayerController;
 
-import java.util.Date;
-import java.util.Timer;
+import java.sql.Timestamp;
 import java.util.TimerTask;
+
 
 public class Test {
     public static void main(String[] args) {
-        MyTask myTask = new MyTask();
-        Timer timer = new Timer();
-        timer.schedule(myTask, 0, 10);
+//        MyTask myTask = new MyTask();
+//        Timer timer = new Timer();
+//        timer.schedule(myTask, 0, 10);
+
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        System.out.println(timestamp.getTime());        // 1616577123311
+
     }
 
     public static class MyTask extends TimerTask {
@@ -20,7 +24,7 @@ public class Test {
 
         @Override
         public void run() {
-            a ++;
+            a++;
             System.out.println(a);
         }
     }

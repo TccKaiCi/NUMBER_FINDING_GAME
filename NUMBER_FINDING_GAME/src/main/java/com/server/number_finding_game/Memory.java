@@ -1,11 +1,16 @@
 package com.server.number_finding_game;
 
+import com.BUS.DetailMatchBUS;
+import com.DTO.UserAccountDTO;
+
 /**
  * Information data storage
  * @author HiamKaito
  */
 public class Memory {
     public static NewClient client = new NewClient();
+
+    public static UserAccountDTO userAccountDTO;
 
 //    ======================================================================
 //    ======================================================================

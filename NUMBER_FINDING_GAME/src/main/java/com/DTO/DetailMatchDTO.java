@@ -5,6 +5,8 @@ public class DetailMatchDTO {
     private String strIdRoom;
     private String strPlayerColor;
     private int    intPoint;
+    private String strKetQua;
+
 
     public DetailMatchDTO() {
 
@@ -49,5 +51,13 @@ public class DetailMatchDTO {
 
     public void setIntPoint(int intPoint) {
         this.intPoint = intPoint;
+    }
+
+    public String getStrKetQua() {
+        return strKetQua;
+    }
+
+    public void setStrKetQua(String strKetQua) {
+        this.strKetQua = strKetQua;
     }
 }

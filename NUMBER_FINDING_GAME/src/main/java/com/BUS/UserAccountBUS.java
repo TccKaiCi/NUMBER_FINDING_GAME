@@ -83,6 +83,18 @@ public class UserAccountBUS {
         }
         return false;
     }
+
+    public UserAccountDTO getUserAccountByUserName(UserAccountDTO DTO) {
+        for ( UserAccountDTO model : list_DTO ) {
+            // kiểm tra mật khảu và tên đăng nhập
+            if (model.getStrUserName().equals(DTO.getStrUserName())
+                    && model.getStrPassWord().equals(DTO.getStrPassWord()) ) {
+                return model;
+            }
+        }
+        return null;
+    }
+
     public String getDefault() {
         if (list_DTO.size() == 0)
             return "3118410";
@@ -107,6 +119,7 @@ public class UserAccountBUS {
             return s;
         }
     }
+
     public int demSoChuSo(int nInput){
         if (nInput < 10) {
             return 1;
