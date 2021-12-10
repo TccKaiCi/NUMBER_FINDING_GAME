@@ -156,21 +156,6 @@ public class MultiplayerController implements Initializable {
     /**
      * 16 : #hex_color
      */
-    public void setColorToNumber(String input) {
-        String[] inputs = input.split(":");
-
-        for (Rectangle item : RecList) {
-            System.out.println(item.getId());
-            if (item.getId().equalsIgnoreCase("SP_" + inputs[0])) {
-//                System.out.println("trong if " + inputs[0] + inputs[1] + inputs[2]);
-                item.setFill(Color.web(inputs[1]));
-            }
-        }
-    }
-
-    /**
-     * 16 : #hex_color
-     */
     public void setColorToNumber(int value, String color) {
         for (Rectangle item : RecList) {
             if (item.getId().equalsIgnoreCase("SP_" + value)) {
@@ -198,7 +183,7 @@ public class MultiplayerController implements Initializable {
 
         MyTask myTask = new MyTask();
         Timer timer = new Timer();
-        timer.schedule(myTask, 0, 100);
+        timer.schedule(myTask, 0, 1);
     }
 
     public class MyTask extends TimerTask {
@@ -214,13 +199,6 @@ public class MultiplayerController implements Initializable {
 
 //                Get X in X;a:b....etc
                 switch (arr[0]) {
-//                    Change color
-//                    type Number:Color
-                    case "Pickup":
-                        Platform.runLater(() -> {
-                            setColorToNumber(s[0]);
-                        });
-                        break;
 //                    setLabelNumberFindingColor
 //                    value:rare
 //                    NextNumber;10:Lucky
