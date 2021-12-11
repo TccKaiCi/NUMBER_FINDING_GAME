@@ -2,35 +2,46 @@ package com.client.number_finding_game.GUI;
 
 import com.client.number_finding_game.LoginForm;
 import com.server.number_finding_game.Memory;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Effect;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class WaitingRoomController implements Initializable {
     @FXML
     private Button btn_multi, btn_practice, btn_ranking, btn_account, btn_quit;
     @FXML
     Label lbl_name;
+    @FXML
+    ImageView img_x;
 
 
     private static final DropShadow hoverEffect = new DropShadow();
     private static final String IDLE_BUTTON_STYLE = "-fx-background-color: #A7DA46; ";
     private static final String HOVERED_BUTTON_STYLE = "-fx-background-color: #4E9525; ";
+    Timer timer;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -38,30 +49,38 @@ public class WaitingRoomController implements Initializable {
         btn_practice.setOnAction(this::setBtn_practiceOnclick);
         btn_account.setOnAction(this::setBtn_accountOnClick);
         btn_quit.setOnAction(this::setBtn_quit);
+        img_x.setOnMouseClicked(this::setImg_x);
         setHoverEffect();
         Node[] node = {btn_multi, btn_practice, btn_ranking, btn_account, btn_quit};
         setButtonAnimate(node);
 
+
         lbl_name.setText(Memory.userAccountDTO.getStrNameInf());
     }
 
-    public void setHoverEffect(){
+    public void setHoverEffect() {
         hoverEffect.setColor(Color.web("#FFE8D6"));
         hoverEffect.setRadius(35);
         hoverEffect.setWidth(40);
         hoverEffect.setHeight(40);
     }
 
-    public void setButtonAnimate(Node[] node){
-        for (Node item: node ) {
-            item.setOnMouseEntered(mouseEvent -> {item.setEffect(hoverEffect); item.setStyle(HOVERED_BUTTON_STYLE);});
-            item.setOnMouseExited(mouseEvent -> {item.setEffect(null); item.setStyle(IDLE_BUTTON_STYLE);});
+    public void setButtonAnimate(Node[] node) {
+        for (Node item : node) {
+            item.setOnMouseEntered(mouseEvent -> {
+                item.setEffect(hoverEffect);
+                item.setStyle(HOVERED_BUTTON_STYLE);
+            });
+            item.setOnMouseExited(mouseEvent -> {
+                item.setEffect(null);
+                item.setStyle(IDLE_BUTTON_STYLE);
+            });
             item.setOnMousePressed(mouseEvent -> item.setStyle(HOVERED_BUTTON_STYLE));
             item.setOnMouseReleased(mouseEvent -> item.setStyle(IDLE_BUTTON_STYLE));
         }
     }
 
-    public void setBtn_practiceOnclick(ActionEvent event){
+    public void setBtn_practiceOnclick(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("PracticeStage.fxml"));
             Parent root = fxmlLoader.load();
@@ -71,7 +90,7 @@ public class WaitingRoomController implements Initializable {
             stage.setResizable(false);
             stage.show();
             Memory.client.sendMessenger("start");
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -87,29 +106,80 @@ public class WaitingRoomController implements Initializable {
 //            stage.initStyle(StageStyle.UNDECORATED);
             stage.setTitle("Edit Account Info");
             stage.show();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setBtn_multiOnClick(ActionEvent event) {
         Memory.client.sendMessenger("start");
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("Multiplayer.fxml"));
-            Parent parent = fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(parent));
-            stage.setResizable(false);
-            stage.initModality(Modality.APPLICATION_MODAL);
-//            stage.initStyle(StageStyle.UNDECORATED);
-            stage.setTitle("Multiplayer");
-            stage.show();
-        }catch (Exception e){
-            e.printStackTrace();
+
+
+        //show loading animation
+        btn_multi.setText("Đang tìm đối thủ...");
+        img_x.setVisible(true);
+        img_x.setDisable(false);
+        Node[] node = {btn_multi, btn_practice, btn_quit, btn_account, btn_ranking};
+        setDisable(node, true);
+
+
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    System.out.println("Đang tìm đối thủ");
+                    if (checkLobby(Memory.messenger)) {
+                        timer.cancel();
+                        try {
+                            System.out.println("Tắt from");
+//                    Stage stage2 = (Stage) btn_multi.getScene().getWindow();
+//                    stage2.close();
+
+                            System.out.println("Mở mutl");
+
+                            FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("Multiplayer.fxml"));
+                            Parent parent = fxmlLoader.load();
+                            Stage stage = new Stage();
+                            stage.setScene(new Scene(parent));
+                            stage.setResizable(false);
+                            stage.initModality(Modality.APPLICATION_MODAL);
+                            stage.initStyle(StageStyle.TRANSPARENT);
+                            stage.setTitle("Multiplayer");
+                            stage.show();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        timer.cancel();
+                    }
+                });
+            }
+        }, 0, 100);
+    }
+
+    public void setImg_x(Event event) {
+        Node[] nodes = {btn_multi, btn_practice, btn_quit, btn_account, btn_ranking, img_x};
+        setDisable(nodes, false);
+        img_x.setVisible(false);
+
+        //        exit lobby from server
+        Memory.client.stop();
+
+    }
+
+    public void setDisable(Node[] node, boolean value) {
+        for (Node item : node) {
+            item.setDisable(value);
         }
     }
 
-    public void setBtn_quit(ActionEvent event){
+    public boolean checkLobby(String mess) {
+        if (mess.contains("data"))
+            return true;
+        return false;
+    }
+
+    public void setBtn_quit(ActionEvent event) {
         System.exit(0);
     }
 }
