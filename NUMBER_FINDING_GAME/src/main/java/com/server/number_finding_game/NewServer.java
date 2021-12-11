@@ -35,7 +35,8 @@ public class NewServer implements Runnable {
     private ChatServerThread clients[] = new ChatServerThread[hardLimit];
     private int clientCount = 0;
     private List<Lobby> ListLobby;
-
+    private int Startpoint = 1, Endpoint = 5;
+//    private HashMap<String, Integer> ListOwner;
     UserAccountBUS bustmp;
     DetailMatchBUS detailMatchBUS;
 
@@ -51,7 +52,6 @@ public class NewServer implements Runnable {
             ListLobby = new ArrayList<>();
             bustmp = new UserAccountBUS();
             detailMatchBUS = new DetailMatchBUS();
-
             System.out.println("Server started on port " + serverSocket.getLocalPort() + "...");
             System.out.println("Waiting for client...");
             thread = new Thread(this);
@@ -119,62 +119,38 @@ public class NewServer implements Runnable {
                 clients[findClient(ID)].send("YourLob;" + clients[findClient(ID)].getLobbyID());
 
 //                lobby
-                Lobby tmp = findDirectLobby(ID);
+
 
 //                if room/ lobby is full 3/3 player or client
-                if (tmp.state.equalsIgnoreCase("isFull") && tmp != null) {
+                if (findDirectLobby(ID).state.equalsIgnoreCase("isFull") && findDirectLobby(ID)!= null) {
 //                    Create idRoom and time
-                    tmp.Match = new Match(clients[findClient(ID)].getLobbyID(), 300);
+                    findDirectLobby(ID).Match = new Match(clients[findClient(ID)].getLobbyID(), 300);
 //                    Create random map
 //                    Set up
-                    tmp.Match.createRandomMap(1, 20, 790, 0, 510, 0);
-
-//                    set id lobby
-                    java.sql.Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                    String lobbyIdRoom = "Lobby" + timestamp.getTime();
+                    findDirectLobby(ID).Match.createRandomMap(Startpoint, Endpoint, 790, 0, 510, 0);
+                    findDirectLobby(ID).ListOwner = new HashMap<>();
 
 //                    Send map for all player in lobby
                     for (int i = 0; i < 3; i++) {
-                        SocketAddress temp = tmp.addr.get(i);
-                        // tạo detail match
-                        DetailMatchDTO dto = new DetailMatchDTO();
-
-                        dto.setStrUid(clients[findClient(temp)].getUid());
-                        dto.setStrIdRoom(lobbyIdRoom);
-
-//                        set color
-                        String color = "";
-                        switch (i) {
-                            case 0:
-                                color = "#ff0000";
-                                break;
-                            case 1:
-                                color = "#ff00eb";
-                                break;
-                            case 2:
-                                color = "#7eff45";
-                                break;
-                        }
-                        dto.setStrPlayerColor(color);
-                        dto.setIntPoint(0);
-                        dto.setStrKetQua("");
-
-                        // add to bus detailmatch
-                        // write to database
-                        detailMatchBUS.add(dto);
-
-                        clients[findClient(temp)].send(tmp.Match.getMapByJSon());
+                        SocketAddress temp =findDirectLobby(ID).addr.get(i);
+                        findDirectLobby(ID).ListOwner.put(clients[findClient(temp)].getUid(),0);
+                        clients[findClient(temp)].send(findDirectLobby(ID).Match.getMapByJSon());
                     }
 
 
                     Thread.sleep(1000);
 //                    Send next number to all player in lobby
                     NumberPoint DTO = findDirectLobby(ID).Match.getNextValue();
+                    if (DTO == null) {
+                        //todo
+                        findDirectLobby(ID).state = "isEnd";
+                    }
                     String output = "NextNumber;"
                             + DTO.getIntValue() + ":" + DTO.getStrRare();
                     sendMessengerToAllInLobby(ID, output);
                 }
             }
+            // lam ham end, t di wc xiu
             //Xử lí cú pháp
             if (input.contains(";")) {
                 String[] job = input.split(";");
@@ -253,10 +229,21 @@ public class NewServer implements Runnable {
 //                            Check is the point chosen
 //                            Input is value
                             if (findDirectLobby(ID).Match.getMap().isChosen(Integer.parseInt(arr[0]))) {
+                                //todo
+                                String UID = clients[findClient(ID)].getUid();
+
+                                // tô mày
+                                // không cần thiết bên server
                                 findDirectLobby(ID).Match.getMap().setColorByValue(Integer.parseInt(arr[0]), arr[1]);
 
 //                                tính điểm cho user
 
+                                // cộng điễm
+
+                                // add to detail match
+                                //todo
+                               int prePoint= findDirectLobby(ID).ListOwner.get(UID);
+                               findDirectLobby(ID).ListOwner.put(UID,prePoint+1);
                                 // gửi cho các user còn lại
                                 phanluong(ID, input);
 
@@ -271,14 +258,62 @@ public class NewServer implements Runnable {
 
 //                                Send next color to choice
                                 NumberPoint DTO = findDirectLobby(ID).Match.getNextValue();
-                                output = "NextNumber;"
-                                        + DTO.getIntValue() + ":" + DTO.getStrRare();
-                                sendMessengerToAllInLobby(ID, output);
+                                if (DTO == null) {
+                                    // end game
+                                    // dont have next number
+                                    EndMatch(ID);
+                                } else {
+                                    output = "NextNumber;"
+                                            + DTO.getIntValue() + ":" + DTO.getStrRare();
+                                    sendMessengerToAllInLobby(ID, output);
+                                }
                             }
                         }
 
                 }
             }
+        }
+    }
+
+    public void EndMatch(SocketAddress ID) throws Exception {
+        Lobby tmp = findDirectLobby(ID);
+//                    set id lobby
+        java.sql.Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String lobbyIdRoom = "Lobby" + timestamp.getTime();
+
+//                    Send map for all player in lobby
+        for (int i = 0; i < 3; i++) {
+            SocketAddress temp = tmp.addr.get(i);
+            // tạo detail match
+            DetailMatchDTO dto = new DetailMatchDTO();
+
+            dto.setStrUid(clients[findClient(temp)].getUid());
+            dto.setStrIdRoom(lobbyIdRoom);
+
+//                        set color
+            String color = switch (i) {
+                case 0 -> "#ff0000";
+                case 1 -> "#ff00eb";
+                case 2 -> "#7eff45";
+                default -> "";
+            };
+            dto.setStrPlayerColor(color);
+
+            // lay diem tu hash map
+            for (Map.Entry<String, Integer> entry : findDirectLobby(ID).ListOwner.entrySet()) {
+                if (entry.getKey().equalsIgnoreCase(dto.getStrUid())) {
+                    // remove UID when match end from hashMap
+                    // then get point
+                    // bay gio la lam theo cahc cong cua m
+                    dto.setIntPoint(entry.getValue());
+                }
+            }
+            dto.setStrKetQua("lose");
+
+            // add to bus detailmatch
+            // write to database
+            // not right now
+            detailMatchBUS.add(dto);
         }
     }
 

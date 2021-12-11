@@ -8,9 +8,8 @@ import java.util.*;
 
 public class Lobby{
     public String state="isFree";
-    public String idRoom;
+    public HashMap<String, Integer> ListOwner;
     public Match Match;
     public String LobbyID;
     public List<SocketAddress> addr= new ArrayList<>(3);
-    public List<String> userID = new ArrayList<>();
 }
