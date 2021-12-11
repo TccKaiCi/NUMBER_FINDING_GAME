@@ -59,8 +59,6 @@ public class LoginController implements Initializable {
 
     public void onClick(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("Waiting_room.fxml"));
-            Parent root = fxmlLoader.load();
 //            todo
 //            lỗi đăng nhập
             String SendingPack = "SIGNIN;" + tf_username.getText() + ";" + pf_password.getText();
@@ -72,9 +70,13 @@ public class LoginController implements Initializable {
                 stage.setResizable(false);
                 //need add function prevent signin when password wrong
                 if (Memory.messenger.equalsIgnoreCase("Valid user")) {
+                    while (!Memory.messenger.contains("Account")){
+                        System.out.println("chở đợi");
+                    }
+                    FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("Waiting_room.fxml"));
+                    Parent root = fxmlLoader.load();
                     stage.setScene(new Scene(root));
                     stage.show();
-                    System.out.println(Memory.messenger);
                 } else {
                     //todo tuananh
                     setVi_TRUE_Dis_FALSE(lbl_Error);
