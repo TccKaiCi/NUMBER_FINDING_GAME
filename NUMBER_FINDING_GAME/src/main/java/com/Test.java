@@ -5,19 +5,17 @@ import com.DTO.NumberPoint;
 import com.client.number_finding_game.GUI.MultiplayerController;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TimerTask;
 
 
 public class Test {
     public static void main(String[] args) {
-//        MyTask myTask = new MyTask();
-//        Timer timer = new Timer();
-//        timer.schedule(myTask, 0, 10);
-
-        String s = "A;b:C";
-        String[] arr= s.split(";");
-        System.out.println(arr.length);
-
+        HashMap<String,Integer> Scoreboard= new HashMap<>();
+        Scoreboard.put("13231",1);
+        Scoreboard.put("13231",Scoreboard.get("13231")+1) ;
+        System.out.println(Scoreboard.get("13231"));
     }
 
     public static class MyTask extends TimerTask {
