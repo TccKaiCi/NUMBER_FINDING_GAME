@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="97.0" prefWidth="300.0" style="-fx-background-color: #EDF0C7; -fx-border-color: green;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.client.number_finding_game.GUI.Alert2Controller">
+   <children>
+      <Label alignment="CENTER" layoutX="37.0" layoutY="24.0" prefHeight="25.0" prefWidth="227.0" text="Thay đổi mật khẩu thành công" textFill="#1a00ff">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="btn_submit3" layoutX="118.0" layoutY="58.0" mnemonicParsing="false" style="-fx-background-color: #A7DA46;" text="Xác nhận">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+</AnchorPane>

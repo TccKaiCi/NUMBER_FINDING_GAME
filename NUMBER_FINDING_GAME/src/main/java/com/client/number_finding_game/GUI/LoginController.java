@@ -27,13 +27,13 @@ public class LoginController implements Initializable {
     @FXML
     public TextField tf_username, dk_name, dk_username;
     @FXML
-    public PasswordField pf_password, dk_pass, dk_retype;//todo
+    public PasswordField pf_password, dk_pass, dk_retype;
     @FXML
-    public Label lbl_Error, lbl_name, lbl_pass, lbl_1, lbl_2, lbl_3, lbl_4, lbl_5, lbl_6, dk_passError, dk_emailError;
+    public Label lbl_Error, lbl_name, lbl_pass, lbl_1, lbl_2, lbl_3, lbl_4, lbl_5, lbl_6, dk_passError, dk_emailError ;
     @FXML
-    public DatePicker dk_dob;//todo
+    public DatePicker dk_dob;
     @FXML
-    public RadioButton dk_male, dk_female, dk_other;//todo
+    public RadioButton dk_male, dk_female, dk_other;
     ToggleGroup toggleGroup = new ToggleGroup();
     public static final String IDLE_BUTTON_STYLE = "-fx-background-color: #A7DA46; ";
     public static final String HOVERED_BUTTON_STYLE = "-fx-background-color: #4E9525; ";
@@ -60,8 +60,6 @@ public class LoginController implements Initializable {
 
     public void onClick(ActionEvent event) {
         try {
-//            todo
-//            lỗi đăng nhập
             String SendingPack = "SIGNIN;" + tf_username.getText() + ";" + pf_password.getText();
             if (validate(tf_username.getText()) || !pf_password.getText().equals("")) {
                 Memory.client.sendMessenger(SendingPack);
@@ -79,7 +77,6 @@ public class LoginController implements Initializable {
                     stage.setScene(new Scene(root));
                     stage.show();
                 } else {
-                    //todo tuananh
                     setVi_TRUE_Dis_FALSE(lbl_Error);
                 }
             } else {
