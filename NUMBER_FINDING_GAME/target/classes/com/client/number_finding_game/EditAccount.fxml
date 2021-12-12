@@ -25,7 +25,7 @@
                   <Font size="13.0" />
                </font>
             </Label>
-            <TextField fx:id="Edt_usrName" prefHeight="27.0" prefWidth="235.0">
+            <TextField fx:id="Edt_usrName" editable="false" prefHeight="27.0" prefWidth="235.0">
                <font>
                   <Font size="13.0" />
                </font>
