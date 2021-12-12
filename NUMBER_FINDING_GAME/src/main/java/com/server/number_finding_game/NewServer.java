@@ -3,12 +3,9 @@ package com.server.number_finding_game;
 import com.BUS.DetailMatchBUS;
 import com.BUS.Match;
 import com.BUS.UserAccountBUS;
-import com.DAO.UserAccountDAO;
 import com.DTO.DetailMatchDTO;
 import com.DTO.NumberPoint;
-import com.DTO.Ranking;
 import com.DTO.UserAccountDTO;
-import com.server.number_finding_game.ChatServerThread;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -37,8 +34,7 @@ public class NewServer implements Runnable {
     private int clientCount = 0;
     private List<Lobby> ListLobby;
     private int Startpoint = 1, Endpoint = 12;
-    //    private HashMap<String, Integer> ListOwner;
-    UserAccountBUS bustmp;
+    UserAccountBUS accountBus;
     DetailMatchBUS detailMatchBUS;
 
 
@@ -51,7 +47,7 @@ public class NewServer implements Runnable {
             serverSocket = new ServerSocket(port);
             // khởi tạo
             ListLobby = new ArrayList<>();
-            bustmp = new UserAccountBUS();
+            accountBus = new UserAccountBUS();
             detailMatchBUS = new DetailMatchBUS();
             System.out.println("Server started on port " + serverSocket.getLocalPort() + "...");
             System.out.println("Waiting for client...");
@@ -131,7 +127,9 @@ public class NewServer implements Runnable {
                     findDirectLobby(ID).Match.createRandomMap(Startpoint, Endpoint, 790, 0, 510, 0);
                     findDirectLobby(ID).ListOwner = new HashMap<>();
 
-//                    Send map for all player in lobby
+//                    Get all UID and color
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("UserColor;");
                     for (int i = 0; i < 3; i++) {
                         SocketAddress temp = findDirectLobby(ID).addr.get(i);
 
@@ -142,14 +140,23 @@ public class NewServer implements Runnable {
                             default -> "";
                         };
 
-                        clients[findClient(temp)].send("UserColor;" + color);
+                        //UID:COLOR:UID2:COLOR2:UID3:COLOR3:
+                        sb.append("%s:%s:".formatted(accountBus.getNameInf_UID(clients[findClient(temp)].getUid()) , color));
+                    }
+
+                    //        delete end ":"
+                    sb.deleteCharAt(sb.length() - 1);
+
+                    for (int i = 0; i < 3; i++) {
+                        SocketAddress temp = findDirectLobby(ID).addr.get(i);
+
+                        clients[findClient(temp)].send(sb.toString());
 
                         Thread.sleep(1000);
 
                         findDirectLobby(ID).ListOwner.put(clients[findClient(temp)].getUid(), 0);
                         clients[findClient(temp)].send(findDirectLobby(ID).Match.getMapByJSon());
                     }
-
 
                     Thread.sleep(100);
 //                    Send next number to all player in lobby
@@ -203,9 +210,9 @@ public class NewServer implements Runnable {
                                 dtotmp.setStrPassWord(bytesToHex(encodedhash));
                                 System.out.println(dtotmp.getStrPassWord());
                             }
-                            if (bustmp.kiemTraDangNhap(dtotmp)) {
+                            if (accountBus.kiemTraDangNhap(dtotmp)) {
                                 boolean valid = true;
-                                dtotmp = bustmp.getUserAccountByUserName(dtotmp);
+                                dtotmp = accountBus.getUserAccountByUserName(dtotmp);
                                 clients[findClient(ID)].setUid(dtotmp.getStrUid());
                                 for (int i = 0; i < clientCount; i++) {
                                     if (clients[i].getUid().equalsIgnoreCase(dtotmp.getStrUid())) {
@@ -253,17 +260,17 @@ public class NewServer implements Runnable {
                             dtotmp.setStrGender(job[4]);
                             dtotmp.setStrDayOfBirth(job[5]);
                             //todo valid user
-                            dtotmp.setStrUid(bustmp.getDefault());
+                            dtotmp.setStrUid(accountBus.getDefault());
                             //need date time
                             //hash paswd
-                            if (!bustmp.kiemTraDangki(dtotmp)) {
+                            if (!accountBus.kiemTraDangki(dtotmp)) {
                                 if (dtotmp.getStrPassWord() != null) {
                                     MessageDigest digest = MessageDigest.getInstance("SHA-256");
                                     byte[] encodedhash = digest.digest(
                                             dtotmp.getStrPassWord().getBytes(StandardCharsets.UTF_8));
                                     dtotmp.setStrPassWord(bytesToHex(encodedhash));
-                                    bustmp.them(dtotmp);
-                                    if (bustmp.kiemTraDangNhap(dtotmp)) {
+                                    accountBus.them(dtotmp);
+                                    if (accountBus.kiemTraDangNhap(dtotmp)) {
                                         clients[findClient(ID)].send("Success signup");
                                     } else {
                                         clients[findClient(ID)].send("Something gone wrong, cant signup this time");
@@ -279,11 +286,11 @@ public class NewServer implements Runnable {
                         if(job[0].equalsIgnoreCase("changepass")){
                             String[] passwd=job[1].split(":");
                             UserAccountDTO usr=new UserAccountDTO();
-                            usr= bustmp.getUserAccountByUID(passwd[0]);
+                            usr= accountBus.getUserAccountByUID(passwd[0]);
                             if(usr!=null){
                                 if(usr.getStrPassWord().equalsIgnoreCase(passwd[1]));
                                 usr.setStrPassWord(passwd[2]);
-                                bustmp.update(usr);
+                                accountBus.update(usr);
                                 clients[findClient(ID)].send("EditSuccess");
                             }
                         }
@@ -392,6 +399,8 @@ public class NewServer implements Runnable {
                     dto.setIntPoint(entry.getValue());
                 }
             }
+
+            //todo
             dto.setStrKetQua("lose");
 
             // add to bus detailmatch

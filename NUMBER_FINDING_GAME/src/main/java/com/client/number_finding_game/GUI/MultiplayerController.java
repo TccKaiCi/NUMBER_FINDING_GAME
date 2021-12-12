@@ -35,7 +35,7 @@ public class MultiplayerController implements Initializable {
     @FXML
     Pane pane_main;
     @FXML
-    Label lbl_findingNum, lbl_time, lbl_playerName, lbl_NumberScore;
+    Label lbl_findingNum, lbl_time, lbl_playerName, lbl_NumberScore, lbl_playerName1, lbl_NumberScore1, lbl_playerName2, lbl_NumberScore2;
     @FXML
     ImageView btn_back, btn_setting;
 
@@ -135,6 +135,34 @@ public class MultiplayerController implements Initializable {
                     System.out.println("1 điểm");
                 }
             }
+        } else {
+            // other user
+            int i = 1;
+            for (Map.Entry<String, String> entry : Memory.otherUserInfor_Color.entrySet()) {
+                if (color.equals(entry.getValue())) {
+                    int diem = Integer.parseInt(lbl_NumberScore.getText());
+                    if (Objects.equals(nextPoint.getStrRare(), "Lucky")) {
+                        if (i == 1) {
+                            lbl_NumberScore1.setText(String.valueOf((diem + 3)));
+                        } else {
+                            lbl_NumberScore2.setText(String.valueOf((diem + 3)));
+                        }
+                    } else {
+                        if (Objects.equals(nextPoint.getStrRare(), "Blind")) {
+//                   todo Tuấn Anh làm
+                        } else {
+                            if (i == 1) {
+                                lbl_NumberScore1.setText(String.valueOf((diem + 1)));
+                            } else {
+                                if (i == 2) {
+                                    lbl_NumberScore2.setText(String.valueOf((diem + 1)));
+                                }
+                            }
+                        }
+                    }
+                }
+                i++;
+            }
         }
     }
 
@@ -207,6 +235,18 @@ public class MultiplayerController implements Initializable {
                 });
             }
         }, 0, 1000);
+
+        int i = 1;
+        for (Map.Entry<String, String> entry : Memory.otherUserInfor_Color.entrySet()) {
+            if (i == 1) {
+                lbl_playerName1.setText(entry.getKey());
+            } else {
+                if (i == 2) {
+                    lbl_playerName2.setText(entry.getKey());
+                }
+            }
+            i++;
+        }
     }
 
     public class MyTask extends TimerTask {

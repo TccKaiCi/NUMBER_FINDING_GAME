@@ -1,9 +1,8 @@
 package com.server.number_finding_game;
 
-import com.DTO.UserAccountDTO;
-
 import java.io.*;
 import java.net.Socket;
+import java.util.Map;
 
 // Client for Server4
 public class NewClient implements Runnable {
@@ -105,7 +104,18 @@ public class NewClient implements Runnable {
                                     } else {
                                         // UserColor;Color
                                         if (job[0].equalsIgnoreCase("UserColor")) {
-                                            Memory.userColor = job[1];
+                                            //UID:COLOR:UID2:COLOR2:UID3:COLOR3
+                                            //0:1:2:3:4:5
+                                            String[] arr = job[1].split(":");
+                                            Memory.otherUserInfor_Color.put(arr[0], arr[1]);
+                                            Memory.otherUserInfor_Color.put(arr[2], arr[3]);
+                                            Memory.otherUserInfor_Color.put(arr[4], arr[5]);
+
+                                            for (Map.Entry<String, String> entry : Memory.otherUserInfor_Color.entrySet() ) {
+                                                if (entry.getKey().equalsIgnoreCase(Memory.userAccountDTO.getStrUid())) {
+                                                    Memory.userColor = entry.getValue();
+                                                }
+                                            }
                                         }
                                     }
                                 }
