@@ -1,14 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.client.number_finding_game.GUI.RankingController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.client.number_finding_game.GUI.RankingController">
+   <children>
+      <ScrollPane hbarPolicy="NEVER" layoutX="50.0" layoutY="57.0" prefHeight="300.0" prefWidth="500.0">
+        <content>
+            <VBox maxHeight="300.0" prefHeight="300.0" prefWidth="500.0">
+               <children>
+                  <Pane maxHeight="50.0" minHeight="50.0" minWidth="300.0" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: red; -fx-background-radius: 2;">
+                     <VBox.margin>
+                        <Insets left="10.0" right="30.0" top="30.0" />
+                     </VBox.margin>
+                     <children>
+                        <Label fx:id="lbl_uid" layoutX="14.0" layoutY="11.0" prefHeight="28.0" prefWidth="100.0" text="UID">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lbl_name" layoutX="114.0" layoutY="11.0" prefHeight="28.0" prefWidth="155.0" text="Name">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lbl_point" layoutX="284.0" layoutY="11.0" prefHeight="28.0" prefWidth="81.0" text="Point">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lbl_winRate" layoutX="365.0" layoutY="11.0" prefHeight="28.0" prefWidth="81.0" text="Win Rate">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+        </content>
+      </ScrollPane>
+   </children>
 </AnchorPane>
