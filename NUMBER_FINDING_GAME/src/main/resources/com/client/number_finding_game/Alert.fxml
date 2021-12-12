@@ -12,7 +12,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Button fx:id="btn_submit" layoutX="90.0" layoutY="61.0" mnemonicParsing="false" style="-fx-background-color: #A7DA46;" text="Xác nhận">
+      <Button fx:id="btn_submit" layoutX="118.0" layoutY="58.0" mnemonicParsing="false" style="-fx-background-color: #A7DA46;" text="Xác nhận">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

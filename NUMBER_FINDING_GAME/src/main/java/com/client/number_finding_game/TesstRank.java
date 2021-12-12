@@ -12,6 +12,7 @@ public class TesstRank {
 
         ranking.getJsonRankTable(bus.initJsonRankTable());
         ranking.display();
+        ranking.handleRank();
 
     }
 
