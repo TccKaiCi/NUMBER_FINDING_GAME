@@ -10,7 +10,7 @@
 | MAP;Value | Server -> Client | trả về Map | Tạo mạp random từ server cho các client |
 | start | Server <-> Client | Client join lobby | Cấp cho client một lobby còn trống |
 | exit | Client -> Server | Client thoát khỏi Server | Thoát khỏi lobby |
-| Pickup | Client <-> Server | Pickup;Number:Color | Gửi dữ liệu in game |
+| Pickup | Client <-> Server | Pickup;Number:Color:Rare:UID | Gửi dữ liệu in game |
 | NextNumber | Server -> Client | NextNumber;Value:Rare | Số cần chọn kế tiếp |
 | FillColor | Client <-> Server | FillColor;Number:Color | Tô màu cho số |
 

@@ -13,6 +13,8 @@ public class Memory {
     public static UserAccountDTO userAccountDTO = new UserAccountDTO();
     public static Ranking rankingDTO = new Ranking();
 
+    public static String userColor;
+
 //    ======================================================================
 //    ======================================================================
 

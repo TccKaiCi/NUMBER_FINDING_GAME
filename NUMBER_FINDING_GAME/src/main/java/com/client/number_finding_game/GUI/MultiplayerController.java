@@ -2,13 +2,17 @@ package com.client.number_finding_game.GUI;
 
 import com.BUS.Match;
 import com.DTO.NumberPoint;
+import com.client.number_finding_game.LoginForm;
 import com.server.number_finding_game.Memory;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -17,10 +21,13 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.json.*;
 import org.w3c.dom.events.MouseEvent;
 
@@ -71,12 +78,6 @@ public class MultiplayerController implements Initializable {
 
 //            Event click
             stackPane.setOnMouseClicked(mouseEvent -> {
-//                This can be change for player input
-                String color;
-                if (model.getIntValue() % 2 == 0)
-                    color = "#ff0000";
-                else
-                    color = "#ff00eb";
 //                Check is nextValue
                 if (model.getIntValue() == nextPoint.getIntValue()) {
 //                    Check is chosen
@@ -84,7 +85,7 @@ public class MultiplayerController implements Initializable {
 //                    Print value select
 //                        Pickup;Value:color:rare:uid
                         Memory.client.sendMessenger("Pickup;"
-                                + model.getIntValue() + ":" + color
+                                + model.getIntValue() + ":" + Memory.userColor
                                 + ":" + model.getStrRare()
                                 + ":" + Memory.userAccountDTO.getStrUid());
                     }
@@ -148,8 +149,27 @@ public class MultiplayerController implements Initializable {
     }
 
     public void setBtn_back(Event event) {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.close();
+//        quay trở lại waitting room
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("Waiting_room.fxml"));
+            Parent parent = null;
+
+            parent = fxmlLoader.load();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(parent));
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setTitle("submit success");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // close
+        Stage stage1 = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage1.close();
+
 //        exit lobby from server
         Memory.client.stop();
     }
@@ -168,7 +188,7 @@ public class MultiplayerController implements Initializable {
         timer.schedule(new MyTask(), 0, 1);
 
         countDown = new Timer();
-        countDown.schedule(new CountingDown(),0, 1000);
+        countDown.schedule(new CountingDown(), 0, 1000);
     }
 
     public class CountingDown extends TimerTask {

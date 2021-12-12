@@ -132,12 +132,6 @@ public class WaitingRoomController implements Initializable {
                     if (checkLobby(Memory.messenger)) {
                         timer.cancel();
                         try {
-                            System.out.println("Tắt from");
-//                    Stage stage2 = (Stage) btn_multi.getScene().getWindow();
-//                    stage2.close();
-
-                            System.out.println("Mở mutl");
-
                             FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("Multiplayer.fxml"));
                             Parent parent = fxmlLoader.load();
                             Stage stage = new Stage();
@@ -147,6 +141,11 @@ public class WaitingRoomController implements Initializable {
                             stage.initStyle(StageStyle.TRANSPARENT);
                             stage.setTitle("Multiplayer");
                             stage.show();
+
+
+                            Stage stage2 = (Stage) btn_multi.getScene().getWindow();
+                            stage2.close();
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

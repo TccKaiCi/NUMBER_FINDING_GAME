@@ -35,8 +35,8 @@ public class NewServer implements Runnable {
     private ChatServerThread clients[] = new ChatServerThread[hardLimit];
     private int clientCount = 0;
     private List<Lobby> ListLobby;
-    private int Startpoint = 1, Endpoint = 5;
-//    private HashMap<String, Integer> ListOwner;
+    private int Startpoint = 1, Endpoint = 12;
+    //    private HashMap<String, Integer> ListOwner;
     UserAccountBUS bustmp;
     DetailMatchBUS detailMatchBUS;
 
@@ -122,7 +122,7 @@ public class NewServer implements Runnable {
 
 
 //                if room/ lobby is full 3/3 player or client
-                if (findDirectLobby(ID).state.equalsIgnoreCase("isFull") && findDirectLobby(ID)!= null) {
+                if (findDirectLobby(ID).state.equalsIgnoreCase("isFull") && findDirectLobby(ID) != null) {
 //                    Create idRoom and time
                     findDirectLobby(ID).Match = new Match(clients[findClient(ID)].getLobbyID(), 70);
 //                    Create random map
@@ -132,13 +132,25 @@ public class NewServer implements Runnable {
 
 //                    Send map for all player in lobby
                     for (int i = 0; i < 3; i++) {
-                        SocketAddress temp =findDirectLobby(ID).addr.get(i);
-                        findDirectLobby(ID).ListOwner.put(clients[findClient(temp)].getUid(),0);
+                        SocketAddress temp = findDirectLobby(ID).addr.get(i);
+
+                        String color = switch (i) {
+                            case 0 -> "Red";
+                            case 1 -> "Yellow";
+                            case 2 -> "Green";
+                            default -> "";
+                        };
+
+                        clients[findClient(temp)].send("UserColor;" + color);
+
+                        Thread.sleep(500);
+
+                        findDirectLobby(ID).ListOwner.put(clients[findClient(temp)].getUid(), 0);
                         clients[findClient(temp)].send(findDirectLobby(ID).Match.getMapByJSon());
                     }
 
 
-                    Thread.sleep(1000);
+                    Thread.sleep(100);
 //                    Send next number to all player in lobby
                     NumberPoint DTO = findDirectLobby(ID).Match.getNextValue();
                     if (DTO == null) {
@@ -170,19 +182,19 @@ public class NewServer implements Runnable {
                                 System.out.println(dtotmp.getStrPassWord());
                             }
                             if (bustmp.kiemTraDangNhap(dtotmp)) {
-                                boolean valid=true;
+                                boolean valid = true;
                                 dtotmp = bustmp.getUserAccountByUserName(dtotmp);
                                 clients[findClient(ID)].setUid(dtotmp.getStrUid());
                                 for (int i = 0; i < clientCount; i++) {
                                     if (clients[i].getUid().equalsIgnoreCase(dtotmp.getStrUid())) {
-                                        if(clients[i].getID()==ID){
+                                        if (clients[i].getID() == ID) {
                                             continue;
                                         }
                                         clients[findClient(ID)].send("Account are sign in on other address");
                                         valid = false;
                                     }
                                 }
-                                if(valid){
+                                if (valid) {
                                     clients[findClient(ID)].send("valid user");
                                     // return for client all infor user
 
@@ -201,7 +213,6 @@ public class NewServer implements Runnable {
                                     clients[findClient(ID)].send(sendmess);
 
                                 }
-
 
 
                             }
@@ -235,15 +246,14 @@ public class NewServer implements Runnable {
                                         clients[findClient(ID)].send("Something gone wrong, cant signup this time");
                                     }
                                 }
-                            }
-                            else {
+                            } else {
                                 //todo
                                 clients[findClient(ID)].send("ERR:username already have a account");
                             }
                         }
                     case 2:
                         //gui vs cu phap play nghia la dang trong tran
-                        ;//Pickup;Number:Color
+                        ;//Pickup;Number:Color:Rare:UID
                         if (job[0].equalsIgnoreCase("Pickup")) {
                             String[] arr = job[1].split(":");
 //                            Check is the point chosen
@@ -253,7 +263,6 @@ public class NewServer implements Runnable {
                                 String UID = clients[findClient(ID)].getUid();
 
                                 // tô mày
-                                // không cần thiết bên server
                                 findDirectLobby(ID).Match.getMap().setColorByValue(Integer.parseInt(arr[0]), arr[1]);
 
 //                                tính điểm cho user
@@ -262,19 +271,30 @@ public class NewServer implements Runnable {
 
                                 // add to detail match
                                 //todo
-                               int prePoint= findDirectLobby(ID).ListOwner.get(UID);
-                               findDirectLobby(ID).ListOwner.put(UID,prePoint+1);
+                                int prePoint = findDirectLobby(ID).ListOwner.get(UID);
+
+                                if (Objects.equals( arr[2], "Lucky")) {
+                                    findDirectLobby(ID).ListOwner.put(UID, prePoint + 3);
+                                    System.out.println("3 điểm");
+                                } else {
+                                    if (Objects.equals(arr[2], "Blind")) {
+//                                        todo Tuấn Anh che màn hình
+                                    } else {
+                                        System.out.println("1 điểm");
+                                        findDirectLobby(ID).ListOwner.put(UID, prePoint + 1);
+                                    }
+                                }
                                 // gửi cho các user còn lại
                                 phanluong(ID, input);
 
-                                Thread.sleep(1000);
+                                Thread.sleep(100);
 
 //                                Send and color the value number (Input)
                                 String output = "FillColor;" + arr[0] + ":" + arr[1];
                                 //gửi tất cả user
                                 sendMessengerToAllInLobby(ID, output);
 
-                                Thread.sleep(1000);
+                                Thread.sleep(100);
 
 //                                Send next color to choice
                                 NumberPoint DTO = findDirectLobby(ID).Match.getNextValue();

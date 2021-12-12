@@ -102,6 +102,11 @@ public class NewClient implements Runnable {
                                         Memory.userAccountDTO.setStrPassWord(arr[3]);
                                         Memory.userAccountDTO.setStrGender(arr[4]);
                                         Memory.userAccountDTO.setStrDayOfBirth(arr[5]);
+                                    } else {
+                                        // UserColor;Color
+                                        if (job[0].equalsIgnoreCase("UserColor")) {
+                                            Memory.userColor = job[1];
+                                        }
                                     }
                                 }
                             }
