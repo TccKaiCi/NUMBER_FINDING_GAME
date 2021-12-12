@@ -97,8 +97,8 @@ public class ChangePasswordController implements Initializable {
         if (isInputValidate()) {
             OldPass = Cp_OldPass.getText();
             String SendingPack = "ChangePass;" + Memory.userAccountDTO.getStrUid() + ";" + OldPass + ";" + Cp_NewPass.getText();
+
             Memory.client.sendMessenger(SendingPack);
-            System.out.println(SendingPack);
             //todo nhan duoc "EditSuccess" thi bao thanh cong
         }
         Timer timer = new Timer();

@@ -144,7 +144,7 @@ public class NewServer implements Runnable {
 
                         clients[findClient(temp)].send("UserColor;" + color);
 
-                        Thread.sleep(500);
+                        Thread.sleep(1000);
 
                         findDirectLobby(ID).ListOwner.put(clients[findClient(temp)].getUid(), 0);
                         clients[findClient(temp)].send(findDirectLobby(ID).Match.getMapByJSon());
@@ -158,9 +158,30 @@ public class NewServer implements Runnable {
                         //todo
                         findDirectLobby(ID).state = "isEnd";
                     }
+                    assert DTO != null;
                     String output = "NextNumber;"
                             + DTO.getIntValue() + ":" + DTO.getStrRare();
                     sendMessengerToAllInLobby(ID, output);
+                    //                    server start count_down
+                    Timer countDown = new Timer();
+                    countDown.scheduleAtFixedRate(new TimerTask() {
+                        @Override
+                        public void run() {
+                            long temp = findDirectLobby(ID).Match.getLongMatchTime();
+                            findDirectLobby(ID).Match.setLongMatchTime(temp - 1);
+
+
+                            if (temp == 0) {
+                                try {
+                                    EndMatch(ID);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                countDown.cancel();
+                            }
+                        }
+                    }, 0, 1000);
+
                 }
             }
             // lam ham end, t di wc xiu
@@ -255,6 +276,18 @@ public class NewServer implements Runnable {
                         }
                         break;
                     case 2:
+                        if(job[0].equalsIgnoreCase("changepass")){
+                            String[] passwd=job[1].split(":");
+                            UserAccountDTO usr=new UserAccountDTO();
+                            usr= bustmp.getUserAccountByUID(passwd[0]);
+                            if(usr!=null){
+                                if(usr.getStrPassWord().equalsIgnoreCase(passwd[1]));
+                                usr.setStrPassWord(passwd[2]);
+                                bustmp.update(usr);
+                                clients[findClient(ID)].send("EditSuccess");
+                            }
+                        }
+
                         //gui vs cu phap play nghia la dang trong tran
                         //Pickup;Number:Color:Rare:UID
                         if (job[0].equalsIgnoreCase("Pickup")) {
@@ -329,6 +362,8 @@ public class NewServer implements Runnable {
 //                    set id lobby
         java.sql.Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         String lobbyIdRoom = "Lobby" + timestamp.getTime();
+
+        sendMessengerToAllInLobby(ID,"ENDGAME;");
 
 //                    Send map for all player in lobby
         for (int i = 0; i < 3; i++) {

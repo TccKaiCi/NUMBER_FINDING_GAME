@@ -35,14 +35,14 @@ public class MultiplayerController implements Initializable {
     @FXML
     Pane pane_main;
     @FXML
-    Label lbl_findingNum, lbl_time;
+    Label lbl_findingNum, lbl_time, lbl_playerName, lbl_NumberScore;
     @FXML
     ImageView btn_back, btn_setting;
 
     private Match match;
     private NumberPoint nextPoint;
     private List<Rectangle> RecList;
-    private Timer countDown;
+    private Timer countDown, timer;
 
 
     public static final String DEFAULT_COLOR = "#23f2eb";
@@ -119,17 +119,19 @@ public class MultiplayerController implements Initializable {
         }
     }
 
-    public void getPoint() {
-//        is have next number
-        if (nextPoint == null) {
-        } else {
+    public void getPoint(String color) {
+        //10:Red
 //            check Rare number
+        if (color.equals(Memory.userColor)) {
+            int diem = Integer.parseInt(lbl_NumberScore.getText());
             if (Objects.equals(nextPoint.getStrRare(), "Lucky")) {
+                lbl_NumberScore.setText(String.valueOf((diem + 3)));
                 System.out.println("3 điểm");
             } else {
                 if (Objects.equals(nextPoint.getStrRare(), "Blind")) {
-//                    Tuấn Anh làm
+//                   todo Tuấn Anh làm
                 } else {
+                    lbl_NumberScore.setText(String.valueOf((diem + 1)));
                     System.out.println("1 điểm");
                 }
             }
@@ -184,30 +186,27 @@ public class MultiplayerController implements Initializable {
         btn_back.setOnMouseClicked(this::setBtn_back);
         btn_setting.setOnMouseClicked(this::setBtn_setting);
 
-        Timer timer = new Timer();
+        lbl_playerName.setText(Memory.userAccountDTO.getStrNameInf());
+
+        timer = new Timer();
         timer.schedule(new MyTask(), 0, 1);
 
         countDown = new Timer();
-        countDown.schedule(new CountingDown(), 0, 1000);
-    }
+        countDown.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    long temp = match.getLongMatchTime();
+                    match.setLongMatchTime(temp - 1);
 
-    public class CountingDown extends TimerTask {
-        @Override
-        public void run() {
-            Platform.runLater(() -> {
-                long temp = match.getLongMatchTime();
-                match.setLongMatchTime(temp - 1);
-
-
-                lbl_time.setText((temp / 60) + ":" + (temp - (temp / 60) * 60));
-
-                if (temp == 0) {
-                    lbl_time.setText("0");
-
-                    countDown.cancel();
-                }
-            });
-        }
+                    if (temp == 0) {
+                        lbl_time.setText("0");
+                    } else {
+                        lbl_time.setText((temp / 60) + ":" + (temp - (temp / 60) * 60));
+                    }
+                });
+            }
+        }, 0, 1000);
     }
 
     public class MyTask extends TimerTask {
@@ -216,33 +215,40 @@ public class MultiplayerController implements Initializable {
             if (!Memory.messenger.equalsIgnoreCase("")) {
                 String tmp = Memory.messenger;
 
+                if (Memory.messenger == "ENDGAME;") {
+                    System.out.println("ENDGAME;");
+                    countDown.cancel();
+                    timer.cancel();
+                } else {
 //                Pickup;1:color
-                String[] arr = tmp.split(";");
-                String[] s = arr[1].split(":");
+                    String[] arr = tmp.split(";");
+                    String[] s = arr[1].split(":");
 
 
 //                Get X in X;a:b....etc
-                switch (arr[0]) {
+                    switch (arr[0]) {
 //                    setLabelNumberFindingColor
 //                    value:rare
 //                    NextNumber;10:Lucky
-                    case "NextNumber":
-                        Platform.runLater(() -> {
-                            if (nextPoint == null) {
-                                nextPoint = new NumberPoint();
-                            }
-                            System.out.println(arr[1]);
-                            nextPoint.setIntValue(Integer.parseInt(s[0]));
-                            nextPoint.setStrRare(s[1]);
-                            setLabelNumberFindingColor();
-                        });
-                        break;
+                        case "NextNumber":
+                            Platform.runLater(() -> {
+                                if (nextPoint == null) {
+                                    nextPoint = new NumberPoint();
+                                }
+                                System.out.println(arr[1]);
+                                nextPoint.setIntValue(Integer.parseInt(s[0]));
+                                nextPoint.setStrRare(s[1]);
+                                setLabelNumberFindingColor();
+                            });
+                            break;
 //                        Type: Number:Color
-                    case "FillColor":
-                        Platform.runLater(() -> {
-                            setColorToNumber(Integer.parseInt(s[0]), s[1]);
-                        });
-                        break;
+                        case "FillColor":
+                            Platform.runLater(() -> {
+                                setColorToNumber(Integer.parseInt(s[0]), s[1]);
+                                getPoint(s[1]);
+                            });
+                            break;
+                    }
                 }
                 Memory.messenger = "";
             } else {

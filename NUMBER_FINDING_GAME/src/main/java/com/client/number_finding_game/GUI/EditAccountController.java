@@ -43,7 +43,17 @@ public class EditAccountController implements Initializable {
         Edt_btnCancel.setOnAction(this::setEdt_btnCancel);
         Edt_btnSave.setOnAction(this::setEdt_btnSave);
         Edt_Dob.setOnAction(this::getDatePicker);
-
+        Edt_usrName.setText(Memory.userAccountDTO.getStrUserName());
+        Edt_fullName.setText(Memory.userAccountDTO.getStrNameInf());
+        //convert String to LocalDate
+        LocalDate localDate = LocalDate.parse(Memory.userAccountDTO.getStrDayOfBirth());
+        Edt_Dob.setValue(localDate);
+        String gender=Memory.userAccountDTO.getStrGender();
+        switch (gender) {
+            case "Nam" -> Edt_RBMale.setSelected(true);
+            case "Nữ" -> Edt_RBFemale.setSelected(true);
+            case "Khác" -> Edt_RBOthers.setSelected(true);
+        }
         setButtonHover(Edt_btnChangePass, "-fx-background-color: gray;", "-fx-background-color: lightgray;");
         setButtonHover(Edt_btnCancel,  "-fx-background-color: #4E9525;", "-fx-background-color: #A7DA46;");
         setButtonHover(Edt_btnSave, "-fx-background-color: #FE6845;", "-fx-background-color: #FFA259;");
@@ -107,7 +117,7 @@ public class EditAccountController implements Initializable {
                     +Memory.userAccountDTO.getStrNameInf()+":"
                     +Memory.userAccountDTO.getStrDayOfBirth()+":"
                     +Memory.userAccountDTO.getStrGender();
-            System.out.println(SendingPack);
+           Memory.client.sendMessenger(SendingPack);
             //todo nhan duoc "EditSuccess" moi bao, check gmail
             stage.setTitle("Edit success");
             stage.show();

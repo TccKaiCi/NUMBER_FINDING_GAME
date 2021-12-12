@@ -70,7 +70,7 @@ public class LoginController implements Initializable {
                 //need add function prevent signin when password wrong
                 if (Memory.messenger.equalsIgnoreCase("valid user")) {
                     while (!Memory.messenger.contains("Account")){
-                        System.out.println("chở đợi");
+                        System.out.printf("");
                     }
                     FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("Waiting_room.fxml"));
                     Parent root = fxmlLoader.load();

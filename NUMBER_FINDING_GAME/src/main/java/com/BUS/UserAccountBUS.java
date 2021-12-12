@@ -103,6 +103,15 @@ public class UserAccountBUS {
         }
         return null;
     }
+    public UserAccountDTO getUserAccountByUID(String UID) {
+        for ( UserAccountDTO model : list_DTO ) {
+            // kiểm tra mật khảu và tên đăng nhập
+            if (model.getStrUid().equals(UID)) {
+                return model;
+            }
+        }
+        return null;
+    }
 
     public String getNameInf_UID(String uid) {
         for ( UserAccountDTO model : list_DTO ) {
