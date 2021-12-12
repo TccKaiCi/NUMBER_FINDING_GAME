@@ -109,11 +109,12 @@ public class Map {
      *
      * @return
      */
-    public String getMapByJSon() {
+    public String getMapByJSon(long longMatchTime) {
         StringBuilder sb = new StringBuilder();
 
 //        open json
         sb.append("{\n" +
+                " \"longMatchTime\" : " + longMatchTime + " ,\n" +
                 "  \"data\": [");
 
         list.forEach(model -> {

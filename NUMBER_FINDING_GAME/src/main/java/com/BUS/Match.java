@@ -1,8 +1,15 @@
 package com.BUS;
 
 import com.DTO.NumberPoint;
+import com.server.number_finding_game.Memory;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.Objects;
 import java.util.Stack;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Match {
     private String strIdRoom;
@@ -116,10 +123,41 @@ public class Match {
     }
 
     public String getMapByJSon() {
-        return map.getMapByJSon();
+
+        return map.getMapByJSon(this.longMatchTime);
     }
 
+    /**
+     * @param jsonData String
+     */
+    public void setMapByJSon(String jsonData) {
+        //      get data from server
+        try {
+            JSONObject json = new JSONObject(jsonData);
+//            clear cache
+            Memory.messenger = "";
 
+            setLongMatchTime(Long.parseLong(json.get("longMatchTime").toString()));
+
+//            set all point
+            JSONArray recs = json.getJSONArray("data");
+
+            for (int i = 0; i < recs.length(); i++) {
+                JSONObject rec = recs.getJSONObject(i);
+                NumberPoint point = new NumberPoint();
+
+                point.setIntValue(Integer.parseInt(rec.get("intValue").toString()));
+                point.setIntPosX(Integer.parseInt(rec.get("intPosX").toString()));
+                point.setIntPosY(Integer.parseInt(rec.get("intPosY").toString()));
+                point.setStrChosenColor(rec.get("strChosenColor").toString());
+                point.setStrRare(rec.get("strRare").toString());
+
+                this.addPointToMap(point);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 

@@ -28,13 +28,15 @@ public class MultiplayerController implements Initializable {
     @FXML
     Pane pane_main;
     @FXML
-    Label lbl_findingNum;
+    Label lbl_findingNum, lbl_time;
     @FXML
     ImageView btn_back, btn_setting;
 
     private Match match;
     private NumberPoint nextPoint;
     private List<Rectangle> RecList;
+    private Timer countDown;
+
 
     public static final String DEFAULT_COLOR = "#23f2eb";
 
@@ -44,30 +46,10 @@ public class MultiplayerController implements Initializable {
         }
 
         RecList = new ArrayList<>();
-        match = new Match("R2321321313", 3000);
+        match = new Match();
 
-//      get data from server
-        try {
-            JSONObject json = new JSONObject(Memory.messenger);
-            Memory.messenger = "";
+        match.setMapByJSon(Memory.messenger);
 
-            JSONArray recs = json.getJSONArray("data");
-
-            for (int i = 0; i < recs.length(); i++) {
-                JSONObject rec = recs.getJSONObject(i);
-                NumberPoint point = new NumberPoint();
-
-                point.setIntValue(Integer.parseInt(rec.get("intValue").toString()));
-                point.setIntPosX(Integer.parseInt(rec.get("intPosX").toString()));
-                point.setIntPosY(Integer.parseInt(rec.get("intPosY").toString()));
-                point.setStrChosenColor(rec.get("strChosenColor").toString());
-                point.setStrRare(rec.get("strRare").toString());
-
-                match.addPointToMap(point);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
 //        create list label
         match.getMap().getList().forEach(model -> {
@@ -153,6 +135,7 @@ public class MultiplayerController implements Initializable {
         }
     }
 
+
     /**
      * 16 : #hex_color
      */
@@ -181,9 +164,30 @@ public class MultiplayerController implements Initializable {
         btn_back.setOnMouseClicked(this::setBtn_back);
         btn_setting.setOnMouseClicked(this::setBtn_setting);
 
-        MyTask myTask = new MyTask();
         Timer timer = new Timer();
-        timer.schedule(myTask, 0, 1);
+        timer.schedule(new MyTask(), 0, 1);
+
+        countDown = new Timer();
+        countDown.schedule(new CountingDown(),0, 1000);
+    }
+
+    public class CountingDown extends TimerTask {
+        @Override
+        public void run() {
+            Platform.runLater(() -> {
+                long temp = match.getLongMatchTime();
+                match.setLongMatchTime(temp - 1);
+
+
+                lbl_time.setText((temp / 60) + ":" + (temp - (temp / 60) * 60));
+
+                if (temp == 0) {
+                    lbl_time.setText("0");
+
+                    countDown.cancel();
+                }
+            });
+        }
     }
 
     public class MyTask extends TimerTask {

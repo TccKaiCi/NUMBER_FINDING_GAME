@@ -12,10 +12,13 @@ import java.util.TimerTask;
 
 public class Test {
     public static void main(String[] args) {
-        HashMap<String,Integer> Scoreboard= new HashMap<>();
-        Scoreboard.put("13231",1);
-        Scoreboard.put("13231",Scoreboard.get("13231")+1) ;
-        System.out.println(Scoreboard.get("13231"));
+
+        long temp = 60023;
+
+        System.out.println(temp / 60 +"phut");
+        System.out.println( temp- (temp / 60)* 60+"giay");
+
+
     }
 
     public static class MyTask extends TimerTask {
