@@ -96,10 +96,6 @@ public class NewClient implements Runnable {
                                 } else {
                                     if (job[0].equalsIgnoreCase("Account")) {
                                         String[] arr = job[1].split(":");
-
-                                        System.out.println("TRONG PHAN ACCOUNT TUI TINH");
-                                        System.out.println(job[1]);
-
                                         Memory.userAccountDTO.setStrUid(arr[0]);
                                         Memory.userAccountDTO.setStrUserName(arr[1]);
                                         Memory.userAccountDTO.setStrNameInf(arr[2]);

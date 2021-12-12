@@ -69,7 +69,7 @@ public class LoginController implements Initializable {
                 stage.setTitle("Number finding game");
                 stage.setResizable(false);
                 //need add function prevent signin when password wrong
-                if (Memory.messenger.equalsIgnoreCase("Valid user")) {
+                if (Memory.messenger.equalsIgnoreCase("valid user")) {
                     while (!Memory.messenger.contains("Account")){
                         System.out.println("chở đợi");
                     }

@@ -170,25 +170,40 @@ public class NewServer implements Runnable {
                                 System.out.println(dtotmp.getStrPassWord());
                             }
                             if (bustmp.kiemTraDangNhap(dtotmp)) {
-                                System.out.println("valid user");
-                                clients[findClient(ID)].send("valid user");
-
-                                // return for client all infor user
+                                boolean valid=true;
                                 dtotmp = bustmp.getUserAccountByUserName(dtotmp);
-                                String sendmess = "Account;" +
-                                        dtotmp.getStrUid() + ":" +
-                                        dtotmp.getStrUserName() + ":" +
-                                        dtotmp.getStrNameInf() + ":" +
-                                        dtotmp.getStrPassWord() + ":" +
-                                        dtotmp.getStrGender() + ":" +
-                                        dtotmp.getStrDayOfBirth();
-
-                                // set uid
                                 clients[findClient(ID)].setUid(dtotmp.getStrUid());
+                                for (int i = 0; i < clientCount; i++) {
+                                    if (clients[i].getUid().equalsIgnoreCase(dtotmp.getStrUid())) {
+                                        if(clients[i].getID()==ID){
+                                            continue;
+                                        }
+                                        clients[findClient(ID)].send("Account are sign in on other address");
+                                        valid = false;
+                                    }
+                                }
+                                if(valid){
+                                    clients[findClient(ID)].send("valid user");
+                                    // return for client all infor user
 
-                                Thread.sleep(1000);
+                                    String sendmess = "Account;" +
+                                            dtotmp.getStrUid() + ":" +
+                                            dtotmp.getStrUserName() + ":" +
+                                            dtotmp.getStrNameInf() + ":" +
+                                            dtotmp.getStrPassWord() + ":" +
+                                            dtotmp.getStrGender() + ":" +
+                                            dtotmp.getStrDayOfBirth();
 
-                                clients[findClient(ID)].send(sendmess);
+                                    // set uid
+
+                                    Thread.sleep(1000);
+
+                                    clients[findClient(ID)].send(sendmess);
+
+                                }
+
+
+
                             }
 
                             dtotmp = new UserAccountDTO();
@@ -203,23 +218,28 @@ public class NewServer implements Runnable {
                             dtotmp.setStrPassWord(job[3] + "+NumberFinding");
                             dtotmp.setStrGender(job[4]);
                             dtotmp.setStrDayOfBirth(job[5]);
+                            //todo valid user
                             dtotmp.setStrUid(bustmp.getDefault());
                             //need date time
                             //hash paswd
-                            if (dtotmp.getStrPassWord() != null) {
-                                MessageDigest digest = MessageDigest.getInstance("SHA-256");
-                                byte[] encodedhash = digest.digest(
-                                        dtotmp.getStrPassWord().getBytes(StandardCharsets.UTF_8));
-                                dtotmp.setStrPassWord(bytesToHex(encodedhash));
-                                clients[findClient(ID)].send("Signup success");
-                                bustmp.them(dtotmp);
-                                if (bustmp.kiemTraDangNhap(dtotmp)) {
-                                    clients[findClient(ID)].send("Success signup");
-                                } else {
-                                    clients[findClient(ID)].send("Something gone wrong, cant signup this time");
+                            if (!bustmp.kiemTraDangki(dtotmp)) {
+                                if (dtotmp.getStrPassWord() != null) {
+                                    MessageDigest digest = MessageDigest.getInstance("SHA-256");
+                                    byte[] encodedhash = digest.digest(
+                                            dtotmp.getStrPassWord().getBytes(StandardCharsets.UTF_8));
+                                    dtotmp.setStrPassWord(bytesToHex(encodedhash));
+                                    bustmp.them(dtotmp);
+                                    if (bustmp.kiemTraDangNhap(dtotmp)) {
+                                        clients[findClient(ID)].send("Success signup");
+                                    } else {
+                                        clients[findClient(ID)].send("Something gone wrong, cant signup this time");
+                                    }
                                 }
                             }
-
+                            else {
+                                //todo
+                                clients[findClient(ID)].send("ERR:username already have a account");
+                            }
                         }
                     case 2:
                         //gui vs cu phap play nghia la dang trong tran

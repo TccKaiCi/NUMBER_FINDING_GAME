@@ -83,6 +83,15 @@ public class UserAccountBUS {
         }
         return false;
     }
+    public Boolean kiemTraDangki(UserAccountDTO DTO) {
+        for ( UserAccountDTO model : list_DTO ) {
+            // kiểm tra mật khảu và tên đăng nhập
+            if (model.getStrUserName().equals(DTO.getStrUserName())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public UserAccountDTO getUserAccountByUserName(UserAccountDTO DTO) {
         for ( UserAccountDTO model : list_DTO ) {
