@@ -84,9 +84,11 @@ public class ChangePasswordController implements Initializable {
     public void setCP_BtnSave(ActionEvent event){
         if(isInputValidate()){
             OldPass=Cp_OldPass.getText();
-            String SendingPack = "ChangePass;" +Memory.userAccountDTO.getStrUid()+ ";" +OldPass+";"+Memory.userAccountDTO.getStrPassWord();
+            String SendingPack = "ChangePass;"
+                    +Memory.userAccountDTO.getStrUid()+ ";"
+                    +OldPass+";"
+                    +Memory.userAccountDTO.getStrPassWord();
             Memory.client.sendMessenger(SendingPack);
-            System.out.println(SendingPack);
             //todo nhan duoc "EditSuccess" thi bao thanh cong
         }
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

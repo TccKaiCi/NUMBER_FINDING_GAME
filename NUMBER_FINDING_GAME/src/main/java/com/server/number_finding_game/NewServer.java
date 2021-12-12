@@ -158,6 +158,7 @@ public class NewServer implements Runnable {
                         //todo
                         findDirectLobby(ID).state = "isEnd";
                     }
+                    assert DTO != null;
                     String output = "NextNumber;"
                             + DTO.getIntValue() + ":" + DTO.getStrRare();
                     sendMessengerToAllInLobby(ID, output);
@@ -255,6 +256,18 @@ public class NewServer implements Runnable {
                         }
                         break;
                     case 2:
+                        if(job[0].equalsIgnoreCase("changepass")){
+                            String[] passwd=job[1].split(":");
+                            UserAccountDTO usr=new UserAccountDTO();
+                            usr= bustmp.getUserAccountByUID(passwd[0]);
+                            if(usr!=null){
+                                if(usr.getStrPassWord().equalsIgnoreCase(passwd[1]));
+                                usr.setStrPassWord(passwd[2]);
+                                bustmp.update(usr);
+                                clients[findClient(ID)].send("EditSuccess");
+                            }
+                        }
+
                         //gui vs cu phap play nghia la dang trong tran
                         //Pickup;Number:Color:Rare:UID
                         if (job[0].equalsIgnoreCase("Pickup")) {

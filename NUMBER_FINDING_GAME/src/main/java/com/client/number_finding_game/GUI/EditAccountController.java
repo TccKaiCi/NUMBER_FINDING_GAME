@@ -117,7 +117,7 @@ public class EditAccountController implements Initializable {
                     +Memory.userAccountDTO.getStrNameInf()+":"
                     +Memory.userAccountDTO.getStrDayOfBirth()+":"
                     +Memory.userAccountDTO.getStrGender();
-            System.out.println(SendingPack);
+           Memory.client.sendMessenger(SendingPack);
             //todo nhan duoc "EditSuccess" moi bao, check gmail
             stage.setTitle("Edit success");
             stage.show();
