@@ -42,7 +42,7 @@ public class MultiplayerController implements Initializable {
     private Match match;
     private NumberPoint nextPoint;
     private List<Rectangle> RecList;
-    private Timer countDown;
+    private Timer countDown, timer;
 
 
     public static final String DEFAULT_COLOR = "#23f2eb";
@@ -188,7 +188,7 @@ public class MultiplayerController implements Initializable {
 
         lbl_playerName.setText(Memory.userAccountDTO.getStrNameInf());
 
-        Timer timer = new Timer();
+        timer = new Timer();
         timer.schedule(new MyTask(), 0, 1);
 
         countDown = new Timer();
@@ -218,6 +218,7 @@ public class MultiplayerController implements Initializable {
                 if (Memory.messenger == "ENDGAME;") {
                     System.out.println("ENDGAME;");
                     countDown.cancel();
+                    timer.cancel();
                 } else {
 //                Pickup;1:color
                     String[] arr = tmp.split(";");

@@ -144,7 +144,7 @@ public class NewServer implements Runnable {
 
                         clients[findClient(temp)].send("UserColor;" + color);
 
-                        Thread.sleep(500);
+                        Thread.sleep(1000);
 
                         findDirectLobby(ID).ListOwner.put(clients[findClient(temp)].getUid(), 0);
                         clients[findClient(temp)].send(findDirectLobby(ID).Match.getMapByJSon());
@@ -162,6 +162,26 @@ public class NewServer implements Runnable {
                     String output = "NextNumber;"
                             + DTO.getIntValue() + ":" + DTO.getStrRare();
                     sendMessengerToAllInLobby(ID, output);
+                    //                    server start count_down
+                    Timer countDown = new Timer();
+                    countDown.scheduleAtFixedRate(new TimerTask() {
+                        @Override
+                        public void run() {
+                            long temp = findDirectLobby(ID).Match.getLongMatchTime();
+                            findDirectLobby(ID).Match.setLongMatchTime(temp - 1);
+
+
+                            if (temp == 0) {
+                                try {
+                                    EndMatch(ID);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                countDown.cancel();
+                            }
+                        }
+                    }, 0, 1000);
+
                 }
             }
             // lam ham end, t di wc xiu
@@ -342,6 +362,8 @@ public class NewServer implements Runnable {
 //                    set id lobby
         java.sql.Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         String lobbyIdRoom = "Lobby" + timestamp.getTime();
+
+        sendMessengerToAllInLobby(ID,"ENDGAME;");
 
 //                    Send map for all player in lobby
         for (int i = 0; i < 3; i++) {
