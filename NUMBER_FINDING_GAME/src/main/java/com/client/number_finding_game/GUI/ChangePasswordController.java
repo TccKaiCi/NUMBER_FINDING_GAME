@@ -1,20 +1,26 @@
 package com.client.number_finding_game.GUI;
 
+import com.client.number_finding_game.LoginForm;
 import com.server.number_finding_game.Memory;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.Node;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class ChangePasswordController implements Initializable {
@@ -26,7 +32,9 @@ public class ChangePasswordController implements Initializable {
     public CheckBox cb_showhide;
     @FXML
     public Button CP_BtnCancel, CP_BtnSave;
-    public static String OldPass=Memory.userAccountDTO.getStrPassWord();
+
+    public static String OldPass = Memory.userAccountDTO.getStrPassWord();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setShowPassword();
@@ -37,12 +45,16 @@ public class ChangePasswordController implements Initializable {
         setButtonHover(CP_BtnSave, "-fx-background-color: #FE6845;", "-fx-background-color: #FFA259;");
     }
 
-    public void setButtonHover(Node node, String colorEnter, String colorExit){
-        node.setOnMouseEntered(mouseEvent -> { node.setStyle(colorEnter); });
-        node.setOnMouseExited(mouseEvent -> { node.setStyle(colorExit); });
+    public void setButtonHover(Node node, String colorEnter, String colorExit) {
+        node.setOnMouseEntered(mouseEvent -> {
+            node.setStyle(colorEnter);
+        });
+        node.setOnMouseExited(mouseEvent -> {
+            node.setStyle(colorExit);
+        });
     }
 
-    public void setShowPassword(){
+    public void setShowPassword() {
         //Set init state
         tf_1.setManaged(false);
         tf_1.setVisible(false);
@@ -76,27 +88,53 @@ public class ChangePasswordController implements Initializable {
         tf_3.textProperty().bindBidirectional(Cp_RenewPass.textProperty());
     }
 
-    public void setCP_BtnCancel(ActionEvent event){
+    public void setCP_BtnCancel(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
 
-    public void setCP_BtnSave(ActionEvent event){
-        if(isInputValidate()){
-            OldPass=Cp_OldPass.getText();
-            String SendingPack = "ChangePass;" +Memory.userAccountDTO.getStrUid()+ ";" +OldPass+";"+Memory.userAccountDTO.getStrPassWord();
+    public void setCP_BtnSave(ActionEvent event) {
+        if (isInputValidate()) {
+            OldPass = Cp_OldPass.getText();
+            String SendingPack = "ChangePass;" + Memory.userAccountDTO.getStrUid() + ";" + OldPass + ";" + Cp_NewPass.getText();
             Memory.client.sendMessenger(SendingPack);
             System.out.println(SendingPack);
             //todo nhan duoc "EditSuccess" thi bao thanh cong
         }
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    if (Memory.messenger.contains("EditSuccess")) {
+                        timer.cancel();
+                        try {
+                            FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("Alert2.fxml"));
+                            Parent parent = fxmlLoader.load();
+                            Stage stage = new Stage();
+                            stage.setScene(new Scene(parent));
+                            stage.setResizable(false);
+                            stage.initModality(Modality.APPLICATION_MODAL);
+                            stage.initStyle(StageStyle.TRANSPARENT);
+                            stage.setTitle("Alert");
+                            stage.show();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        timer.cancel();
+                    }
+                });
+            }
+        }, 0, 100);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
+
     public boolean isInputValidate() {
         boolean check = true;
         boolean passCheck = Cp_NewPass.getText().isBlank();
         boolean repassCheck = Cp_RenewPass.getText().isBlank();
-        if (passCheck || repassCheck||!Cp_RenewPass.getText().equalsIgnoreCase(Cp_NewPass.getText())) {
+        if (passCheck || repassCheck || !Cp_RenewPass.getText().equalsIgnoreCase(Cp_NewPass.getText())) {
             System.out.println("hello");
             check = false;
         }

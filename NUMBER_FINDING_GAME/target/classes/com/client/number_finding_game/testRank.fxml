@@ -8,12 +8,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.client.number_finding_game.GUI.RankingController">
    <children>
-      <ScrollPane hbarPolicy="NEVER" layoutX="50.0" layoutY="57.0" prefHeight="300.0" prefWidth="500.0">
+      <ScrollPane hbarPolicy="NEVER" layoutX="50.0" layoutY="57.0" prefHeight="412.0" prefWidth="500.0">
         <content>
-            <VBox maxHeight="300.0" prefHeight="300.0" prefWidth="500.0">
+            <VBox maxHeight="413.0" prefHeight="413.0" prefWidth="500.0">
                <children>
                   <Pane maxHeight="50.0" minHeight="50.0" minWidth="300.0" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: red; -fx-background-radius: 2;">
                      <VBox.margin>
@@ -46,5 +45,10 @@
             </VBox>
         </content>
       </ScrollPane>
+      <Label layoutX="226.0" layoutY="14.0" text="Bảng Xếp hạng">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

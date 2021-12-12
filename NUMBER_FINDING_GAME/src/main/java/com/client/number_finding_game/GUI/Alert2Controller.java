@@ -9,13 +9,12 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AlertController implements Initializable {
+public class Alert2Controller implements Initializable {
     @FXML
-    Button btn_submit2;
-
+    Button btn_submit3;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        btn_submit2.setOnAction(event -> {
+        btn_submit3.setOnAction(event -> {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.close();
         });
