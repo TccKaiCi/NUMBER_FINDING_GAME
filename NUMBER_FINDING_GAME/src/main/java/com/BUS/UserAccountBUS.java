@@ -95,6 +95,16 @@ public class UserAccountBUS {
         return null;
     }
 
+    public String getNameInf_UID(String uid) {
+        for ( UserAccountDTO model : list_DTO ) {
+            // kiểm tra mật khảu và tên đăng nhập
+            if (model.getStrUid().equals(uid)) {
+                return model.getStrNameInf();
+            }
+        }
+        return null;
+    }
+
     public String getDefault() {
         if (list_DTO.size() == 0)
             return "3118410";
