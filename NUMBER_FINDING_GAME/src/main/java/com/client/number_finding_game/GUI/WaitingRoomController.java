@@ -53,7 +53,7 @@ public class WaitingRoomController implements Initializable {
         setHoverEffect();
         Node[] node = {btn_multi, btn_practice, btn_ranking, btn_account, btn_quit};
         setButtonAnimate(node);
-
+        Memory.rankingDTO.getPoint();
 
         lbl_name.setText(Memory.userAccountDTO.getStrNameInf());
     }

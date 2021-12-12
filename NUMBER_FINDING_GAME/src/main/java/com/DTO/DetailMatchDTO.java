@@ -60,4 +60,5 @@ public class DetailMatchDTO {
     public void setStrKetQua(String strKetQua) {
         this.strKetQua = strKetQua;
     }
+
 }

@@ -74,6 +74,14 @@ public class MyConnectUnit {
         }
     }
 
+    //Hàm thêm group by vào query
+    private void AddGroupBy(StringBuilder query, String GroupBy){
+        //Kiểm tra GroupBy khác null
+        if (GroupBy != null ){
+            query.append(" GROUP BY " +GroupBy);
+        }
+    }
+
     // Hàm hỗ trợ Insert xuống SQL
     /**
      * Insert Into TableName values...
