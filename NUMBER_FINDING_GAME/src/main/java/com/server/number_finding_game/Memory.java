@@ -3,6 +3,8 @@ package com.server.number_finding_game;
 import com.DTO.Ranking;
 import com.DTO.UserAccountDTO;
 
+import java.util.HashMap;
+
 /**
  * Information data storage
  * @author HiamKaito
@@ -14,6 +16,7 @@ public class Memory {
     public static Ranking rankingDTO = new Ranking();
 
     public static String userColor;
+    public static HashMap<String,String> otherUserInfor_Color = new HashMap<>();
 
 //    ======================================================================
 //    ======================================================================
@@ -27,6 +30,4 @@ public class Memory {
     static boolean playerMessenger = true;
 
     static String statusMessenger = " ";
-    static String playerConnectName = "";
-    static boolean playerConnect = false;
 }

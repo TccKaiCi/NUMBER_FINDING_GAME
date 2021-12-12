@@ -66,9 +66,6 @@ public class ChatServerThread extends Thread {
             bos = new BufferedOutputStream(socket.getOutputStream());
             dos = new DataOutputStream(bos);
 
-//            CHANGE ATTIBUUE 
-            Memory.playerConnect = true;
-            Memory.playerConnectName = socket.getRemoteSocketAddress().toString();
             while (true) {
                 //gui cho player biet no dang o lobby nao, reset sau khi lobby isEnd
                 newServer.handle(ID, dis.readUTF());

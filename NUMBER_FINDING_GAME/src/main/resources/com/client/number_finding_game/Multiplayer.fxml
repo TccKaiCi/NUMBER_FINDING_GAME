@@ -62,7 +62,57 @@
                         </ImageView>
                      </children>
                   </Pane>
-                  <VBox fx:id="vb_playerList" layoutY="60.0" prefHeight="500.0" prefWidth="200.0" style="-fx-background-color: #EDF0C7; -fx-border-color: #000;" />
+                  <VBox fx:id="vb_playerList" layoutY="60.0" prefHeight="500.0" prefWidth="200.0" style="-fx-background-color: #EDF0C7; -fx-border-color: #000;">
+                     <children>
+                        <Pane prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: #FFA259; -fx-border-color: black;">
+                           <children>
+                              <ImageView fx:id="img_player1" fitHeight="55.0" fitWidth="55.0" layoutX="5.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" x="10.0">
+                                 <image>
+                                    <Image url="@assets/Rank/Season_2019_-_Grandmaster_1.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="lbl_playerName1" layoutX="80.0" layoutY="5.0" text="Player Name">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lbl_score1" layoutX="80.0" layoutY="30.0" text="Score: ">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lbl_NumberScore1" layoutX="122.0" layoutY="30.0" text="0">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: #FFA259; -fx-border-color: black;">
+                           <children>
+                              <ImageView fx:id="img_player2" fitHeight="55.0" fitWidth="55.0" layoutX="5.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" x="10.0">
+                                 <image>
+                                    <Image url="@assets/Rank/Season_2019_-_Grandmaster_1.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="lbl_playerName2" layoutX="80.0" layoutY="5.0" text="Player Name">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lbl_score2" layoutX="80.0" layoutY="30.0" text="Score: ">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lbl_NumberScore2" layoutX="122.0" layoutY="30.0" text="0">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                     </children></VBox>
                </children>
             </Pane>
          </left>
