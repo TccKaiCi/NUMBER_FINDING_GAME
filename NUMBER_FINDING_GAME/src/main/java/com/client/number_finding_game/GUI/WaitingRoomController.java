@@ -1,5 +1,6 @@
 package com.client.number_finding_game.GUI;
 
+import com.DTO.Ranking;
 import com.client.number_finding_game.LoginForm;
 import com.server.number_finding_game.Memory;
 import javafx.application.Platform;
@@ -41,7 +42,6 @@ public class WaitingRoomController implements Initializable {
     private static final DropShadow hoverEffect = new DropShadow();
     private static final String IDLE_BUTTON_STYLE = "-fx-background-color: #A7DA46; ";
     private static final String HOVERED_BUTTON_STYLE = "-fx-background-color: #4E9525; ";
-    Timer timer;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -49,6 +49,7 @@ public class WaitingRoomController implements Initializable {
         btn_practice.setOnAction(this::setBtn_practiceOnclick);
         btn_account.setOnAction(this::setBtn_accountOnClick);
         btn_quit.setOnAction(this::setBtn_quit);
+        btn_ranking.setOnAction(this::setBtn_ranking);
         img_x.setOnMouseClicked(this::setImg_x);
         setHoverEffect();
         Node[] node = {btn_multi, btn_practice, btn_ranking, btn_account, btn_quit};
@@ -95,6 +96,43 @@ public class WaitingRoomController implements Initializable {
         }
     }
 
+    public void setBtn_ranking(ActionEvent event) {
+        Memory.client.sendMessenger("Ranking;Ranking");
+
+        Timer timer123 = new Timer();
+        timer123.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    String[] arr = Memory.messenger.split(";");
+                    if (arr[0].equals("RankingData")) {
+                        timer123.cancel();
+                        try {
+                            FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("testRank.fxml"));
+                            Parent parent = fxmlLoader.load();
+                            Stage stage = new Stage();
+                            stage.setScene(new Scene(parent));
+                            stage.setResizable(false);
+                            stage.initModality(Modality.APPLICATION_MODAL);
+                            stage.initStyle(StageStyle.TRANSPARENT);
+                            stage.setTitle("testRank");
+                            stage.show();
+
+                            Ranking ranking = new Ranking();
+
+                            ranking.getJsonRankTable(arr[1]);
+                            Ranking list = ranking.handleRank();
+                            list.display();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        timer123.cancel();
+                    }
+                });
+            }
+        }, 0, 100);
+    }
+
     public void setBtn_accountOnClick(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("EditAccount.fxml"));
@@ -128,7 +166,6 @@ public class WaitingRoomController implements Initializable {
             @Override
             public void run() {
                 Platform.runLater(() -> {
-                    System.out.println("Đang tìm đối thủ");
                     if (checkLobby(Memory.messenger)) {
                         timer.cancel();
                         try {

@@ -6,6 +6,7 @@ import com.BUS.UserAccountBUS;
 import com.DAO.UserAccountDAO;
 import com.DTO.DetailMatchDTO;
 import com.DTO.NumberPoint;
+import com.DTO.Ranking;
 import com.DTO.UserAccountDTO;
 import com.server.number_finding_game.ChatServerThread;
 
@@ -219,6 +220,7 @@ public class NewServer implements Runnable {
 
                             dtotmp = new UserAccountDTO();
                         }
+                        break;
                     case 6:
                         //SIGNUP;UID;SIGNUP;Username;Nameinf;Passwd;Gender
                         if (job[0].equalsIgnoreCase("SIGNUP")) {
@@ -251,9 +253,10 @@ public class NewServer implements Runnable {
                                 clients[findClient(ID)].send("ERR:username already have a account");
                             }
                         }
+                        break;
                     case 2:
                         //gui vs cu phap play nghia la dang trong tran
-                        ;//Pickup;Number:Color:Rare:UID
+                        //Pickup;Number:Color:Rare:UID
                         if (job[0].equalsIgnoreCase("Pickup")) {
                             String[] arr = job[1].split(":");
 //                            Check is the point chosen
@@ -308,8 +311,14 @@ public class NewServer implements Runnable {
                                     sendMessengerToAllInLobby(ID, output);
                                 }
                             }
+                        } else {
+                            if (job[0].equalsIgnoreCase("Ranking")){
+                                clients[findClient(ID)].send( "RankingData;" + new DetailMatchBUS().initJsonRankTable());
+                            }
                         }
+                        //Ranking;Ranking
 
+                        break;
                 }
             }
         }

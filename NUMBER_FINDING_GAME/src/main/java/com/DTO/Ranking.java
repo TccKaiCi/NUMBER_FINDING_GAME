@@ -49,15 +49,12 @@ public class Ranking {
         }
     }
 
-    public void handleRank() {
+    public Ranking handleRank() {
         HashMap<String, Integer> mapPoint = new HashMap<String, Integer>();
 
         //Tong diem player || return map<uid, diem>
         for (int i = 0; i < list.size(); i++) {
             mapPoint.merge(list.get(i).UID, list.get(i).Point, Integer::sum);
-        }
-        for (Map.Entry<String, Integer> item : mapPoint.entrySet()) {
-            //System.out.println("Point: Key " + item.getKey() + "; Value " + item.getValue());
         }
 
         // Ty le thang/tong
@@ -70,54 +67,55 @@ public class Ranking {
                 if (list.get(i).UID.equals(item.getKey())) {
                     temp = 1;
                     mapAllMatch.merge(item.getKey(), temp, Double::sum);
-                    if (list.get(i).KetQua.equals("win")){
+                    if (list.get(i).KetQua.equals("win")) {
                         temp2 = 1;
                         mapWinMatch.merge(item.getKey(), temp2, Double::sum);
                     }
                 }
-
             }
         }
-
 
         HashMap<String, String> mapWinRate = new HashMap<>();
         for (Map.Entry<String, Double> item : mapAllMatch.entrySet()) {
             for (Map.Entry<String, Double> item2 : mapWinMatch.entrySet()) {
-                if(Objects.equals(item.getKey(), item2.getKey())){
+                if (Objects.equals(item.getKey(), item2.getKey())) {
                     DecimalFormat numberFormat = new DecimalFormat("#.00");
                     mapWinRate.put(item.getKey(), numberFormat.format(((item2.getValue() / item.getValue()) * 100)));
-
-                   // System.out.println("Ti le thang: "+(item2.getValue()/ item.getValue()) * 100);
+                    // System.out.println("Ti le thang: "+(item2.getValue()/ item.getValue()) * 100);
                 }
-
             }
-
         }
+
+        //  UID     NAME    POINT   WINRATE
+        // NAME     WINRATE
+        Ranking bus = new Ranking();
+
         for (Map.Entry<String, Integer> item : mapPoint.entrySet()) {
-            System.out.println("Point: Key " + item.getKey() + "; Value " + item.getValue());
+            Ranking dto = new Ranking();
+
+            dto.setUID(item.getKey());
+            dto.setPoint(item.getValue());
+            dto.setName(this.getName_UID(dto.getUID()));
+
+            // winrate
+            for (Map.Entry<String, String> winRate : mapWinRate.entrySet()) {
+                if (dto.getUID() == winRate.getKey()) {
+                    dto.setWinRate(Double.parseDouble(winRate.getValue()));
+                }
+            }
+            bus.list.add(dto);
         }
-        for (Map.Entry<String, Double> item : mapAllMatch.entrySet()) {
-            System.out.println("All match: Key " + item.getKey() + "; Value " + item.getValue());
+        return bus;
+    }
+
+
+    public String getName_UID(String name) {
+        for (Ranking item : list) {
+            if (Objects.equals(name, item.getUID())) {
+                return item.getName();
+            }
         }
-        for (Map.Entry<String, Double> item : mapWinMatch.entrySet()) {
-            System.out.println("Win match: Key " + item.getKey() + "; Value " + item.getValue());
-        }
-        for (Map.Entry<String, String> item : mapWinRate.entrySet()) {
-            System.out.println("Win Rate: Key " + item.getKey() + "; Value " + item.getValue());
-        }
-
-        Ranking ranking = new Ranking();
-
-
-//        for (Map.Entry<String, Integer> item : mapPoint.entrySet()) {
-//            System.out.println("Merge: Key " + item.getKey() + "; Value " + item.getValue());
-//        }
-
-//        StringBuilder sb =new StringBuilder();
-//        for (Map.Entry<String, Double> item : mapAllMatch.entrySet()) {
-//
-//        }
-
+        return null;
     }
 
     public void display() {
@@ -189,7 +187,7 @@ public class Ranking {
         return "Ranking{" +
                 "UID='" + UID + '\'' +
                 ", Point=" + Point +
-                ", KetQua='" + KetQua + '\'' +
+                ", WinRate='" + WinRate + '\'' +
                 ", Name='" + Name + '\'' +
                 '}';
     }
