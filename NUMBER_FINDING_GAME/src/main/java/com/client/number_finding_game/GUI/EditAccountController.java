@@ -1,6 +1,8 @@
 package com.client.number_finding_game.GUI;
 
+import com.DTO.UserAccountDTO;
 import com.client.number_finding_game.LoginForm;
+import com.server.number_finding_game.Memory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,7 +34,7 @@ public class EditAccountController implements Initializable {
     public RadioButton Edt_RBMale, Edt_RBFemale, Edt_RBOthers;
     @FXML
     public DatePicker Edt_Dob;
-
+    ToggleGroup toggleGroup = new ToggleGroup();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -69,7 +71,7 @@ public class EditAccountController implements Initializable {
     }
 
     public void initRadioGroup() {
-        ToggleGroup toggleGroup = new ToggleGroup();
+
         Edt_RBMale.setToggleGroup(toggleGroup);
         Edt_RBFemale.setToggleGroup(toggleGroup);
         Edt_RBOthers.setToggleGroup(toggleGroup);
@@ -92,8 +94,24 @@ public class EditAccountController implements Initializable {
             stage.setResizable(false);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UNDECORATED);
+            Memory.userAccountDTO.setStrUid(Memory.userAccountDTO.getStrUid());
+            Memory.userAccountDTO.setStrUserName(Edt_usrName.getText());
+            Memory.userAccountDTO.setStrNameInf(Edt_fullName.getText());
+            Memory.userAccountDTO.setStrDayOfBirth(Edt_Dob.getValue().toString());
+            RadioButton selectedRadioButton = (RadioButton) toggleGroup.getSelectedToggle();
+            String toogleGroupValue = selectedRadioButton.getText();
+            Memory.userAccountDTO.setStrGender(toogleGroupValue);
+           String SendingPack ="Edit;"
+                    +Memory.userAccountDTO.getStrUid()+":"
+                    +Memory.userAccountDTO.getStrUserName()+":"
+                    +Memory.userAccountDTO.getStrNameInf()+":"
+                    +Memory.userAccountDTO.getStrDayOfBirth()+":"
+                    +Memory.userAccountDTO.getStrGender();
+            System.out.println(SendingPack);
+            //todo nhan duoc "EditSuccess" moi bao, check gmail
             stage.setTitle("Edit success");
             stage.show();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

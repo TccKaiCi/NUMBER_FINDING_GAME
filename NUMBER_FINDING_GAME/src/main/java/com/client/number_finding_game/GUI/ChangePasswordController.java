@@ -1,5 +1,6 @@
 package com.client.number_finding_game.GUI;
 
+import com.server.number_finding_game.Memory;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -25,7 +26,7 @@ public class ChangePasswordController implements Initializable {
     public CheckBox cb_showhide;
     @FXML
     public Button CP_BtnCancel, CP_BtnSave;
-
+    public static String OldPass=Memory.userAccountDTO.getStrPassWord();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setShowPassword();
@@ -81,8 +82,25 @@ public class ChangePasswordController implements Initializable {
     }
 
     public void setCP_BtnSave(ActionEvent event){
+        if(isInputValidate()){
+            OldPass=Cp_OldPass.getText();
+            String SendingPack = "ChangePass;" +Memory.userAccountDTO.getStrUid()+ ";" +OldPass+";"+Memory.userAccountDTO.getStrPassWord();
+            Memory.client.sendMessenger(SendingPack);
+            System.out.println(SendingPack);
+            //todo nhan duoc "EditSuccess" thi bao thanh cong
+        }
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
+    }
+    public boolean isInputValidate() {
+        boolean check = true;
+        boolean passCheck = Cp_NewPass.getText().isBlank();
+        boolean repassCheck = Cp_RenewPass.getText().isBlank();
+        if (passCheck || repassCheck||!Cp_RenewPass.getText().equalsIgnoreCase(Cp_NewPass.getText())) {
+            System.out.println("hello");
+            check = false;
+        }
+        return check;
     }
 
 }

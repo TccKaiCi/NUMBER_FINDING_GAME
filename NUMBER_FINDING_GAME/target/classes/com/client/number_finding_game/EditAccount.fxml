@@ -41,7 +41,7 @@
                   <Insets left="20.0" top="10.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="Edt_fullName" editable="false" prefHeight="27.0" prefWidth="235.0">
+            <TextField fx:id="Edt_fullName" prefHeight="27.0" prefWidth="235.0">
                <font>
                   <Font size="13.0" />
                </font>

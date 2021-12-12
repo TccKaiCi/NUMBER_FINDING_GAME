@@ -1,5 +1,6 @@
 package com.client.number_finding_game.GUI;
 
+import com.DTO.UserAccountDTO;
 import com.client.number_finding_game.LoginForm;
 import com.server.number_finding_game.Memory;
 import com.server.number_finding_game.NewClient;
