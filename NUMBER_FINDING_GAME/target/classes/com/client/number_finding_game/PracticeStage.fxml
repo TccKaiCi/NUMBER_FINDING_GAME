@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -11,36 +10,12 @@
    <children>
       <Pane prefHeight="100.0" prefWidth="800.0" style="-fx-background-color: #E7E0C9;" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="212.0" layoutY="12.0" prefHeight="77.0" prefWidth="107.0" text="Player 1: 0" textFill="BLACK">
-               <font>
-                  <Font size="23.0" />
-               </font>
-            </Label>
-            <Label layoutX="496.0" layoutY="12.0" prefHeight="77.0" prefWidth="120.0" text="Player 2: 0" textFill="BLACK">
-               <font>
-                  <Font size="23.0" />
-               </font>
-            </Label>
             <Label fx:id="lblNumberFinding" alignment="CENTER" layoutX="392.0" layoutY="33.0" text="100">
                <font>
                   <Font name="System Bold" size="23.0" />
                </font>
             </Label>
-            <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="40.0" layoutY="38.0">
-               <image>
-                  <Image url="@assets/play-button.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="713.0" layoutY="38.0">
-               <image>
-                  <Image url="@assets/clock.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="745.0" layoutY="38.0" text="6:09">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Label>
+            <Button fx:id="lbl_BackGame" layoutX="31.0" layoutY="27.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="97.0" text="&lt;| Back" />
          </children>
       </Pane>
       <Pane fx:id="pane2" layoutY="100.0" prefHeight="500.0" prefWidth="800.0" AnchorPane.topAnchor="100.0" />

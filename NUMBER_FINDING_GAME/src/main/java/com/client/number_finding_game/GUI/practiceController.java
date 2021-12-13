@@ -2,16 +2,23 @@ package com.client.number_finding_game.GUI;
 
 import com.BUS.Match;
 import com.DTO.NumberPoint;
+import com.client.number_finding_game.LoginForm;
 import com.server.number_finding_game.Memory;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.*;
@@ -23,6 +30,8 @@ public class practiceController implements Initializable {
     private Label lblNumberFinding;
     @FXML
     private AnchorPane anchor;
+    @FXML
+    Button lbl_BackGame;
 
     private Match match;
     private NumberPoint nextPoint;
@@ -34,7 +43,7 @@ public class practiceController implements Initializable {
         RecList = new ArrayList<>();
         match = new Match("R3", 300);
 
-        match.createRandomMap(14, 17);
+        match.createRandomMap(1, 100);
 
 //        create list label
         match.getMap().getList().forEach(model -> {
@@ -59,9 +68,9 @@ public class practiceController implements Initializable {
 //                This can be change for player input
                 String color;
                 if (model.getIntValue() % 2 == 0)
-                    color = "0xffa500ff";
+                    color = "Yellow";
                 else
-                    color = "ffee04";
+                    color = "Cyan";
 //                Check is nextValue
                 if (model.getIntValue() == nextPoint.getIntValue()) {
 //                    Check is chosen
@@ -160,22 +169,26 @@ public class practiceController implements Initializable {
             }
         }
     }
-    // 16 ; 16 ; #hex_color
-    public void setColorToNumber(String input){
-        String[] color = input.split(";");
-        System.out.println("dadasdsa");
-        for (Rectangle item : RecList){
-            System.out.println(item.getId());
-            if(item.getId().equalsIgnoreCase("SP_"+color[0])){
-                System.out.println("trong if "+ color[0]+ color[1]+ color[2]);
-                item.setFill(Color.web(color[2]));
-            }
-        }
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         init(pane2);
-        setColorToNumber("16;16;#000");
+
+        lbl_BackGame.setOnAction(this::setBtn_practiceOnclick);
+    }
+
+    public void setBtn_practiceOnclick(ActionEvent event) {
+        try {
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setTitle("Practice play");
+            stage.setResizable(false);
+
+            FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("Waiting_room.fxml"));
+            Parent root = fxmlLoader.load();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
