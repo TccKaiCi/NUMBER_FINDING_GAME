@@ -35,9 +35,10 @@ public class NewServer implements Runnable {
     private int clientCount = 0;
     private List<Lobby> ListLobby;
     private int Startpoint = 1, Endpoint = 12;
-    HashMap<String,String > userStatus=new HashMap<>();
+    HashMap<String, String> userStatus = new HashMap<>();
     UserAccountBUS accountBus;
     DetailMatchBUS detailMatchBUS;
+
     public HashMap<String, String> getUserStatus() {
         return userStatus;
     }
@@ -189,7 +190,7 @@ public class NewServer implements Runnable {
                         };
 
                         //UID:COLOR:UID2:COLOR2:UID3:COLOR3:
-                        sb.append("%s:%s:".formatted(accountBus.getNameInf_UID(clients[findClient(temp)].getUid()) , color));
+                        sb.append("%s:%s:".formatted(accountBus.getNameInf_UID(clients[findClient(temp)].getUid()), color));
                     }
 
                     //        delete end ":"
@@ -272,7 +273,7 @@ public class NewServer implements Runnable {
                                     }
                                 }
                                 if (valid) {
-                                    userStatus.put(clients[findClient(ID)].getUid(),"online");
+                                    userStatus.put(clients[findClient(ID)].getUid(), "online");
                                     clients[findClient(ID)].send("valid user");
                                     // return for client all infor user
 
@@ -332,12 +333,12 @@ public class NewServer implements Runnable {
                         }
                         break;
                     case 2://edit acc
-                        if(job[0].equalsIgnoreCase("Edit")){
-                            String[] edit=job[1].split(":");
-                            UserAccountDTO usr=new UserAccountDTO();
-                            usr= accountBus.getUserAccountByUID(edit[0]);
-                            if(usr!=null){
-                                if(usr.getStrPassWord().equalsIgnoreCase(edit[1]));
+                        if (job[0].equalsIgnoreCase("Edit")) {
+                            String[] edit = job[1].split(":");
+                            UserAccountDTO usr = new UserAccountDTO();
+                            usr = accountBus.getUserAccountByUID(edit[0]);
+                            if (usr != null) {
+                                if (usr.getStrPassWord().equalsIgnoreCase(edit[1])) ;
                                 usr.setStrDayOfBirth(edit[3]);
                                 usr.setStrGender(edit[4]);
                                 usr.setStrNameInf(edit[2]);
@@ -345,13 +346,13 @@ public class NewServer implements Runnable {
                                 clients[findClient(ID)].send("EditSuccess");
                             }
                         }
-                        if(job[0].equalsIgnoreCase("changepass")){
-                            String[] passwd=job[1].split(":");
-                            UserAccountDTO usr=new UserAccountDTO();
-                            usr= accountBus.getUserAccountByUID(passwd[0]);
-                            if(usr!=null){
-                                if(usr.getStrPassWord().equalsIgnoreCase(passwd[1]));
-                                usr.setStrPassWord(Hash(passwd[2]+"+NumberFinding"));
+                        if (job[0].equalsIgnoreCase("changepass")) {
+                            String[] passwd = job[1].split(":");
+                            UserAccountDTO usr = new UserAccountDTO();
+                            usr = accountBus.getUserAccountByUID(passwd[0]);
+                            if (usr != null) {
+                                if (usr.getStrPassWord().equalsIgnoreCase(passwd[1])) ;
+                                usr.setStrPassWord(Hash(passwd[2] + "+NumberFinding"));
                                 accountBus.update(usr);
                                 clients[findClient(ID)].send("EditSuccess");
                             }
@@ -378,7 +379,7 @@ public class NewServer implements Runnable {
                                 //todo
                                 int prePoint = findDirectLobby(ID).ListOwner.get(UID);
 
-                                if (Objects.equals( arr[2], "Lucky")) {
+                                if (Objects.equals(arr[2], "Lucky")) {
                                     findDirectLobby(ID).ListOwner.put(UID, prePoint + 3);
                                     System.out.println("3 điểm");
                                 } else {
@@ -414,8 +415,8 @@ public class NewServer implements Runnable {
                                 }
                             }
                         } else {
-                            if (job[0].equalsIgnoreCase("Ranking")){
-                                clients[findClient(ID)].send( "RankingData;" + new DetailMatchBUS().initJsonRankTable());
+                            if (job[0].equalsIgnoreCase("Ranking")) {
+                                clients[findClient(ID)].send("RankingData;" + new DetailMatchBUS().initJsonRankTable());
                             }
                         }
                         //Ranking;Ranking
@@ -432,7 +433,17 @@ public class NewServer implements Runnable {
         java.sql.Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         String lobbyIdRoom = "Lobby" + timestamp.getTime();
 
-        sendMessengerToAllInLobby(ID,"ENDGAME;");
+        sendMessengerToAllInLobby(ID, "ENDGAME;");
+
+        int max = 0;
+        for (int i = 0; i < 3; i++) {
+            SocketAddress temp = tmp.addr.get(i);
+            for (Map.Entry<String, Integer> entry : findDirectLobby(ID).ListOwner.entrySet()) {
+                if (entry.getValue() >= max) {
+                    max = entry.getValue();
+                }
+            }
+        }
 
 //                    Send map for all player in lobby
         for (int i = 0; i < 3; i++) {
@@ -463,8 +474,15 @@ public class NewServer implements Runnable {
             }
 
             //todo
-            dto.setStrKetQua("lose");
-
+            if (max == 0) {
+                dto.setStrKetQua("lose");
+            } else {
+                if (max == dto.getIntPoint()) {
+                    dto.setStrKetQua("win");
+                } else {
+                    dto.setStrKetQua("lose");
+                }
+            }
             // add to bus detailmatch
             // write to database
             // not right now
@@ -553,27 +571,27 @@ public class NewServer implements Runnable {
     }
 
     public synchronized void remove(SocketAddress ID) {
-       if(findClient(ID)!=-1){
-           userStatus.put(clients[findClient(ID)].getUid(),"offline");
-           if (!clients[findClient(ID)].getLobbyID().equalsIgnoreCase(""))
-               removeFromLobby(clients[findClient(ID)]);
-           int index = findClient(ID);
-           if (index >= 0) {
-               ChatServerThread threadToTerminate = clients[index];
-               System.out.println("Removing client thread " + ID + " at " + index);
-               if (index < clientCount - 1) {
-                   for (int i = index + 1; i < clientCount; i++) {
-                       clients[i - 1] = clients[i];
-                   }
-               }
-               clientCount--;
-               try {
-                   threadToTerminate.close();
-               } catch (IOException e) {
-                   System.out.println("Error closing thread : " + e.getMessage());
-               }
-           }
-       }
+        if (findClient(ID) != -1) {
+            userStatus.put(clients[findClient(ID)].getUid(), "offline");
+            if (!clients[findClient(ID)].getLobbyID().equalsIgnoreCase(""))
+                removeFromLobby(clients[findClient(ID)]);
+            int index = findClient(ID);
+            if (index >= 0) {
+                ChatServerThread threadToTerminate = clients[index];
+                System.out.println("Removing client thread " + ID + " at " + index);
+                if (index < clientCount - 1) {
+                    for (int i = index + 1; i < clientCount; i++) {
+                        clients[i - 1] = clients[i];
+                    }
+                }
+                clientCount--;
+                try {
+                    threadToTerminate.close();
+                } catch (IOException e) {
+                    System.out.println("Error closing thread : " + e.getMessage());
+                }
+            }
+        }
     }
 
     private void addThreadClient(Socket socket) {
@@ -597,6 +615,7 @@ public class NewServer implements Runnable {
         }
         return hexString.toString();
     }
+
     private static String Hash(String str) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] encodedhash = digest.digest(
