@@ -9,10 +9,13 @@ public class ServerManager {
     public static void main(String[] args) {
         newServer = new NewServer();
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Status: Hien thi user status");
-        String s = scanner.nextLine();
 
-        while (!s.equalsIgnoreCase("stop")) {
+        do {
+            System.out.println("Status: Hien thi user status");
+            System.out.println("Setup: so luong so");
+            System.out.println("Time: thoi gian");
+            System.out.println("lobby");
+            String s = scanner.nextLine();
             if (s.equalsIgnoreCase("status")) {
                 displayStatus();
                 s = scanner.nextLine();
@@ -34,10 +37,10 @@ public class ServerManager {
                 if (x < y) {
                     newServer.setStartpoint(x);
                     newServer.setEndpoint(y);
+                    System.out.println("Cài đặt thành công");
                 } else {
                     System.out.println("vui long nhập bắt đầu > kết thúc");
                 }
-
             }
             //thoiGian
             if (s.equalsIgnoreCase("Time")) {
@@ -49,7 +52,7 @@ public class ServerManager {
                 time = Integer.parseInt(s);
 
                 newServer.setThoiGian(time);
-
+                System.out.println("Cài đặt thành công");
             }
             if ((s.equalsIgnoreCase("Lobby"))) {
                 if (newServer.getListLobby() == null) {
@@ -62,7 +65,7 @@ public class ServerManager {
                     }
                 }
             }
-        }
+        } while (true);
     }
 
     public static void displayStatus() {
