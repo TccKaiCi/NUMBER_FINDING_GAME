@@ -104,7 +104,7 @@ public class NewClient implements Runnable {
                                     } else {
                                         // UserColor;Color
                                         if (job[0].equalsIgnoreCase("UserColor")) {
-                                            //UID:COLOR:UID2:COLOR2:UID3:COLOR3
+                                            //NAME:COLOR:NAME2:COLOR2:NAME3:COLOR3
                                             //0:1:2:3:4:5
                                             String[] arr = job[1].split(":");
                                             Memory.otherUserInfor_Color.put(arr[0], arr[1]);
@@ -112,7 +112,7 @@ public class NewClient implements Runnable {
                                             Memory.otherUserInfor_Color.put(arr[4], arr[5]);
 
                                             for (Map.Entry<String, String> entry : Memory.otherUserInfor_Color.entrySet() ) {
-                                                if (entry.getKey().equalsIgnoreCase(Memory.userAccountDTO.getStrUid())) {
+                                                if (entry.getKey().equalsIgnoreCase(Memory.userAccountDTO.getStrNameInf())) {
                                                     Memory.userColor = entry.getValue();
                                                 }
                                             }

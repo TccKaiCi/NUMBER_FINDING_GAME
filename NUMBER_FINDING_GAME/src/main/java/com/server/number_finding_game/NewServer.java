@@ -159,7 +159,7 @@ public class NewServer implements Runnable {
                         clients[findClient(temp)].send(findDirectLobby(ID).Match.getMapByJSon());
                     }
 
-                    Thread.sleep(100);
+                    Thread.sleep(500);
 //                    Send next number to all player in lobby
                     NumberPoint DTO = findDirectLobby(ID).Match.getNextValue();
                     if (DTO == null) {
@@ -347,7 +347,7 @@ public class NewServer implements Runnable {
                                 Thread.sleep(100);
 
 //                                Send and color the value number (Input)
-                                String output = "FillColor;" + arr[0] + ":" + arr[1];
+                                String output = "FillColor;" + job[1];
                                 //gửi tất cả user
                                 sendMessengerToAllInLobby(ID, output);
 
