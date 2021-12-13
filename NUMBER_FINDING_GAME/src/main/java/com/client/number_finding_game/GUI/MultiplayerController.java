@@ -119,51 +119,45 @@ public class MultiplayerController implements Initializable {
         }
     }
 
-    public void getPoint(String color) {
-        //10:Red
-//            check Rare number
-        if (color.equals(Memory.userColor)) {
-            int diem = Integer.parseInt(lbl_NumberScore.getText());
-            if (Objects.equals(nextPoint.getStrRare(), "Lucky")) {
-                lbl_NumberScore.setText(String.valueOf((diem + 3)));
-                System.out.println("3 điểm");
-            } else {
-                if (Objects.equals(nextPoint.getStrRare(), "Blind")) {
-//                   todo Tuấn Anh làm
-                } else {
-                    lbl_NumberScore.setText(String.valueOf((diem + 1)));
-                    System.out.println("1 điểm");
+    public void getPoint(String color, String rare) {
+        int i = 1;
+        //NAME:COLOR:NAME2:COLOR2:NAME3:COLOR3
+        for (Map.Entry<String, String> entry : Memory.otherUserInfor_Color.entrySet()) {
+            if (Objects.equals(color, entry.getValue())) {
+                System.out.println("Chọn màu " + entry.getValue());
+                switch (i) {
+                    case 1:
+                        System.out.println("A");
+                        congDiem(lbl_NumberScore, rare);
+                        break;
+                    case 2:
+                        System.out.println("B");
+                        congDiem(lbl_NumberScore1, rare);
+                        break;
+                    case 3:
+                        System.out.println("C");
+                        congDiem(lbl_NumberScore2, rare);
+                        break;
                 }
             }
+            i++;
+        }
+    }
+
+    public void congDiem(Label lbl, String rare) {
+        int diem = Integer.parseInt(lbl.getText());
+        System.out.println(diem + " la diem hien tai");
+
+        if (Objects.equals(rare, "Lucky")) {
+            diem += 3;
         } else {
-            // other user
-            int i = 1;
-            for (Map.Entry<String, String> entry : Memory.otherUserInfor_Color.entrySet()) {
-                if (color.equals(entry.getValue())) {
-                    int diem = Integer.parseInt(lbl_NumberScore.getText());
-                    if (Objects.equals(nextPoint.getStrRare(), "Lucky")) {
-                        if (i == 1) {
-                            lbl_NumberScore1.setText(String.valueOf((diem + 3)));
-                        } else {
-                            lbl_NumberScore2.setText(String.valueOf((diem + 3)));
-                        }
-                    } else {
-                        if (Objects.equals(nextPoint.getStrRare(), "Blind")) {
+            if (Objects.equals(rare, "Blind")) {
 //                   todo Tuấn Anh làm
-                        } else {
-                            if (i == 1) {
-                                lbl_NumberScore1.setText(String.valueOf((diem + 1)));
-                            } else {
-                                if (i == 2) {
-                                    lbl_NumberScore2.setText(String.valueOf((diem + 1)));
-                                }
-                            }
-                        }
-                    }
-                }
-                i++;
+            } else {
+                diem += 1;
             }
         }
+        lbl.setText(String.valueOf(diem));
     }
 
 
@@ -238,12 +232,16 @@ public class MultiplayerController implements Initializable {
 
         int i = 1;
         for (Map.Entry<String, String> entry : Memory.otherUserInfor_Color.entrySet()) {
-            if (i == 1) {
-                lbl_playerName1.setText(entry.getKey());
-            } else {
-                if (i == 2) {
+            switch (i) {
+                case 1:
+                    lbl_playerName.setText(entry.getKey());
+                    break;
+                case 2:
+                    lbl_playerName1.setText(entry.getKey());
+                    break;
+                case 3:
                     lbl_playerName2.setText(entry.getKey());
-                }
+                    break;
             }
             i++;
         }
@@ -281,11 +279,12 @@ public class MultiplayerController implements Initializable {
                                 setLabelNumberFindingColor();
                             });
                             break;
-//                        Type: Number:Color
+//                        Type: Number:Color:Rare:UID
+//                        0:1:2:3
                         case "FillColor":
                             Platform.runLater(() -> {
                                 setColorToNumber(Integer.parseInt(s[0]), s[1]);
-                                getPoint(s[1]);
+                                getPoint(s[1], s[2]);
                             });
                             break;
                     }
