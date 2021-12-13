@@ -98,7 +98,6 @@ public class WaitingRoomController implements Initializable {
             stage.setTitle("Practice play");
             stage.setResizable(false);
             stage.show();
-            Memory.client.sendMessenger("start");
         } catch (Exception e) {
             e.printStackTrace();
         }
