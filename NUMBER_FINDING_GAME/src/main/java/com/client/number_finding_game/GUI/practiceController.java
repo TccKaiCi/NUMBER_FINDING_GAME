@@ -4,6 +4,7 @@ import com.BUS.Match;
 import com.DTO.NumberPoint;
 import com.client.number_finding_game.LoginForm;
 import com.server.number_finding_game.Memory;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,7 +44,7 @@ public class practiceController implements Initializable {
         RecList = new ArrayList<>();
         match = new Match("R3", 300);
 
-        match.createRandomMap(1, 100);
+        match.createRandomMap(4, 6);
 
 //        create list label
         match.getMap().getList().forEach(model -> {
@@ -70,16 +71,16 @@ public class practiceController implements Initializable {
                 if (model.getIntValue() % 2 == 0)
                     color = "Yellow";
                 else
-                    color = "Cyan";
+                    color = "Red";
 //                Check is nextValue
                 if (model.getIntValue() == nextPoint.getIntValue()) {
 //                    Check is chosen
                     if (match.getMap().isChosen(model.getIntValue())) {
+                        match.getMap().setColorByValue(model.getIntValue(), color);
 //                        Point
                         getPoint();
 //                    Change input
                         rectangle.setFill(Color.valueOf(color));
-                        match.getMap().setColorByValue(model.getIntValue(), color);
 
 //                    Print value select
 //                      todo
@@ -98,7 +99,6 @@ public class practiceController implements Initializable {
                     }
                 }
             });
-
 
 
 //            add to Panel/ UI
@@ -140,29 +140,22 @@ public class practiceController implements Initializable {
                 System.out.println("3 điểm");
             } else {
                 if (Objects.equals(nextPoint.getStrRare(), "Blind")) {
-//                    Tuấn Anh làm
-//                    System.out.println("CHUA HE");
-//                    Pane panel = new Pane();
-//                    panel.setLayoutX(0);
-//                    panel.setLayoutY(100);
-//                    panel.setPrefWidth(800);
-//                    panel.setPrefHeight(500);
-//                    panel.setStyle("-fx-background-input: red; ");
-//                    panel.setVisible(true);
-//                    anchor.getChildren().add(panel);
-//                    pane2.setOpacity(0);
-//                    pane2.setVisible(false);
-
-//                    try {
-//
-////                        Thread.sleep(3000);
-//
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                        System.out.println(e.getMessage());
-//                    }
-//                    pane2.setOpacity(1);
-//                    pane2.setVisible(true);
+                    pane2.setOpacity(0);
+                    Timer cheManHinh = new Timer();
+                    cheManHinh.scheduleAtFixedRate(new TimerTask() {
+                        public int i = 1;
+                        @Override
+                        public void run() {
+                            Platform.runLater(() -> {
+                                if (i == 4) {
+                                    pane2.setOpacity(1);
+                                    cheManHinh.cancel();
+                                } else {
+                                    i++;
+                                }
+                            });
+                        }
+                    }, 0, 1000);
                 } else {
                     System.out.println("1 điểm");
                 }
