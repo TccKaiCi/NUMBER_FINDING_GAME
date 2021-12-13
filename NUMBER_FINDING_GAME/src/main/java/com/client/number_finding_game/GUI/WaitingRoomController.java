@@ -121,7 +121,7 @@ public class WaitingRoomController implements Initializable {
                             stage.setScene(new Scene(parent));
                             stage.setResizable(false);
                             stage.initModality(Modality.APPLICATION_MODAL);
-                            stage.initStyle(StageStyle.TRANSPARENT);
+//                            stage.initStyle(StageStyle.TRANSPARENT);
                             stage.setTitle("testRank");
                             stage.show();
 //                            Ranking ranking = new Ranking();
@@ -179,7 +179,7 @@ public class WaitingRoomController implements Initializable {
                             stage.setScene(new Scene(parent));
                             stage.setResizable(false);
                             stage.initModality(Modality.APPLICATION_MODAL);
-                            stage.initStyle(StageStyle.TRANSPARENT);
+//                            stage.initStyle(StageStyle.TRANSPARENT);
                             stage.setTitle("Multiplayer");
                             stage.show();
 
