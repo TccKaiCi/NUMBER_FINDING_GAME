@@ -197,6 +197,10 @@ public class MultiplayerController implements Initializable {
         Stage stage1 = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage1.close();
 
+
+        countDown.cancel();
+        timer.cancel();
+
 //        exit lobby from server
         Memory.client.sendMessenger("exit");
         Platform.exit();
@@ -228,6 +232,8 @@ public class MultiplayerController implements Initializable {
 
                     if (temp == 0) {
                         lbl_time.setText("0");
+                        countDown.cancel();
+                        timer.cancel();
                     } else {
                         lbl_time.setText((temp / 60) + ":" + (temp - (temp / 60) * 60));
                     }
