@@ -153,6 +153,8 @@ public class MultiplayerController implements Initializable {
         } else {
             if (Objects.equals(rare, "Blind")) {
 //                   todo Tuấn Anh làm
+
+
             } else {
                 diem += 1;
             }
@@ -173,23 +175,6 @@ public class MultiplayerController implements Initializable {
     }
 
     public void setBtn_back(Event event) {
-//        quay trở lại waitting room
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("Waiting_room.fxml"));
-            Parent parent = null;
-
-            parent = fxmlLoader.load();
-
-            Stage stage = new Stage();
-            stage.setScene(new Scene(parent));
-            stage.setResizable(false);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.UNDECORATED);
-            stage.setTitle("submit success");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         // close
         Stage stage1 = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage1.close();

@@ -32,7 +32,7 @@ import java.util.TimerTask;
 
 public class WaitingRoomController implements Initializable {
     @FXML
-    private Button btn_multi, btn_practice, btn_ranking, btn_account, btn_quit, btn_x;
+    private Button btn_multi, btn_practice, btn_ranking, btn_account, btn_quit;
     @FXML
     Label lbl_name;
 
@@ -50,7 +50,6 @@ public class WaitingRoomController implements Initializable {
         btn_account.setOnAction(this::setBtn_accountOnClick);
         btn_quit.setOnAction(this::setBtn_quit);
         btn_ranking.setOnAction(this::setBtn_ranking);
-//        btn_x.setOnAction(this::setBtn_x);
         setHoverEffect();
         Node[] node = {btn_multi, btn_practice, btn_ranking, btn_account, btn_quit};
         setButtonAnimate(node);
@@ -155,11 +154,8 @@ public class WaitingRoomController implements Initializable {
 
         //show loading animation
         btn_multi.setText("Đang tìm đối thủ...");
-        btn_x.setVisible(true);
-        btn_x.setDisable(false);
         Node[] node = {btn_multi, btn_practice, btn_quit, btn_account, btn_ranking};
         setDisable(node, true);
-
 
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -182,30 +178,19 @@ public class WaitingRoomController implements Initializable {
                             stage.show();
 
 
-                            Stage stage2 = (Stage) btn_multi.getScene().getWindow();
-                            stage2.close();
+//                            Stage stage2 = (Stage) btn_multi.getScene().getWindow();
+//                            stage2.close();
 
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        setDisable(node, true);
                         timer.cancel();
                     }
                 });
             }
         }, 0, 100);
     }
-
-//    public void setBtn_x(ActionEvent event) {
-//        Node[] nodes = {btn_multi, btn_practice, btn_quit, btn_account, btn_ranking};
-////        timer.cancel();
-//        setDisable(nodes, false);
-//        btn_x.setDisable(true);
-//        btn_x.setVisible(false);
-//        System.out.println("before stop");
-//        //Exit lobby from server
-//        Memory.client.stop();
-//
-//    }
 
     public void setDisable(Node[] node, boolean value) {
         for (Node item : node) {
