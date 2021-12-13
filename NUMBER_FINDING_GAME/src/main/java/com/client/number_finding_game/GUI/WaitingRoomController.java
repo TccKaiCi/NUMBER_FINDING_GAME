@@ -32,16 +32,16 @@ import java.util.TimerTask;
 
 public class WaitingRoomController implements Initializable {
     @FXML
-    private Button btn_multi, btn_practice, btn_ranking, btn_account, btn_quit;
+    private Button btn_multi, btn_practice, btn_ranking, btn_account, btn_quit, btn_x;
     @FXML
     Label lbl_name;
-    @FXML
-    ImageView img_x;
+
 
 
     private static final DropShadow hoverEffect = new DropShadow();
     private static final String IDLE_BUTTON_STYLE = "-fx-background-color: #A7DA46; ";
     private static final String HOVERED_BUTTON_STYLE = "-fx-background-color: #4E9525; ";
+    Timer timer;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -50,10 +50,11 @@ public class WaitingRoomController implements Initializable {
         btn_account.setOnAction(this::setBtn_accountOnClick);
         btn_quit.setOnAction(this::setBtn_quit);
         btn_ranking.setOnAction(this::setBtn_ranking);
-        img_x.setOnMouseClicked(this::setImg_x);
+//        btn_x.setOnAction(this::setBtn_x);
         setHoverEffect();
         Node[] node = {btn_multi, btn_practice, btn_ranking, btn_account, btn_quit};
         setButtonAnimate(node);
+
         Memory.rankingDTO.getPoint();
 
         lbl_name.setText(Memory.userAccountDTO.getStrNameInf());
@@ -117,12 +118,11 @@ public class WaitingRoomController implements Initializable {
                             stage.initStyle(StageStyle.TRANSPARENT);
                             stage.setTitle("testRank");
                             stage.show();
-
-                            Ranking ranking = new Ranking();
-
-                            ranking.getJsonRankTable(arr[1]);
-                            Ranking list = ranking.handleRank();
-                            list.display();
+//                            Ranking ranking = new Ranking();
+//
+//                            ranking.getJsonRankTable(arr[1]);
+//                            Ranking listRank = ranking.handleRank();
+//                            listRank.display();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -155,19 +155,21 @@ public class WaitingRoomController implements Initializable {
 
         //show loading animation
         btn_multi.setText("Đang tìm đối thủ...");
-        img_x.setVisible(true);
-        img_x.setDisable(false);
+        btn_x.setVisible(true);
+        btn_x.setDisable(false);
         Node[] node = {btn_multi, btn_practice, btn_quit, btn_account, btn_ranking};
         setDisable(node, true);
 
 
-        Timer timer = new Timer();
+        timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 Platform.runLater(() -> {
                     if (checkLobby(Memory.messenger)) {
                         timer.cancel();
+                        Node[] node = {btn_multi, btn_practice, btn_quit, btn_account, btn_ranking};
+                        setDisable(node, false);
                         try {
                             FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("Multiplayer.fxml"));
                             Parent parent = fxmlLoader.load();
@@ -193,15 +195,17 @@ public class WaitingRoomController implements Initializable {
         }, 0, 100);
     }
 
-    public void setImg_x(Event event) {
-        Node[] nodes = {btn_multi, btn_practice, btn_quit, btn_account, btn_ranking, img_x};
-        setDisable(nodes, false);
-        img_x.setVisible(false);
-
-        //        exit lobby from server
-        Memory.client.stop();
-
-    }
+//    public void setBtn_x(ActionEvent event) {
+//        Node[] nodes = {btn_multi, btn_practice, btn_quit, btn_account, btn_ranking};
+////        timer.cancel();
+//        setDisable(nodes, false);
+//        btn_x.setDisable(true);
+//        btn_x.setVisible(false);
+//        System.out.println("before stop");
+//        //Exit lobby from server
+//        Memory.client.stop();
+//
+//    }
 
     public void setDisable(Node[] node, boolean value) {
         for (Node item : node) {

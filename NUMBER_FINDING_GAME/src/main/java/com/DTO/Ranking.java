@@ -16,7 +16,7 @@ public class Ranking {
     private String KetQua;
     private String Name;
     public int SumPoint;
-    public double WinRate;
+    public String WinRate;
 
     private List<Ranking> list;
 
@@ -100,7 +100,7 @@ public class Ranking {
             // winrate
             for (Map.Entry<String, String> winRate : mapWinRate.entrySet()) {
                 if (dto.getUID() == winRate.getKey()) {
-                    dto.setWinRate(Double.parseDouble(winRate.getValue()));
+                    dto.setWinRate(winRate.getValue());
                 }
             }
             bus.list.add(dto);
@@ -108,6 +108,25 @@ public class Ranking {
         return bus;
     }
 
+    public void sortPoint() {
+        Collections.sort(list, Ranking::pointGiamDan);
+    }
+
+    public static int pointGiamDan(Ranking a, Ranking b){
+        int x = a.getPoint();
+        int y = b.getPoint();
+        if ( x > y ) {
+            return -1;
+        }
+        else {
+            if (x == y ) {
+                return 0;
+            }
+            else {
+                return 1;
+            }
+        }
+    }
 
     public String getName_UID(String name) {
         for (Ranking item : list) {
@@ -133,11 +152,11 @@ public class Ranking {
         SumPoint = sumPoint;
     }
 
-    public double getWinRate() {
+    public String getWinRate() {
         return WinRate;
     }
 
-    public void setWinRate(double winRate) {
+    public void setWinRate(String winRate) {
         WinRate = winRate;
     }
 
