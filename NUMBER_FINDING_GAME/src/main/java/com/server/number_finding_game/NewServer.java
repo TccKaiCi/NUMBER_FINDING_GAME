@@ -35,6 +35,7 @@ public class NewServer implements Runnable {
     private int clientCount = 0;
     private List<Lobby> ListLobby;
     private int Startpoint = 1, Endpoint = 12;
+    HashMap<String,String > userStatus=new HashMap<>();
     UserAccountBUS accountBus;
     DetailMatchBUS detailMatchBUS;
 
@@ -225,6 +226,8 @@ public class NewServer implements Runnable {
                                     }
                                 }
                                 if (valid) {
+                                    userStatus.put(clients[findClient(ID)].getUid(),"online");
+                                    userStatus.forEach((k, v) -> System.out.println(k + " :" + v));
                                     clients[findClient(ID)].send("valid user");
                                     // return for client all infor user
 
@@ -505,24 +508,28 @@ public class NewServer implements Runnable {
     }
 
     public synchronized void remove(SocketAddress ID) {
-        if (!clients[findClient(ID)].getLobbyID().equalsIgnoreCase(""))
-            removeFromLobby(clients[findClient(ID)]);
-        int index = findClient(ID);
-        if (index >= 0) {
-            ChatServerThread threadToTerminate = clients[index];
-            System.out.println("Removing client thread " + ID + " at " + index);
-            if (index < clientCount - 1) {
-                for (int i = index + 1; i < clientCount; i++) {
-                    clients[i - 1] = clients[i];
-                }
-            }
-            clientCount--;
-            try {
-                threadToTerminate.close();
-            } catch (IOException e) {
-                System.out.println("Error closing thread : " + e.getMessage());
-            }
-        }
+       if(findClient(ID)!=-1){
+           userStatus.put(clients[findClient(ID)].getUid(),"offline");
+           userStatus.forEach((k, v) -> System.out.println(k + " :" + v));
+           if (!clients[findClient(ID)].getLobbyID().equalsIgnoreCase(""))
+               removeFromLobby(clients[findClient(ID)]);
+           int index = findClient(ID);
+           if (index >= 0) {
+               ChatServerThread threadToTerminate = clients[index];
+               System.out.println("Removing client thread " + ID + " at " + index);
+               if (index < clientCount - 1) {
+                   for (int i = index + 1; i < clientCount; i++) {
+                       clients[i - 1] = clients[i];
+                   }
+               }
+               clientCount--;
+               try {
+                   threadToTerminate.close();
+               } catch (IOException e) {
+                   System.out.println("Error closing thread : " + e.getMessage());
+               }
+           }
+       }
     }
 
     private void addThreadClient(Socket socket) {
