@@ -495,7 +495,7 @@ public class NewServer implements Runnable {
 
     public Lobby findDirectLobby(SocketAddress addr) {
         for (int i = 0; i < ListLobby.size(); i++) {
-            for (int j = 0; j < 3; j++) {
+            for (int j = 0; j < ListLobby.get(i).addr.size(); j++) {
                 if (ListLobby.get(i).addr.get(j) == addr) {
                     return ListLobby.get(i);
                 }
