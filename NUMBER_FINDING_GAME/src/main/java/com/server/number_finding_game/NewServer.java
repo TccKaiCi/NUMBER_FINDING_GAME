@@ -46,6 +46,14 @@ public class NewServer implements Runnable {
         this.userStatus = userStatus;
     }
 
+    public int getStartpoint() {
+        return Startpoint;
+    }
+
+    public void setStartpoint(int startpoint) {
+        Startpoint = startpoint;
+    }
+
     public int getHardLimit() {
         return hardLimit;
     }
@@ -64,6 +72,14 @@ public class NewServer implements Runnable {
 
     public int getEndpoint() {
         return Endpoint;
+    }
+
+    public List<Lobby> getListLobby() {
+        return ListLobby;
+    }
+
+    public void setListLobby(List<Lobby> listLobby) {
+        ListLobby = listLobby;
     }
 
     public void setEndpoint(int endpoint) {
@@ -257,7 +273,6 @@ public class NewServer implements Runnable {
                                 }
                                 if (valid) {
                                     userStatus.put(clients[findClient(ID)].getUid(),"online");
-                                    userStatus.forEach((k, v) -> System.out.println(k + " :" + v));
                                     clients[findClient(ID)].send("valid user");
                                     // return for client all infor user
 
@@ -540,7 +555,6 @@ public class NewServer implements Runnable {
     public synchronized void remove(SocketAddress ID) {
        if(findClient(ID)!=-1){
            userStatus.put(clients[findClient(ID)].getUid(),"offline");
-           userStatus.forEach((k, v) -> System.out.println(k + " :" + v));
            if (!clients[findClient(ID)].getLobbyID().equalsIgnoreCase(""))
                removeFromLobby(clients[findClient(ID)]);
            int index = findClient(ID);
