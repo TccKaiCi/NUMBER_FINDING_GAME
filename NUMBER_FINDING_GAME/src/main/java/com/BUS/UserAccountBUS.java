@@ -57,12 +57,7 @@ public class UserAccountBUS {
     public Boolean update(UserAccountDTO DTO) throws Exception {
         if ( DAO.update(DTO) ) {
 
-            // duyệt từng phẩn tử
-            for ( UserAccountDTO model : list_DTO ) {
-                if (model.getStrUid().equals(DTO.getStrUid())){
-                    break;
-                }
-            }
+           DAO.readDB();
         }
 
         return false;
