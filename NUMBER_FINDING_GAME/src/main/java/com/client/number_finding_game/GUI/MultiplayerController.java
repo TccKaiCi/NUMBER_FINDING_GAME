@@ -122,27 +122,49 @@ public class MultiplayerController implements Initializable {
     }
 
     public void getPoint(String color, String rare) {
-        int i = 1;
-        //NAME:COLOR:NAME2:COLOR2:NAME3:COLOR3
-        for (Map.Entry<String, String> entry : Memory.otherUserInfor_Color.entrySet()) {
-            if (Objects.equals(color, entry.getValue())) {
-                System.out.println("Chọn màu " + entry.getValue());
-                switch (i) {
-                    case 1:
-                        System.out.println("A");
-                        congDiem(lbl_NumberScore, rare);
-                        break;
-                    case 2:
-                        System.out.println("B");
-                        congDiem(lbl_NumberScore1, rare);
-                        break;
-                    case 3:
-                        System.out.println("C");
-                        congDiem(lbl_NumberScore2, rare);
-                        break;
+        if ((color != Memory.userColor) && (rare.equals("Blind"))) {
+            // blind
+            pane_main.setOpacity(0);
+            Timer cheManHinh = new Timer();
+            cheManHinh.scheduleAtFixedRate(new TimerTask() {
+                public int i = 1;
+
+                @Override
+                public void run() {
+                    Platform.runLater(() -> {
+                        if (i == 4) {
+                            pane_main.setOpacity(1);
+                            cheManHinh.cancel();
+                        } else {
+                            i++;
+                        }
+                    });
                 }
+            }, 0, 1000);
+
+        } else {
+            int i = 1;
+            //NAME:COLOR:NAME2:COLOR2:NAME3:COLOR3
+            for (Map.Entry<String, String> entry : Memory.otherUserInfor_Color.entrySet()) {
+                if (Objects.equals(color, entry.getValue())) {
+                    System.out.println("Chọn màu " + entry.getValue());
+                    switch (i) {
+                        case 1:
+                            System.out.println("A");
+                            congDiem(lbl_NumberScore, rare);
+                            break;
+                        case 2:
+                            System.out.println("B");
+                            congDiem(lbl_NumberScore1, rare);
+                            break;
+                        case 3:
+                            System.out.println("C");
+                            congDiem(lbl_NumberScore2, rare);
+                            break;
+                    }
+                }
+                i++;
             }
-            i++;
         }
     }
 
@@ -153,13 +175,7 @@ public class MultiplayerController implements Initializable {
         if (Objects.equals(rare, "Lucky")) {
             diem += 3;
         } else {
-            if (Objects.equals(rare, "Blind")) {
-//                   todo Tuấn Anh làm
-
-
-            } else {
-                diem += 1;
-            }
+            diem += 1;
         }
         lbl.setText(String.valueOf(diem));
     }
@@ -182,7 +198,7 @@ public class MultiplayerController implements Initializable {
         stage1.close();
 
 //        exit lobby from server
-        Memory.client.stop();
+        Memory.client.sendMessenger("exit");
         Platform.exit();
         System.exit(0);
     }
@@ -248,36 +264,41 @@ public class MultiplayerController implements Initializable {
                     timer.cancel();
                 } else {
 //                Pickup;1:color
-                    String[] arr = tmp.split(";");
-                    String[] s = arr[1].split(":");
+                    try {
+                        String[] arr = tmp.split(";");
+                        String[] s = arr[1].split(":");
 
 
 //                Get X in X;a:b....etc
-                    switch (arr[0]) {
+                        switch (arr[0]) {
 //                    setLabelNumberFindingColor
 //                    value:rare
 //                    NextNumber;10:Lucky
-                        case "NextNumber":
-                            Platform.runLater(() -> {
-                                if (nextPoint == null) {
-                                    nextPoint = new NumberPoint();
-                                }
-                                System.out.println(arr[1]);
-                                nextPoint.setIntValue(Integer.parseInt(s[0]));
-                                nextPoint.setStrRare(s[1]);
-                                setLabelNumberFindingColor();
-                            });
-                            break;
+                            case "NextNumber":
+                                Platform.runLater(() -> {
+                                    if (nextPoint == null) {
+                                        nextPoint = new NumberPoint();
+                                    }
+                                    System.out.println(arr[1]);
+                                    nextPoint.setIntValue(Integer.parseInt(s[0]));
+                                    nextPoint.setStrRare(s[1]);
+                                    setLabelNumberFindingColor();
+                                });
+                                break;
 //                        Type: Number:Color:Rare:UID
 //                        0:1:2:3
-                        case "FillColor":
-                            Platform.runLater(() -> {
-                                setColorToNumber(Integer.parseInt(s[0]), s[1]);
-                                getPoint(s[1], s[2]);
-                            });
-                            break;
+                            case "FillColor":
+                                Platform.runLater(() -> {
+                                    setColorToNumber(Integer.parseInt(s[0]), s[1]);
+                                    getPoint(s[1], s[2]);
+                                });
+                                break;
+                        }
+                    } catch (Exception ignored) {
+
                     }
                 }
+
                 Memory.messenger = "";
             } else {
 
