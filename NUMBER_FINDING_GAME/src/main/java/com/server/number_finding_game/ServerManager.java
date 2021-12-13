@@ -31,7 +31,7 @@ public class ServerManager {
                 } while (isInteger(s) && s != null);
                 y = Integer.parseInt(s);
 
-                if (x < y) {
+                if (x > y) {
                     newServer.setStartpoint(x);
                     newServer.setEndpoint(y);
                 } else {
