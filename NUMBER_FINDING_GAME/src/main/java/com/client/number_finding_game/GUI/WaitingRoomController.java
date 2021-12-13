@@ -56,7 +56,15 @@ public class WaitingRoomController implements Initializable {
 
         Memory.rankingDTO.getPoint();
 
-        lbl_name.setText(Memory.userAccountDTO.getStrNameInf());
+        Timer countDown = new Timer();
+        countDown.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    lbl_name.setText(Memory.userAccountDTO.getStrNameInf());
+                });
+            }
+        }, 0, 1000);
     }
 
     public void setHoverEffect() {
@@ -151,7 +159,6 @@ public class WaitingRoomController implements Initializable {
     public void setBtn_multiOnClick(ActionEvent event) {
         Memory.client.sendMessenger("start");
 
-
         //show loading animation
         btn_multi.setText("Đang tìm đối thủ...");
         Node[] node = {btn_multi, btn_practice, btn_quit, btn_account, btn_ranking};
@@ -178,14 +185,14 @@ public class WaitingRoomController implements Initializable {
                             stage.show();
 
 
-//                            Stage stage2 = (Stage) btn_multi.getScene().getWindow();
-//                            stage2.close();
-
+                            Stage stage2 = (Stage) btn_multi.getScene().getWindow();
+                            stage2.close();
+                            setDisable(node, true);
+                            timer.cancel();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        setDisable(node, true);
-                        timer.cancel();
+
                     }
                 });
             }
