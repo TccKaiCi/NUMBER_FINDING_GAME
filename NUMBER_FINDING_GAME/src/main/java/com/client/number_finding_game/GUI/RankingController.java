@@ -49,8 +49,12 @@ public class RankingController implements Initializable {
                 Label uid = new Label(dto.getUID());
                 Label name = new Label(dto.getName());
                 Label point = new Label(String.valueOf(dto.getPoint()));
-                Label winRate = new Label(dto.getWinRate());
-                System.out.println(uid.getText() + name.getText() + point.getText() + winRate.getText());
+                Label winRate;
+                if (dto.getWinRate() == null) {
+                    winRate = new Label("0,0");
+                } else {
+                    winRate = new Label(dto.getWinRate());
+                }
                 Insets insets = new Insets(11, 0, 0, 5);
                 uid.setPadding(insets);
                 name.setPadding(insets);
@@ -68,15 +72,15 @@ public class RankingController implements Initializable {
                 name.setFont(new Font(19));
                 point.setFont(new Font(19));
                 winRate.setFont(new Font(19));
-                uid.setTextFill(Color.GOLD);
-                name.setTextFill(Color.GOLD);
-                point.setTextFill(Color.GOLD);
-                winRate.setTextFill(Color.GOLD);
+                uid.setTextFill(Color.BLACK);
+                name.setTextFill(Color.BLACK);
+                point.setTextFill(Color.RED);
+                winRate.setTextFill(Color.BLACK);
 
                 playerPane.getChildren().addAll(uid, name, point, winRate);
                 playerPane.setPrefHeight(50);
                 playerPane.setPrefWidth(300);
-                playerPane.setStyle("-fx-background-color: red; -fx-background-radius: 2;");
+                playerPane.setStyle("-fx-background-color: CYAN; -fx-background-radius: 2;");
                 HBox.setMargin(playerPane, new Insets(30, 30, 0, 30));
                 vbox.getChildren().add(playerPane);
                 vbox.setSpacing(10);
