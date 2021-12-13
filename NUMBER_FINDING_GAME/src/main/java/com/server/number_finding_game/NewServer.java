@@ -13,6 +13,7 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -282,14 +283,27 @@ public class NewServer implements Runnable {
                             }
                         }
                         break;
-                    case 2:
+                    case 2://edit acc
+                        if(job[0].equalsIgnoreCase("Edit")){
+                            String[] edit=job[1].split(":");
+                            UserAccountDTO usr=new UserAccountDTO();
+                            usr= accountBus.getUserAccountByUID(edit[0]);
+                            if(usr!=null){
+                                if(usr.getStrPassWord().equalsIgnoreCase(edit[1]));
+                                usr.setStrDayOfBirth(edit[3]);
+                                usr.setStrGender(edit[4]);
+                                usr.setStrNameInf(edit[2]);
+                                accountBus.update(usr);
+                                clients[findClient(ID)].send("EditSuccess");
+                            }
+                        }
                         if(job[0].equalsIgnoreCase("changepass")){
                             String[] passwd=job[1].split(":");
                             UserAccountDTO usr=new UserAccountDTO();
                             usr= accountBus.getUserAccountByUID(passwd[0]);
                             if(usr!=null){
                                 if(usr.getStrPassWord().equalsIgnoreCase(passwd[1]));
-                                usr.setStrPassWord(passwd[2]);
+                                usr.setStrPassWord(Hash(passwd[2]+"+NumberFinding"));
                                 accountBus.update(usr);
                                 clients[findClient(ID)].send("EditSuccess");
                             }
@@ -531,6 +545,12 @@ public class NewServer implements Runnable {
             hexString.append(hex);
         }
         return hexString.toString();
+    }
+    private static String Hash(String str) throws NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] encodedhash = digest.digest(
+                str.getBytes(StandardCharsets.UTF_8));
+        return bytesToHex(encodedhash);
     }
 
 

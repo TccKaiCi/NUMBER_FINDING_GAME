@@ -96,7 +96,10 @@ public class ChangePasswordController implements Initializable {
     public void setCP_BtnSave(ActionEvent event) {
         if (isInputValidate()) {
             OldPass = Cp_OldPass.getText();
-            String SendingPack = "ChangePass;" + Memory.userAccountDTO.getStrUid() + ";" + OldPass + ";" + Cp_NewPass.getText();
+            String SendingPack = "ChangePass;"
+                    + Memory.userAccountDTO.getStrUid() + ":"
+                    + OldPass + ":"
+                    + Cp_NewPass.getText();
 
             Memory.client.sendMessenger(SendingPack);
             //todo nhan duoc "EditSuccess" thi bao thanh cong

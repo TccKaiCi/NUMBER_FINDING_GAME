@@ -89,7 +89,12 @@ public class UserAccountDAO {
 
         // tạo đối tượng truyền vào
         HashMap<String, Object> insertValues = new HashMap<>();
-//        insertValues.put("matkhau", tk.getStrMatKhau());
+        insertValues.put("UID", tk.getStrUid());
+        insertValues.put("username", tk.getStrUserName());
+        insertValues.put("passwd", tk.getStrPassWord());
+        insertValues.put("nameinf", tk.getStrNameInf());
+        insertValues.put("gender", tk.getStrGender());
+        insertValues.put("dayofbirth", tk.getStrDayOfBirth());
 //        insertValues.put("capbac", tk.getiCapBac());
 
         String condition = " UID = '" + tk.getStrUid() + "'";
