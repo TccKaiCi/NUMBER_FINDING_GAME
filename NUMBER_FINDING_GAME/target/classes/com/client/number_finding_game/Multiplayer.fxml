@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -18,7 +19,7 @@
          <left>
             <Pane prefWidth="200.0">
                <children>
-                  <Pane prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: #FFA259; -fx-border-color: black;">
+                  <Pane prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: red; -fx-border-color: black;">
                      <children>
                         <ImageView fx:id="img_player" fitHeight="55.0" fitWidth="55.0" layoutX="5.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" x="10.0">
                            <image>
@@ -44,14 +45,6 @@
                   </Pane>
                   <Pane layoutY="560.0" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #FFA259; -fx-border-color: black;">
                      <children>
-                        <ImageView fx:id="btn_back" fitHeight="25.0" fitWidth="25.0" layoutX="14.0" layoutY="8.0" opacity="0.78" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@assets/Rank/backicon.png" />
-                           </image>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </ImageView>
                         <ImageView fx:id="btn_setting" fitHeight="25.0" fitWidth="25.0" layoutX="161.0" layoutY="8.0" opacity="0.78" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@assets/Rank/setting.png" />
@@ -60,15 +53,20 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </ImageView>
+                        <Button fx:id="btn_stop" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" style="-fx-background-color: gray;" text="Thoát game">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
                      </children>
                   </Pane>
                   <VBox fx:id="vb_playerList" layoutY="60.0" prefHeight="500.0" prefWidth="200.0" style="-fx-background-color: #EDF0C7; -fx-border-color: #000;">
                      <children>
-                        <Pane prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: lightblue; -fx-border-color: black;">
+                        <Pane prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: gold; -fx-border-color: black;">
                            <children>
                               <ImageView fx:id="img_player1" fitHeight="55.0" fitWidth="55.0" layoutX="5.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" x="10.0">
                                  <image>
-                                    <Image url="@assets/Rank/Season_2019_-_Diamond_1.png" />
+                                    <Image url="@assets/Rank/Season_2019_-_Grandmaster_1.png" />
                                  </image>
                               </ImageView>
                               <Label fx:id="lbl_playerName1" layoutX="80.0" layoutY="5.0" text="Player Name">
@@ -88,11 +86,11 @@
                               </Label>
                            </children>
                         </Pane>
-                        <Pane prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: gold; -fx-border-color: black;">
+                        <Pane prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: green; -fx-border-color: black;">
                            <children>
                               <ImageView fx:id="img_player2" fitHeight="55.0" fitWidth="55.0" layoutX="5.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" x="10.0">
                                  <image>
-                                    <Image url="@assets/Rank/Season_2019_-_Gold_1.png" />
+                                    <Image url="@assets/Rank/Season_2019_-_Master_1.png" />
                                  </image>
                               </ImageView>
                               <Label fx:id="lbl_playerName2" layoutX="80.0" layoutY="5.0" text="Player Name">

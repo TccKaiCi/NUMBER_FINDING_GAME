@@ -37,7 +37,9 @@ public class MultiplayerController implements Initializable {
     @FXML
     Label lbl_findingNum, lbl_time, lbl_playerName, lbl_NumberScore, lbl_playerName1, lbl_NumberScore1, lbl_playerName2, lbl_NumberScore2;
     @FXML
-    ImageView btn_back, btn_setting;
+    Button btn_stop;
+    @FXML
+    ImageView btn_setting;
 
     private Match match;
     private NumberPoint nextPoint;
@@ -174,13 +176,15 @@ public class MultiplayerController implements Initializable {
         }
     }
 
-    public void setBtn_back(Event event) {
+    public void setBtn_stop(ActionEvent event) {
         // close
         Stage stage1 = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage1.close();
 
 //        exit lobby from server
         Memory.client.stop();
+        Platform.exit();
+        System.exit(0);
     }
 
     public void setBtn_setting(Event event) {
@@ -190,7 +194,7 @@ public class MultiplayerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         init(pane_main);
-        btn_back.setOnMouseClicked(this::setBtn_back);
+        btn_stop.setOnAction(this::setBtn_stop);
         btn_setting.setOnMouseClicked(this::setBtn_setting);
 
         lbl_playerName.setText(Memory.userAccountDTO.getStrNameInf());
