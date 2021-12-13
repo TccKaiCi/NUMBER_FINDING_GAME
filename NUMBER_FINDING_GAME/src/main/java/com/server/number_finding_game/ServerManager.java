@@ -18,25 +18,37 @@ public class ServerManager {
                 s = scanner.nextLine();
             }
             if (s.equalsIgnoreCase("SetUp")) {
-                int x,y;
+                int x, y;
                 do {
                     System.out.println("Đặt điểm khởi đầu");
                     s = scanner.nextLine();
-                } while (isInteger(s) && s != null);
+                } while (!isInteger(s) && s != null);
                 x = Integer.parseInt(s);
 
                 do {
                     System.out.println("Đặt điểm kết thúc");
                     s = scanner.nextLine();
-                } while (isInteger(s) && s != null);
+                } while (!isInteger(s) && s != null);
                 y = Integer.parseInt(s);
 
-                if (x > y) {
+                if (x < y) {
                     newServer.setStartpoint(x);
                     newServer.setEndpoint(y);
                 } else {
                     System.out.println("vui long nhập bắt đầu > kết thúc");
                 }
+
+            }
+            //thoiGian
+            if (s.equalsIgnoreCase("Time")) {
+                int time;
+                do {
+                    System.out.println("thời gian: ");
+                    s = scanner.nextLine();
+                } while (!isInteger(s) && s != null);
+                time = Integer.parseInt(s);
+
+                newServer.setThoiGian(time);
 
             }
             if ((s.equalsIgnoreCase("Lobby"))) {

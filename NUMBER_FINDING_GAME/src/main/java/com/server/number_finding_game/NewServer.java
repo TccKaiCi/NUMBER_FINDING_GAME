@@ -35,6 +35,7 @@ public class NewServer implements Runnable {
     private int clientCount = 0;
     private List<Lobby> ListLobby;
     private int Startpoint = 1, Endpoint = 12;
+    private int thoiGian = 100;
     HashMap<String, String> userStatus = new HashMap<>();
     UserAccountBUS accountBus;
     DetailMatchBUS detailMatchBUS;
@@ -170,7 +171,7 @@ public class NewServer implements Runnable {
 //                if room/ lobby is full 3/3 player or client
                 if (findDirectLobby(ID).state.equalsIgnoreCase("isFull") && findDirectLobby(ID) != null) {
 //                    Create idRoom and time
-                    findDirectLobby(ID).Match = new Match(clients[findClient(ID)].getLobbyID(), 70);
+                    findDirectLobby(ID).Match = new Match(clients[findClient(ID)].getLobbyID(), thoiGian);
 //                    Create random map
 //                    Set up
                     findDirectLobby(ID).Match.createRandomMap(Startpoint, Endpoint, 790, 0, 510, 0);
@@ -623,5 +624,11 @@ public class NewServer implements Runnable {
         return bytesToHex(encodedhash);
     }
 
+    public int getThoiGian() {
+        return thoiGian;
+    }
 
+    public void setThoiGian(int thoiGian) {
+        this.thoiGian = thoiGian;
+    }
 }
