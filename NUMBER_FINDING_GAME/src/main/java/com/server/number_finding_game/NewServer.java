@@ -38,7 +38,37 @@ public class NewServer implements Runnable {
     HashMap<String,String > userStatus=new HashMap<>();
     UserAccountBUS accountBus;
     DetailMatchBUS detailMatchBUS;
+    public HashMap<String, String> getUserStatus() {
+        return userStatus;
+    }
 
+    public void setUserStatus(HashMap<String, String> userStatus) {
+        this.userStatus = userStatus;
+    }
+
+    public int getHardLimit() {
+        return hardLimit;
+    }
+
+    public void setHardLimit(int hardLimit) {
+        this.hardLimit = hardLimit;
+    }
+
+    public int getSoftLimit() {
+        return softLimit;
+    }
+
+    public void setSoftLimit(int softLimit) {
+        this.softLimit = softLimit;
+    }
+
+    public int getEndpoint() {
+        return Endpoint;
+    }
+
+    public void setEndpoint(int endpoint) {
+        Endpoint = endpoint;
+    }
 
     public static void main(String[] args) {
         NewServer news = new NewServer();
