@@ -6,6 +6,7 @@ import com.DTO.UserAccountDTO;
 import java.util.ArrayList;
 
 /**
+ * Server
  * Mỗi tài khoản chỉ thuộc về 1 người
  */
 public class UserAccountBUS {

@@ -3,6 +3,7 @@ package com.DTO;
 import java.util.Random;
 
 /**
+ * Server and client
  * MỘt kiểu dữ liệu Object trò chơi, có thể dùng cho hiển thị
  */
 public class NumberPoint {
@@ -14,14 +15,6 @@ public class NumberPoint {
     private String strRare;
 
     public NumberPoint() {
-    }
-
-    public NumberPoint(int intValue, int intPosX, int intPosY, String strChosenColor, String strRare) {
-        this.intValue = intValue;
-        this.intPosX = intPosX;
-        this.intPosY = intPosY;
-        this.strChosenColor = strChosenColor;
-        this.strRare = strRare;
     }
 
     public void randomPosition(int posXMax, int posXMin, int posYMax, int posYMin) {

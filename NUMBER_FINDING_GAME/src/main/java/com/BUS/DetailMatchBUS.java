@@ -34,21 +34,6 @@ public class DetailMatchBUS {
         return false;
     }
 
-    public Boolean update(DetailMatchDTO DTO) throws Exception {
-        if (DAO.update(DTO)) {
-            // duyệt từng phẩn tử
-            for (DetailMatchDTO tmp : list_DTO) {
-                if (tmp.getStrIdRoom().equals(DTO.getStrIdRoom())
-                        && tmp.getStrUid().equals(DTO.getStrUid())) {
-                    tmp.setIntPoint(DTO.getIntPoint());
-                    tmp.setStrPlayerColor(DTO.getStrPlayerColor());
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     // Lấy dữ liệu UID Diem KetqUA từ DetailmatchDto
     public ArrayList<Ranking> getUID_Diem_KetQua() {
         ArrayList<Ranking> list = new ArrayList<>();
@@ -63,6 +48,10 @@ public class DetailMatchBUS {
     }
 
 
+    /**
+     * Get data by Json
+     * @return
+     */
     public String initJsonRankTable() {
         try {
             UserAccountBUS bus = new UserAccountBUS();

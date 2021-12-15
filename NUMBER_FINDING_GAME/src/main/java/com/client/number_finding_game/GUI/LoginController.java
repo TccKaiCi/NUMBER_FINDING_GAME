@@ -112,7 +112,7 @@ public class LoginController implements Initializable {
                         stage.setScene(new Scene(parent));
                         stage.setResizable(false);
                         stage.initModality(Modality.APPLICATION_MODAL);
-                        stage.initStyle(StageStyle.UNDECORATED);
+//                        stage.initStyle(StageStyle.UNDECORATED);
                         stage.setTitle("submit success");
                         stage.show();
                     } catch (Exception e) {

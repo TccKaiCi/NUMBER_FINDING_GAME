@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 public class DetailMatchDAO {
     MyConnectUnit connect;
     String strTableName = "tbldetailmatch";
@@ -43,7 +44,7 @@ public class DetailMatchDAO {
 
 
     /**
-     * Tạo thêm 1 tài khoản dựa theo đã có thông tin trước
+     * Tạo thêm 1 dựa theo đã có thông tin trước
      *
      * @return true nếu thành công
      */
@@ -59,41 +60,6 @@ public class DetailMatchDAO {
         insertValues.put("KetQua", tk.getStrKetQua());
 
         Boolean check = connect.Insert(strTableName, insertValues);
-
-        connect.Close();
-        return check;
-    }
-
-    /**
-     * @param tk chuyền vào dữ liệu tài khoản để xóa
-     * @return true nếu thành công
-     */
-    public Boolean delete(DetailMatchDTO tk) throws Exception {
-        connect = new MyConnectUnit();
-        String condition = " UID = '" + tk.getStrUid() + "'";
-
-        Boolean check = connect.Delete(strTableName, condition);
-
-        connect.Close();
-        return check;
-    }
-
-    /**
-     * @param tk truyền vào dữ liệu tài khoản mới
-     *           Sửa thông tin đăng nhập hoặc là cấp bậc của 1 tài khoản
-     * @return true nếu thành công
-     */
-    public Boolean update(DetailMatchDTO tk) throws Exception {
-        connect = new MyConnectUnit();
-
-        // tạo đối tượng truyền vào
-        HashMap<String, Object> insertValues = new HashMap<>();
-//        insertValues.put("matkhau", tk.getStrMatKhau());
-//        insertValues.put("capbac", tk.getiCapBac());
-
-        String condition = " UID = '" + tk.getStrUid() + "'";
-
-        Boolean check = connect.Update(strTableName, insertValues, condition);
 
         connect.Close();
         return check;

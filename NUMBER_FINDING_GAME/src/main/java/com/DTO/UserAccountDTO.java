@@ -1,5 +1,8 @@
 package com.DTO;
 
+/**
+ * For client and server
+ */
 public class UserAccountDTO {
     private String strUid;
     private String strUserName;

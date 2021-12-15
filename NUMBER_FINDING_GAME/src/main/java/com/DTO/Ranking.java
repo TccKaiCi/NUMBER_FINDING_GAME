@@ -49,6 +49,10 @@ public class Ranking {
         }
     }
 
+    /**
+     * Noob coder @prohzgod
+     * @return
+     */
     public Ranking handleRank() {
         HashMap<String, Integer> mapPoint = new HashMap<String, Integer>();
 

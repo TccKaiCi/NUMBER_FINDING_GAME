@@ -11,6 +11,10 @@ import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Server and CLient
+ * A match have map, id room, time
+ */
 public class Match {
     private String strIdRoom;
     private long longMatchTime;

@@ -1,5 +1,8 @@
 package com.DTO;
 
+/**
+ * For server
+ */
 public class DetailMatchDTO {
     private String strUid;
     private String strIdRoom;

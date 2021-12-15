@@ -5,6 +5,7 @@ import com.DTO.NumberPoint;
 import java.util.*;
 
 /**
+ * For server and client
  * Map có 1 dãy Number liên tiếp nhau, sắp xếp lộn xộn trên hiển thị
  */
 public class Map {
