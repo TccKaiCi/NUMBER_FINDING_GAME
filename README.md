@@ -1,7 +1,13 @@
 # TRÒ CHƠI TÌM SỐ [Document](https://github.com/HiamKaito/NUMBER_FINDING_GAME/blob/main/NUMBER_FINDING_GAME/Document/README.md)
 
+## Tái sử dụng code từ: [Shoe Shop](https://github.com/HiamKaito/Shop_Manager_System), [SQL Java](https://github.com/HiamKaito/Ket-Noi-SQL-JAVA), [TicTacToe - LAN](https://github.com/HiamKaito/TicTacToe)
+
+## Chạy file : [Client](https://github.com/HiamKaito/NUMBER_FINDING_GAME/blob/main/NUMBER_FINDING_GAME/src/main/java/com/client/number_finding_game/LoginForm.java) và [Server](https://github.com/HiamKaito/NUMBER_FINDING_GAME/blob/main/NUMBER_FINDING_GAME/src/main/java/com/server/number_finding_game/ServerManager.java)
+
 ![Language](https://img.shields.io/badge/Language-Java-orange.svg)
 ![Language](https://img.shields.io/badge/Team-SGU-orange.svg)
+![Language](https://img.shields.io/badge/Môn-LTM-orange.svg)
+![Language](https://img.shields.io/badge/Type-Game-orange.svg)
 
 ## Team
 | MSSV | Họ và Tên  | Link |
