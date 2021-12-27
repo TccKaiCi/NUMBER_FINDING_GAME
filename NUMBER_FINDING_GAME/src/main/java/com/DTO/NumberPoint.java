@@ -36,10 +36,7 @@ public class NumberPoint {
                 (this.intPosX - point.getIntPosX()) * (this.intPosX - point.getIntPosX()) +
                         (this.intPosY - point.getIntPosY()) * (this.intPosY - point.getIntPosY()));
 
-        if (khoanCach <= duongCheo + 20) {
-            return true;
-        }
-        return false;
+        return khoanCach <= duongCheo + 20;
     }
 
 

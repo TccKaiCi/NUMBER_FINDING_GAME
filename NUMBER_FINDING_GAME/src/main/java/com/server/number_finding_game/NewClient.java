@@ -7,8 +7,8 @@ import java.util.Map;
 // Client for Server4
 public class NewClient implements Runnable {
     public String CurLobbyID = ""; //uid
-    private String serverName = "localhost";
-    private int serverPort = 8081;
+    private final String serverName = "localhost";
+    private final int serverPort = 8081;
     private Socket socket = null;
     private Thread thread = null;
     private DataInputStream dis = null;
@@ -55,7 +55,7 @@ public class NewClient implements Runnable {
                 dos.writeUTF(dis.readLine());
                 dos.flush();
                 try {
-                    thread.sleep(500);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     System.out.println("Error : " + e.getMessage());
                 }
@@ -168,7 +168,7 @@ public class NewClient implements Runnable {
             dos.flush();
 
             try {
-                thread.sleep(500);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 System.out.println("Error : " + e.getMessage());
             }
@@ -184,7 +184,7 @@ public class NewClient implements Runnable {
             dos.flush();
 
             try {
-                thread.sleep(500);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 System.out.println("Error : " + e.getMessage());
             }

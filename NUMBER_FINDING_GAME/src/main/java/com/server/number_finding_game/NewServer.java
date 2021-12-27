@@ -28,10 +28,10 @@ import java.util.*;
 public class NewServer implements Runnable {
     public int softLimit = 40;
     public int hardLimit = 45;
-    private int port = 8081;
+    private final int port = 8081;
     private ServerSocket serverSocket = null;
     private Thread thread = null;
-    private ChatServerThread clients[] = new ChatServerThread[hardLimit];
+    private final ChatServerThread[] clients = new ChatServerThread[hardLimit];
     private int clientCount = 0;
     private List<Lobby> ListLobby;
     private int Startpoint = 1, Endpoint = 12;

@@ -14,7 +14,7 @@ public class DetailMatchBUS {
     /**
      * Xử lý các lệnh trong SQL
      */
-    private DetailMatchDAO DAO;
+    private final DetailMatchDAO DAO;
 
     public DetailMatchBUS() throws Exception {
         list_DTO = new ArrayList<>();

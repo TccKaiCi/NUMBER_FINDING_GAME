@@ -10,7 +10,7 @@ import java.util.HashMap;
  */
 public class MyConnectUnit {
     //biến kết nối cơ bản
-    private MySQLConnection connect;
+    private final MySQLConnection connect;
 
     // hàm khởi tạo kết nối mặc định
     public MyConnectUnit() {
@@ -104,7 +104,7 @@ public class MyConnectUnit {
         valueInsert = valueInsert.delete(valueInsert.length() - 1, valueInsert.length());
 
         // đưa giá trị của cột vào câu query
-        query.append(") Values(" + valueInsert.toString() + ")");
+        query.append(") Values(" + valueInsert + ")");
         // chèn ký tự ; vào cuối dòng lệnh để cách câu
         query.append(";");
         System.out.println(query);
@@ -161,7 +161,7 @@ public class MyConnectUnit {
     // hàm lấy tên cột trong  result  select từ CSDL
     public static String[] getColumnName(ResultSet result) throws SQLException {
         // lấy resultsetMetaDate từ Result
-        ResultSetMetaData rsMetaData = (ResultSetMetaData) result.getMetaData();
+        ResultSetMetaData rsMetaData = result.getMetaData();
         // lấy số lượng cột trong Result
         int ColumnCount = rsMetaData.getColumnCount();
         // khai báo danh sách các cột

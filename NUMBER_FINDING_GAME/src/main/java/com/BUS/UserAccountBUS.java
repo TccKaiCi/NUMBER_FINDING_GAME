@@ -14,7 +14,7 @@ public class UserAccountBUS {
     /**
      * Xử lý các lệnh trong SQL
      */
-    private UserAccountDAO DAO;
+    private final UserAccountDAO DAO;
 
     public UserAccountBUS() throws Exception {
         list_DTO = new ArrayList<>();

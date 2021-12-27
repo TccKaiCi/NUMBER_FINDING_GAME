@@ -11,7 +11,7 @@ import java.util.*;
 public class Map {
     private List<NumberPoint> list;
     private int startValue, endValue;
-    private String DEFAULT_COLOR = "#23f2eb";
+    private final String DEFAULT_COLOR = "#23f2eb";
 
     public Map() {
         list = new ArrayList<>();

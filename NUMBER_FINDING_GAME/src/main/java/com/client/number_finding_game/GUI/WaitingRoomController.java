@@ -205,9 +205,7 @@ public class WaitingRoomController implements Initializable {
     }
 
     public boolean checkLobby(String mess) {
-        if (mess.contains("data"))
-            return true;
-        return false;
+        return mess.contains("data");
     }
 
     public void setBtn_quit(ActionEvent event) {
