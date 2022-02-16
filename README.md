@@ -1,4 +1,4 @@
-# TRÒ CHƠI TÌM SỐ [Document](https://github.com/HiamKaito/NUMBER_FINDING_GAME/blob/main/NUMBER_FINDING_GAME/Document/README.md)
+# TRÒ CHƠI TÌM SỐ [Document](https://github.com/HiamKaito/NUMBER_FINDING_GAME/blob/main/NUMBER_FINDING_GAME/Document/README.md) || [Demo](https://youtu.be/KDLBvzmWwRU)
 
 ## Tái sử dụng code từ: [Shoe Shop](https://github.com/HiamKaito/Shop_Manager_System), [SQL Java](https://github.com/HiamKaito/Ket-Noi-SQL-JAVA), [TicTacToe - LAN](https://github.com/HiamKaito/TicTacToe)
 
