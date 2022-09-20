@@ -11,7 +11,7 @@
 
 ## Team
 | Họ và Tên  | Link |
-|------| ----- | ----- |
+| ----- | ----- |
 | Nguyễn Tuấn Anh | [FB](https://www.facebook.com/ProHZGOD) |
 | Tăng Chí Chung | [FB](https://www.facebook.com/hiamkaito.404/) |
 | Nguyễn Ngọc Tiến Em | [FB](https://www.facebook.com/nguyenngoctienem.nguyen) |
